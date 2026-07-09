@@ -1,0 +1,51 @@
+{
+  "name": "@bigmobility/vinyl-ui",
+  "version": "1.0.0",
+  "description": "Bigmobility own Design System. Beautifully designed components built with Ark UI and Panda CSS that work with React frameworks.",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "npm run dev",
+    "build": "panda codegen && tsup",
+    "dev": "tsup --watch",
+    "check": "tsc --noEmit",
+    "css": "panda codegen",
+    "lint": "eslint . --fix",
+    "test": "jest --passWithNoTests",
+    "watch": "jest --watchAll"
+  },
+  "author": {
+    "name": "bigmobility",
+    "url": "https://bigmobility.co.kr"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./preset": {
+      "types": "./dist/preset/index.d.ts",
+      "import": "./dist/preset/index.js"
+    }
+  },
+  "peerDependencies": {
+    "@ark-ui/react": "^5",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@ark-ui/react": "^5.37.2",
+    "@pandacss/dev": "^1.11.4",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tsup": "^8.5.1"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web for Vinyl UI",
+  "scripts": {
+    "start": "npm run dev",
+    "css": "panda codegen",
+    "dev": "next dev -p 8080",
+    "build": "next build",
+    "check": "tsc --noEmit",
+    "lint": "eslint --fix src",
+    "test": "jest --passWithNoTests",
+    "watch": "jest --watchAll"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@bigmobility/vinyl-ui": "*",
+    "next": "^16.2.10",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^1.11.4",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.16"
+  }
+}

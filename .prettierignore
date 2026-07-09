@@ -1,0 +1,5 @@
+dist
+styled-system
+.next
+node_modules
+coverage
