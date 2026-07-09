@@ -153,3 +153,6 @@ vite.config.ts.timestamp-*
 
 # Next.js (auto-generated)
 **/next-env.d.ts
+
+# private docs
+.internal/
