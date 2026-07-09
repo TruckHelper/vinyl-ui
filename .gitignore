@@ -141,3 +141,15 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# IDEA
+.idea/
+
+# UI Library
+**/dist
+**/styled-system
+**/.next
+**/coverage
+
+# Next.js (auto-generated)
+**/next-env.d.ts
