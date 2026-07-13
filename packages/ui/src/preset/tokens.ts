@@ -2,6 +2,7 @@ import type { Tokens } from '@pandacss/dev';
 
 export const tokens: Tokens = {
   colors: {
+    transparent: { value: 'transparent' },
     navy: {
       100: { value: '#EEF0F7' },
       200: { value: '#D0D5E8' },

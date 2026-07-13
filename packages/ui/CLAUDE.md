@@ -9,13 +9,14 @@
   Ark 상태 context 유지 → 접근성 정상)
 - **클라이언트 컴포넌트.** 상태를 쓰면 파일 최상단에 `'use client'`.
 - **타입은 `type`으로 통일.
+- **JSX prop 2개 이상은 줄바꿈.** prop이 2개 이상이면 각 prop을 한 줄에 하나씩, 1개면 인라인 유지.
 
 ## 2. 토큰·스타일
 
 - **시맨틱 토큰만.** 색·간격은 시맨틱 토큰으로만(`layout.primary`, `text.default`). 원시 토큰(`orange.500`) 직접 참조 지양.
 - **표준 CSS 속성명만 사용.** Panda 단축 별칭·커스텀 유틸 금지. 예외: `textStyle` 합성·조건(`_hover` 등)·토큰 참조는 표준 CSS 대응이 없는 Panda 계층이라 허용.
-- **단위는 rem.** root `62.5%`(프리셋이 배포) → 10px=1rem, 환산 `px ÷ 10`, 항상 토큰 경유. 예외: `radii.full`(
-  pill)· `shadows`만 px.
+- **단위는 rem.** root `62.5%`(프리셋이 배포) → 10px=1rem, 환산 `px ÷ 10`, 항상 토큰 경유. 예외: `radii.full`(pill)·`shadows`·`border`(테두리
+  두께)는 px.
 - **hex는 대문자** (`#EB6013`). `rgba()` 등은 예외.
 - **토큰 키는 kebab(하이픈).** `emerald-green`, `layout.primary-dark`. camelCase·중첩(`layout.primary.dark`) 금지.
 - **타이포는 `textStyle` 우선.** `fontSize`/`fontWeight`/`lineHeight` 나열 대신 합성 스타일. 키는 `{그룹}.{크기}-{굵기}`(`body.medium-normal`,
