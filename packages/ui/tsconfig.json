@@ -9,6 +9,7 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
+    "baseUrl": ".",
     "paths": {
       "styled-system/*": [
         "./styled-system/*"
@@ -30,6 +31,7 @@
     "src",
     "styled-system",
     "panda.config.ts",
-    "tsup.config.ts"
+    "tsup.config.ts",
+    "jest.setup.ts"
   ]
 }
