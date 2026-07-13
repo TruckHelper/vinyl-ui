@@ -25,7 +25,11 @@ export function Icon({ className, name, ...props }: IconProps) {
   const iconName = name in dynamicIconImports ? name : 'file-x';
   return (
     <Container className={className}>
-      <DynamicIcon name={iconName} aria-hidden {...props} />
+      <DynamicIcon
+        name={iconName}
+        aria-hidden
+        {...props}
+      />
     </Container>
   );
 }
