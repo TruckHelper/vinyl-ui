@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { styled } from 'styled-system/jsx';
 
 import { GITHUB_URL } from '../../constants/site';
-import { GithubIcon } from './GithubIcon';
-import { SearchBox } from './SearchBox';
-import { ThemeToggle } from './ThemeToggle';
-import { MobileMenu } from './MobileMenu';
+
+import GithubIcon from './GithubIcon';
+import SearchBox from './SearchBox';
+import MobileMenu from './MobileMenu';
 
 const Container = styled('header', {
   base: {
@@ -123,7 +123,7 @@ const MobileControls = styled('div', {
   },
 });
 
-export function Navbar() {
+export default function Navbar() {
   return (
     <Container>
       <Brand
@@ -142,7 +142,7 @@ export function Navbar() {
       <NavControls>
         <Links>
           <NavLink
-            href="#"
+            href="/docs"
             active
           >
             Docs
@@ -158,10 +158,8 @@ export function Navbar() {
         >
           <GithubIcon />
         </GithubLink>
-        <ThemeToggle />
       </NavControls>
       <MobileControls>
-        <ThemeToggle />
         <MobileMenu />
       </MobileControls>
     </Container>

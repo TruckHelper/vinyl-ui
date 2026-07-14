@@ -55,7 +55,7 @@ const Kbd = styled('span', {
   },
 });
 
-export function SearchBox() {
+export default function SearchBox() {
   return (
     <Box
       type="button"

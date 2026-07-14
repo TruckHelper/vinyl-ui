@@ -9,8 +9,8 @@ import { Icon } from '@bigmobility/vinyl-ui';
 import { styled } from 'styled-system/jsx';
 
 import { GITHUB_URL } from '../../constants/site';
-import { GithubIcon } from './GithubIcon';
-import { SearchBox } from './SearchBox';
+import GithubIcon from './GithubIcon';
+import SearchBox from './SearchBox';
 
 const Trigger = styled('button', {
   base: {
@@ -95,7 +95,7 @@ const GithubMark = styled('span', {
   },
 });
 
-export function MobileMenu() {
+export default function MobileMenu() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

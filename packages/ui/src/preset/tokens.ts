@@ -87,7 +87,7 @@ export const tokens: Tokens = {
     16: { value: '1.6rem' },
     24: { value: '2.4rem' },
     40: { value: '4rem' },
-    full: { value: '50%' },
+    full: { value: '1000px' },
   },
   fonts: {
     body: {

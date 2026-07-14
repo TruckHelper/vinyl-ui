@@ -1,0 +1,171 @@
+---
+title: Button
+description: 액션을 트리거하는 버튼 컴포넌트
+---
+
+import { Button } from '@bigmobility/vinyl-ui';
+
+## 기본 예시
+
+`variant`는 기본 값이 `primary`, `fit`은 기본 값이 `auto`입니다.
+
+<Preview>
+  <Button>버튼</Button>
+</Preview>
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui';
+
+<Button>버튼</Button>;
+```
+
+## Variant
+
+버튼 스타일을 정합니다.
+
+<Preview>
+  <Button variant="primary">primary</Button>
+  <Button variant="emphasis">emphasis</Button>
+  <Button variant="neutral">neutral</Button>
+  <Button variant="outline">outline</Button>
+</Preview>
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui';
+
+<Button variant="primary">primary</Button>
+<Button variant="emphasis">emphasis</Button>
+<Button variant="neutral">neutral</Button>
+<Button variant="outline">outline</Button>
+```
+
+## Fit
+
+너비 방식을 정합니다. `auto`(기본)는 내용에 맞춰 크기가 정해지고, `block`은 부모 컨테이너 너비를 가득 채우며 높이가 `button-height`로 고정됩니다.
+
+<Preview>
+  <Button fit="auto">auto</Button>
+</Preview>
+
+<Preview>
+  <Button fit="block">block </Button>
+</Preview>
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui';
+
+<Button fit="auto">auto</Button>
+<Button fit="block">block</Button>
+```
+
+## Icon
+
+`leftIcon`·`rightIcon`에 아이콘 이름(lucide)을 넘기면 텍스트 좌/우에 표시됩니다. 사용 가능한 이름은 [Lucide 아이콘 목록](https://lucide.dev/icons/)에서 확인하세요.
+
+<Preview>
+  <Button leftIcon="chevron-left">이전</Button>
+  <Button rightIcon="chevron-right">다음</Button>
+</Preview>
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui';
+
+<Button leftIcon="chevron-left">이전</Button>
+<Button rightIcon="chevron-right">다음</Button>
+```
+
+## Disabled
+
+네이티브 `disabled` 속성을 그대로 사용합니다.
+
+<Preview>
+  <Button variant="primary" disabled>primary</Button>
+  <Button variant="emphasis" disabled>emphasis</Button>
+  <Button variant="neutral" disabled>neutral</Button>
+  <Button variant="outline" disabled>outline</Button>
+</Preview>
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui';
+
+<Button
+  variant="primary"
+  disabled
+>
+  primary
+</Button>
+
+<Button
+  variant="emphasis"
+  disabled
+>
+  emphasis
+</Button>
+
+<Button
+  variant="neutral"
+  disabled
+>
+  neutral
+</Button>
+
+<Button
+  variant="outline"
+  disabled
+>
+  outline
+</Button>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    variant: {
+      type: "primary | emphasis | neutral | outline",
+      default: "primary",
+      description: '색 계열',
+    },
+    fit: {
+      type: "block | auto",
+      default: "auto",
+      description: '너비 방식 — 부모 너비 100%(block) / 내용맞춤(auto)',
+    },
+    leftIcon: {
+      type: 'IconName',
+      description: '왼쪽 아이콘 이름 (lucide)',
+    },
+    rightIcon: {
+      type: 'IconName',
+      description: '오른쪽 아이콘 이름 (lucide)',
+    },
+  }}
+/>
+
+## 접근성
+
+- 네이티브 `<button>`이라 **키보드 포커스·Enter/Space 활성화·`disabled`** 가 기본 동작합니다.
+- `type` 기본값은 `"button"` 입니다.
+
+## 토큰 커스터마이징
+
+Button은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.primary` | <Swatch token="layout.primary" /> | primary 배경 |
+| `layout.primary-dark` | <Swatch token="layout.primary-dark" /> | primary hover·active |
+| `layout.emphasis` | <Swatch token="layout.emphasis" /> | emphasis 배경 |
+| `layout.emphasis-dark` | <Swatch token="layout.emphasis-dark" /> | emphasis hover·active |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | neutral 배경 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | neutral 텍스트 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | neutral hover border |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | outline 배경 |
+| `text.default` | <Swatch token="text.default" /> | outline 텍스트 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | outline border |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | outline hover border |
+| `text.default-light` | <Swatch token="text.default-light" /> | primary·emphasis 텍스트 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
+
+이 밖에 `block` 의 높이는 `button-height` 와 타이포 `button.large-normal`(block)·`button.medium-normal`(auto)을 사용합니다.

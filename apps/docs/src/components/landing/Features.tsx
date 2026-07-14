@@ -136,7 +136,7 @@ const CardDescription = styled('p', {
   },
 });
 
-export function Features() {
+export default function Features() {
   return (
     <Section>
       <Header>

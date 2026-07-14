@@ -1,8 +1,8 @@
 import { css } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 
-import { InstallBox } from './InstallBox';
-import { GithubButton } from './GithubButton';
+import InstallBox from './InstallBox';
+import GithubButton from './GithubButton';
 
 const Section = styled('section', {
   base: {
@@ -74,7 +74,7 @@ const ctaButton = css({
   tablet: { width: 'auto' },
 });
 
-export function Hero() {
+export default function Hero() {
   return (
     <Section>
       <Copy>

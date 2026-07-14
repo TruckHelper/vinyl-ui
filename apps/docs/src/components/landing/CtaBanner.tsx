@@ -3,7 +3,7 @@ import { Button } from '@bigmobility/vinyl-ui';
 import { css } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 
-import { GithubButton } from './GithubButton';
+import GithubButton from './GithubButton';
 
 const Section = styled('section', {
   base: {
@@ -82,7 +82,7 @@ const githubButton = css({
   tablet: { display: 'inline-flex' },
 });
 
-export function CtaBanner() {
+export default function CtaBanner() {
   return (
     <Section>
       <Card>

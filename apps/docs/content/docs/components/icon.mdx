@@ -1,0 +1,101 @@
+---
+title: Icon
+description: lucide 아이콘을 렌더링하는 컴포넌트
+---
+
+import { Icon } from '@bigmobility/vinyl-ui';
+
+lucide 아이콘을 이름으로 렌더합니다. 사용 가능한 이름은 [Lucide 아이콘 목록](https://lucide.dev/icons/)에서 확인하세요.
+
+## 기본 예시
+
+<Preview>
+  <Icon name="chevron-right" />
+  <Icon name="check" />
+  <Icon name="search" />
+  <Icon name="settings" />
+</Preview>
+
+```tsx
+import { Icon } from '@bigmobility/vinyl-ui';
+
+<Icon name="check" />;
+```
+
+## Color 변경
+
+아이콘 컴포넌트는 별도 지정이 없으면 부모 요소의 `color`에 맞춰 변경됩니다.
+
+<Preview>
+  <span style={{ color: 'var(--colors-text-accent-primary)' }}><Icon name="heart" /></span>
+  <span style={{ color: 'var(--colors-text-accent-secondary)' }}><Icon name="heart" /></span>
+  <span style={{ color: 'var(--colors-text-issue)' }}><Icon name="heart" /></span>
+</Preview>
+
+```tsx
+import { styled } from 'styled-system/jsx';
+
+import { Icon } from '@bigmobility/vinyl-ui';
+
+const Container = styled('span', {
+  base: {
+    color: 'text.issue',
+  },
+});
+
+export default function ColorfulIcon() {
+  return (
+    <Container>
+      <Icon name="heart" />
+    </Container>
+  );
+}
+```
+
+## Size 변경
+
+아이콘 컴포넌트는 부모의 `font-size`에 맞춰 변경됩니다.
+
+<Preview>
+  <span style={{ fontSize: '1.6rem' }}><Icon name="heart" /></span>
+  <span style={{ fontSize: '2.4rem' }}><Icon name="heart" /></span>
+  <span style={{ fontSize: '4rem' }}><Icon name="heart" /></span>
+</Preview>
+
+```tsx
+import { styled } from 'styled-system/jsx';
+
+import { Icon } from '@bigmobility/vinyl-ui';
+
+const Container = styled('span', {
+  base: {
+    fontSize: '4rem',
+  },
+});
+
+export default function ResizingIcon() {
+  return (
+    <Container>
+      <Icon name="heart" />
+    </Container>
+  );
+}
+```
+
+## Props
+
+<PropsTable
+  type={{
+    name: {
+      type: 'IconName',
+      description: 'lucide 아이콘 이름. 존재하지 않는 이름은 file-x로 폴백',
+    },
+  }}
+/>
+
+`name`을 제외하고 lucide의 [`LucideProps`](https://lucide.dev/guide/react/getting-started#props)를 그대로 전달할 수 있습니다.
+
+## 접근성
+
+- 아이콘은 기본적으로 `aria-hidden`(장식용) 으로 렌더됩니다.
+- 아이콘이 단독으로 의미를 가질 때는 감싸는 상호작용 요소에 `aria-label`을 제공하세요.
