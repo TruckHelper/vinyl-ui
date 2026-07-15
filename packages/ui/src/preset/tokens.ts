@@ -143,4 +143,7 @@ export const tokens: Tokens = {
       xsmall: { value: '1.4rem' },
     },
   },
+  zIndex: {
+    dropdown: { value: 1000 },
+  },
 };

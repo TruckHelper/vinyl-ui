@@ -6,6 +6,7 @@ export default defineConfig({
   dts: true,
   clean: true,
   minify: false,
+  treeshake: true,
   external: ['react', 'react-dom', '@ark-ui/react', /^lucide-react(\/.*)?$/],
   esbuildOptions(options) {
     options.resolveExtensions = ['.tsx', '.ts', '.jsx', '.js', '.mjs', '.css', '.json'];
