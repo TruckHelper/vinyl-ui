@@ -25,8 +25,8 @@
 ## 3. import·네이밍
 
 - Panda 산출물은 **bare import**: `import { styled } from 'styled-system/jsx'` (tsconfig `paths` 필수).
-- **컴포넌트 파일은 PascalCase** (`Icon.tsx`, `Button.tsx`). 컴포넌트별 index 배럴은 두지 않고 `src/index.ts`가 각 파일을 직접 export(컴포넌트=파일 1개,
-  멀티파트는 한 파일에서 플랫 export).
+- **컴포넌트 파일은 PascalCase** (`Icon.tsx`, `Button.tsx`). 컴포넌트별 index 배럴은 두지 않고 `src/index.ts`가 각 파일을 직접 export. 단일 컴포넌트는
+  파일 1개, 멀티파트는 파트별 파일(`Select.tsx`, `SelectTrigger.tsx` …)로 나누고 폴더 배럴 없이 `src/index.ts`가 각 파트 파일을 직접 export.
 - **variant 이름은 Figma 속성과 대응**되게 짓는다 (Code Connect).
 
 ## 4. 테스트
@@ -37,3 +37,4 @@
 ## 5. 패키징
 
 - **배포는 `dist`만** (`files: ["dist"]`).
+- `tsup` **`minify: false`**(styled 정적 추출) + **`treeshake: true`**. treeshake는 **RSC 호환 필수** — styled-system/jsx 배럴이 끌고 오는 `createStyleContext`(`createContext`)를 제거해야 서버 컴포넌트에서 import 가능.

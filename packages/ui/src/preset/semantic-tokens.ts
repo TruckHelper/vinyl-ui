@@ -48,6 +48,7 @@ export const semanticTokens: SemanticTokens = {
       },
     },
     'button-height': { value: '6rem' },
+    'input-height': { value: '4.8rem' },
   },
   spacing: {
     grid: {

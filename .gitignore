@@ -154,5 +154,8 @@ vite.config.ts.timestamp-*
 # Next.js (auto-generated)
 **/next-env.d.ts
 
+# Fumadocs (generated)
+**/.source
+
 # private docs
 .internal/
