@@ -1,5 +1,17 @@
+import { Navbar } from '../components/landing/Navbar';
+import { Hero } from '../components/landing/Hero';
+import { Features } from '../components/landing/Features';
+import { CtaBanner } from '../components/landing/CtaBanner';
+import { Footer } from '../components/landing/Footer';
+
 export default function Home() {
   return (
-    <h1>Vinyl UI Design System</h1>
+    <>
+      <Navbar />
+      <Hero />
+      <Features />
+      <CtaBanner />
+      <Footer />
+    </>
   );
 }

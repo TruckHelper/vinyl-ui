@@ -86,6 +86,7 @@ export default [
           '**/*.config.js',
           '**/jest.setup.ts',
           '**/src/preset/**',
+          '**/theme/**',
         ],
         packageDir: [
           './',
