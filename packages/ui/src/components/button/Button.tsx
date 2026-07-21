@@ -39,8 +39,8 @@ const Container = styled('button', {
       neutral: {
         backgroundColor: 'layout.primary-subtle',
         color: 'text.accent-primary',
-        _hover: { borderColor: 'layout.hilight-line' },
-        _active: { borderColor: 'layout.hilight-line' },
+        _hover: { borderColor: 'layout.highlight-line' },
+        _active: { borderColor: 'layout.highlight-line' },
       },
       outline: {
         backgroundColor: 'layout.bg-light',
