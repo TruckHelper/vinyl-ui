@@ -69,7 +69,7 @@ const Title = styled('h2', {
   base: {
     textStyle: 'heading.large-bold',
     color: 'text.heading',
-    tablet: { textStyle: 'heading.display-bold' },
+    tablet: { textStyle: 'heading.xlarge-bold' },
   },
 });
 

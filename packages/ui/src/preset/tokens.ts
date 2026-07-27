@@ -120,10 +120,10 @@ export const tokens: Tokens = {
   },
   fontSizes: {
     heading: {
-      'display-heading': { value: '3.2rem' },
-      'heading-1': { value: '2.4rem' },
-      'heading-2': { value: '1.8rem' },
-      'heading-3': { value: '1.6rem' },
+      'heading-1': { value: '4rem' },
+      'heading-2': { value: '2.4rem' },
+      'heading-3': { value: '1.8rem' },
+      'heading-4': { value: '1.6rem' },
     },
     body: {
       xlarge: { value: '2.4rem' },
