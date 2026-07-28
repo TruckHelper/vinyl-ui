@@ -144,6 +144,13 @@ export const tokens: Tokens = {
     },
   },
   zIndex: {
-    dropdown: { value: 1000 },
+    base: { value: 0 },
+    content: { value: 1 },
+    sticky: { value: 100 },
+    overlay: { value: 200 },
+    modal: { value: 300 },
+    dropdown: { value: 400 },
+    toast: { value: 500 },
+    tooltip: { value: 600 },
   },
 };
