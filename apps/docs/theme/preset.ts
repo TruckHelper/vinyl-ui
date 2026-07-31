@@ -1,13 +1,13 @@
 import { definePreset } from '@pandacss/dev';
 
-import { docsSemanticTokens } from './semantic-tokens';
 import { docsTextStyles } from './text-styles';
+import { docsTokens } from './tokens';
 
 export const docsPreset = definePreset({
   name: 'vinyl-ui-docs-preset',
   theme: {
     extend: {
-      semanticTokens: docsSemanticTokens,
+      tokens: docsTokens,
       textStyles: docsTextStyles,
     },
   },

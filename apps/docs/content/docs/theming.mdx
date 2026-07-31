@@ -1,0 +1,53 @@
+---
+title: 테마
+description: 토큰을 재정의해 브랜드 테마 적용
+---
+
+Vinyl UI의 핵심은 컴포넌트 코드는 그대로 두고, preset에서 토큰만 재정의해 테마를 바꾸는 것입니다.
+컬러·폰트·팔레트 등 어떤 토큰이든 같은 방식으로 교체합니다.
+
+## Semantic Colors 교체
+
+```ts
+import { defineConfig } from '@pandacss/dev';
+import { preset } from '@bigmobility/vinyl-ui/preset';
+
+export default defineConfig({
+  presets: [preset],
+  theme: {
+    extend: {
+      semanticTokens: {
+        colors: {
+          layout: {
+            primary: { value: '#0057FF' },
+            'primary-dark': { value: '#0046CC' },
+          },
+        },
+      },
+    },
+  },
+});
+```
+
+## 폰트 교체
+
+```ts
+import { defineConfig } from '@pandacss/dev';
+import { preset } from '@bigmobility/vinyl-ui/preset';
+
+export default defineConfig({
+  presets: [preset],
+  theme: {
+    extend: {
+      tokens: {
+        fonts: { body: { value: '"Pretendard", sans-serif' } },
+      },
+    },
+  },
+});
+```
+
+## 그 밖의 토큰
+
+간격(`spacing`)·모서리(`radii`)·그림자(`shadows`) 등도 `tokens`에서 동일하게 재정의할 수 있습니다.
+다만 이런 구조 토큰은 보통 브랜드 간 공유하고, 브랜드 차이는 주로 컬러와 폰트로 표현합니다.

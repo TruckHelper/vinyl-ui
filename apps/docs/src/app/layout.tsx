@@ -13,20 +13,24 @@ export const metadata: Metadata = {
   icons: { icon: '/favicon.ico' },
 };
 
-const themeScript = `(function(){try{var raw=localStorage.getItem('vinyl-ui-theme');var v=raw?JSON.parse(raw):'system';var dark=v==='dark'||(v==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`;
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="ko"
-      suppressHydrationWarning
-    >
+    <html lang="ko">
+    <head>
+      <link
+        rel="preconnect"
+        href="https://spoqa.github.io"
+      />
+      <link
+        rel="stylesheet"
+        href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+      />
+    </head>
     <body>
-    <script dangerouslySetInnerHTML={{ __html: themeScript }} />
     {children}
     </body>
     </html>

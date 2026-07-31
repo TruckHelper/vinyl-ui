@@ -1,0 +1,160 @@
+---
+title: 파운데이션
+description: 색·간격·타이포 등 디자인 시스템의 기반 토큰
+---
+
+컴포넌트는 컬러를 **시맨틱 토큰**(`layout.*`·`text.*`)으로만 참조하고, 시맨틱 토큰은 Primitive colors 팔레트를 참조합니다.
+테마 교체는 preset에서 이 값을 재정의해 이뤄지며 컴포넌트 코드는 그대로입니다.
+
+## Primitive Colors
+
+<Callout type="warning">
+  Primitive Colors 는 시맨틱 토큰의 재료입니다.
+  컴포넌트·화면에서 직접 참조하지 말고 아래 시맨틱 토큰을 사용하세요.
+</Callout>
+
+<Palette name="navy" />
+<Palette name="orange" />
+<Palette name="green" />
+<Palette name="emerald-green" />
+<Palette name="red" />
+<Palette name="black" />
+
+<Palette name="white" shades={['default']} />
+
+## Semantic Colors — layout
+
+| 토큰 | 미리보기 | 기본 토큰 | 역할 |
+| --- | --- | --- | --- |
+| `layout.primary` | <Swatch token="layout.primary" /> | `navy.500` | 브랜드 대표 컬러. 버튼·링크·포커스 등 주요 인터랙티브 요소에 사용 |
+| `layout.primary-dark` | <Swatch token="layout.primary-dark" /> | `navy.600` | primary 요소의 hover·pressed 상태에 사용 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | `navy.100` | 강조 라벨·경고 배지·이슈 영역 배경에 사용 |
+| `layout.emphasis` | <Swatch token="layout.emphasis" /> | `black.500` | 브랜드 컬러 외 강조 컬러. 헤더·주요 콘텐츠 배경·브랜드 강조 영역에 사용 |
+| `layout.emphasis-dark` | <Swatch token="layout.emphasis-dark" /> | `black.600` | emphasis 요소의 hover·pressed 상태에 사용 |
+| `layout.neutral-gray` | <Swatch token="layout.neutral-gray" /> | `black.400` | 네이비 계열 서비스에서 중립적인 보조 UI 요소에 사용 |
+| `layout.accent-secondary` | <Swatch token="layout.accent-secondary" /> | `green.500` | 완료·정상·가능 등 긍정적 상태를 나타낼 때 사용(화면의 30% 이상 금지) |
+| `layout.issue` | <Swatch token="layout.issue" /> | `red.500` | 오류·경고·공휴일 등 부정적 상태를 나타낼 때 사용(화면의 30% 이상 금지) |
+| `layout.bg-soft-gray` | <Swatch token="layout.bg-soft-gray" /> | `black.200` | 구분선·비활성 보더 등 미묘한 경계 표현에 사용 |
+| `layout.bg-layer` | <Swatch token="layout.bg-layer" /> | `rgba(0,0,0,0.6)` | 모달·바텀시트 등 오버레이 생성 시 배경 딤 처리에 사용 |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | `white.default` | 기본 흰색 배경. 카드·시트·팝업 등 콘텐츠 영역 배경에 사용 |
+| `layout.bg-light-blue` | <Swatch token="layout.bg-light-blue" /> | `navy.100` | 네이비 계열의 연한 배경. 선택 상태·활성 탭·강조 영역 배경에 사용 |
+| `layout.bg-light-green` | <Swatch token="layout.bg-light-green" /> | `green.100` | 초록 계열의 연한 배경. 완료·정상·가능 상태의 라벨 배경에 사용 |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | `black.100` | 페이지 기본 배경. 콘텐츠 구분이 필요한 영역의 배경에 사용 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | `black.100` | 비활성화된 모든 컨트롤의 배경 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | `red.100` | 오류·경고 상태의 인풋 보더·구분선에 쓰이는 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | `black.200` | 카드·인풋·섹션 구분 등 기본 보더·구분선에 사용 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | `black.500` | 선택·포커스 등 강한 강조가 필요한 보더에 사용 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | `navy.300` | 네이비 계열 강조 보더. 활성 탭·선택된 항목 표시에 사용 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | `red.500` | 오류·경고 상태의 인풋 보더·구분선에 사용 |
+| `layout.table-header` | <Swatch token="layout.table-header" /> | `black.100` | 테이블 헤더 배경에 사용 |
+
+## Semantic Colors - text
+
+| 토큰 | 미리보기 | 기본 토큰 | 역할 |
+| --- | --- | --- | --- |
+| `text.display` | <Swatch token="text.display" /> | `black.800` | 디스플레이 헤딩에 사용. 가장 큰 타이틀 텍스트 전용 |
+| `text.heading` | <Swatch token="text.heading" /> | `black.800` | 페이지 및 섹션 타이틀에 사용 |
+| `text.strong` | <Swatch token="text.strong" /> | `black.800` | 본문·리스트에서 강조가 필요한 텍스트에 사용 |
+| `text.default` | <Swatch token="text.default" /> | `black.600` | 본문·리스트 등 모든 일반 텍스트에 사용 |
+| `text.default-light` | <Swatch token="text.default-light" /> | `white.default` | 어둡거나 채도 높은 배경 위의 반전 텍스트에 사용 |
+| `text.soft` | <Swatch token="text.soft" /> | `black.500` | 보조 설명·캡션·레벨이 낮은 텍스트에 사용 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | `navy.500` | 강조 텍스트에 제한적으로 사용(화면의 30% 이상 금지) |
+| `text.accent-secondary` | <Swatch token="text.accent-secondary" /> | `green.600` | 완료·정상·가능 등 긍정 상태 강조 텍스트에 사용(화면의 30% 이상 금지) |
+| `text.input` | <Swatch token="text.input" /> | `black.600` | 인풋 필드 입력 텍스트에 사용 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | `black.300` | 인풋 플레이스홀더 및 보조 아이콘에 사용 |
+| `text.input-strong` | <Swatch token="text.input-strong" /> | `black.600` | 인풋 보조 아이콘 강조에 사용 |
+| `text.disable` | <Swatch token="text.disable" /> | `black.300` | 모든 비활성화 상태의 텍스트에 사용 |
+| `text.issue` | <Swatch token="text.issue" /> | `red.500` | 오류·경고·공휴일 등 이슈 상태 텍스트에 사용 |
+
+## Spacing
+
+px 값을 키로, 값은 rem(`10px = 1rem`) 기준입니다. 예: `spacing.16` → `1.6rem`.
+
+| 키 | 값 |
+| --- | --- |
+| `4` | 0.4rem |
+| `8` | 0.8rem |
+| `12` | 1.2rem |
+| `16` | 1.6rem |
+| `24` | 2.4rem |
+| `32` | 3.2rem |
+| `40` | 4rem |
+| `48` | 4.8rem |
+| `60` | 6rem |
+| `80` | 8rem |
+| `100` | 10rem |
+| `120` | 12rem |
+
+## Typography - textStyle
+
+`{name}.{size}-{weight}` 형태의 합성 스타일입니다. 굵기: light `400` · normal `500` · bold `700`.
+
+| textStyle | 크기 | 굵기 |
+| --- | --- | --- |
+| `heading.xlarge-bold` | 4rem | bold |
+| `heading.large-bold` | 2.4rem | bold |
+| `heading.medium-bold` | 1.8rem | bold |
+| `heading.small-bold` | 1.6rem | bold |
+| `body.large-bold` | 1.8rem | bold |
+| `body.large-normal` | 1.8rem | normal |
+| `body.large-light` | 1.8rem | light |
+| `body.medium-bold` | 1.6rem | bold |
+| `body.medium-normal` | 1.6rem | normal |
+| `body.medium-light` | 1.6rem | light |
+| `body.small-bold` | 1.4rem | bold |
+| `body.small-normal` | 1.4rem | normal |
+| `body.small-light` | 1.4rem | light |
+| `body.xsmall-light` | 1.2rem | light |
+| `button.large-normal` | 1.8rem | normal |
+| `button.medium-normal` | 1.6rem | normal |
+| `button.small-normal` | 1.4rem | normal |
+| `input.medium-light` | 1.8rem | light |
+| `input.small-light` | 1.6rem | light |
+| `input.xsmall-light` | 1.4rem | light |
+
+## Radius (radii)
+
+| 키 | 값 |
+| --- | --- |
+| `4` | 0.4rem |
+| `8` | 0.8rem |
+| `16` | 1.6rem |
+| `24` | 2.4rem |
+| `40` | 4rem |
+| `full` | 1000px |
+
+## Shadows
+
+| 키 | 값 |
+| --- | --- |
+| `xs` | `0 1px 2px 0 rgba(0,0,0,0.05)` |
+| `sm` | `0 1px 3px 0 rgba(0,0,0,0.10), 0 1px 2px -1px rgba(0,0,0,0.10)` |
+| `md` | `0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.10)` |
+| `lg` | `0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10)` |
+| `xl` | `0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10)` |
+| `inner` | `inset 0 2px 4px 0 rgba(0,0,0,0.06)` |
+
+## Fonts
+
+| 키 | 값 |
+| --- | --- |
+| `body` | `"Spoqa Han Sans Neo", sans-serif` |
+
+기본 브랜드 폰트는 **Spoqa Han Sans Neo**입니다.
+폰트는 직접 로드하거나 아래처럼 `fonts.body`를 재정의해 다른 폰트로 브랜딩합니다.
+
+```ts
+import { defineConfig } from '@pandacss/dev';
+import { preset } from '@bigmobility/vinyl-ui/preset';
+
+export default defineConfig({
+  presets: [preset],
+  theme: {
+    extend: {
+      tokens: {
+        fonts: { body: { value: '"Pretendard", sans-serif' } },
+      },
+    },
+  },
+});
+```

@@ -18,6 +18,7 @@
 - **조각 컴포넌트는 `app/` 밖 `src/components/`** 에 둔다(라우팅과 분리). 기능별 하위 폴더(`landing/`, `docs/`). `app/_components`(private
   folder) 방식은 쓰지 않는다.
 - **파일은 PascalCase**(`Navbar.tsx`, `DocsSidebar.tsx`). 배럴 파일 없이 사용처에서 직접 import.
+- **컴포넌트 파일은 default export로 단일 컴포넌트를 내보낸다.** 훅·팩토리·타입 등 컴포넌트가 아닌 것은 named export를 유지한다.
 - **상태를 쓰면 파일 최상단 `'use client'`.**
 - **JSX prop 2개 이상은 줄바꿈**(각 prop 한 줄), 1개면 인라인.
 - 타입은 `type`으로 통일.

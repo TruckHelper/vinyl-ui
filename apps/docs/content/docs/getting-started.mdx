@@ -1,0 +1,85 @@
+---
+title: 시작하기
+description: Vinyl UI 설치와 Panda CSS 프리셋 설정
+---
+
+## 사전 요구사항
+
+Vinyl UI를 쓰려면 다음 환경이 필요합니다.
+
+- **React 19 이상** — React 바인딩(`@ark-ui/react`)과 React로 구현되어 React 전용입니다.
+- **Panda CSS** — 스타일이 Panda CSS 기반입니다. 프로젝트에 Panda CSS를 설정하고 [프리셋을 등록](#panda-css-프리셋-등록)해야 합니다.
+- **ESM · 모던 번들러** — Next.js(App Router 권장)·Vite 등 모던 번들러 환경에서 동작합니다.
+
+## 설치
+
+1. 먼저 스타일 기반이 되는 Panda CSS를 개발 의존성으로 설치합니다.
+
+```bash
+npm install -D @pandacss/dev
+   ```
+
+2. `@bigmobility/vinyl-ui`와 peer 의존성인 `@ark-ui/react`를 설치합니다.
+
+```bash
+npm install @bigmobility/vinyl-ui @ark-ui/react
+   ```
+
+## Panda CSS 프리셋 등록
+
+1. `panda.config.ts`의 `presets`에 Vinyl UI 프리셋을 등록합니다. 이 프리셋이 색·간격·타이포 토큰과 root `62.5%`(10px = 1rem) 설정을 한꺼번에 제공하므로, 별도 토큰 정의 없이 곧바로 컴포넌트를 쓸 수 있습니다.
+
+```ts
+import { defineConfig } from '@pandacss/dev';
+
+import { preset } from '@bigmobility/vinyl-ui/preset';
+
+export default defineConfig({
+  presets: [preset],
+  jsxFramework: 'react',
+  include: ['./src/**/*.{ts,tsx}'],
+  outdir: 'styled-system',
+});
+   ```
+
+각 설정의 의미는 다음과 같습니다.
+
+- `presets` — Vinyl UI 프리셋 등록. 토큰·전역 스타일이 여기에 설정되어 있습니다.
+- `jsxFramework: 'react'` — React용 `styled` 팩토리를 생성합니다.
+- `include` — Panda가 스타일을 추출하기 위해 스캔할 파일 경로.
+- `outdir` — 생성물(`styled-system`)이 놓일 위치.
+
+2. 코드 생성 명령으로 위 설정을 바탕으로 `styled-system/` 디렉터리(토큰·`styled` 팩토리 등)를 만들어 냅니다. 컴포넌트가 이 산출물을 참조하므로, `panda.config.ts`를 바꿀 때마다 다시 실행해야 합니다.
+
+```bash
+panda codegen
+   ```
+
+## 사용법
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui';
+
+export function Example() {
+  return (
+    <Button variant="primary">
+      확인
+    </Button>
+  );
+}
+```
+
+## 테마 폰트 로드
+
+`fonts.body`는 **Spoqa Han Sans Neo**를 기본으로 참조하지만 폰트 자체는 앱에서 직접 로드해야 합니다.
+
+```html
+<link rel="stylesheet" href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" />
+```
+
+다른 폰트로 변경하는 방법은 [파운데이션 › Fonts](/docs/foundations)를 참고하세요.
+
+## 단위(rem) 규칙
+
+프리셋이 root `62.5%`를 배포하므로 **10px = 1rem**입니다. 컴포넌트·토큰은 모두 rem 기반이며,
+앱에서 이 root가 적용되어야 의도한 크기로 렌더됩니다.

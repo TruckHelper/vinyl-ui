@@ -19,6 +19,7 @@ export default [
       '**/dist',
       '**/styled-system',
       '**/.next',
+      '**/.source',
       '**/node_modules',
       '**/coverage',
       '**/next-env.d.ts',

@@ -1,1 +1,9 @@
 @layer reset, base, tokens, recipes, utilities;
+
+.shiki {
+    background-color: var(--shiki-light-bg);
+}
+
+.shiki span {
+    color: var(--shiki-light);
+}

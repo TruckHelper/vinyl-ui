@@ -68,7 +68,7 @@ const NavLink = styled(Link, {
   },
 });
 
-export function Footer() {
+export default function Footer() {
   return (
     <Container>
       <Wrapper>

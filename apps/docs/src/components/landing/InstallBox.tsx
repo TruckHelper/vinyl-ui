@@ -60,7 +60,7 @@ const CopyButton = styled('button', {
   },
 });
 
-export function InstallBox() {
+export default function InstallBox() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
