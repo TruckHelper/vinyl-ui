@@ -1,0 +1,244 @@
+---
+title: Accordion
+description: 제목을 눌러 내용을 펼치고 접는 아코디언 컴포넌트
+---
+
+import { Accordion, AccordionItem, AccordionItemContent, AccordionItemTrigger, } from '@bigmobility/vinyl-ui';
+
+아코디언은 여러 파트를 조합해 사용합니다. `Accordion`(루트) 안에 `AccordionItem`을 나열하고,
+각 아이템은 `AccordionItemTrigger`(제목)와 `AccordionItemContent`(내용)로 구성합니다.
+`AccordionItem`의 `value`는 아이템을 식별하는 값으로 필수입니다.
+
+## 기본 예시
+
+`collapsible` props로 열린 아이템을 다시 눌러 접을 수 있습니다. 제목 우측의 `chevron-down` 아이콘은
+`AccordionItemTrigger`가 기본으로 렌더합니다.
+
+<Preview>
+  <Accordion collapsible defaultValue={["delivery"]}>
+    <AccordionItem value="delivery">
+      <AccordionItemTrigger>배송 안내</AccordionItemTrigger>
+      <AccordionItemContent>주문 후 2~3일 내 발송됩니다.</AccordionItemContent>
+    </AccordionItem>
+    <AccordionItem value="refund">
+      <AccordionItemTrigger>환불 정책</AccordionItemTrigger>
+      <AccordionItemContent>수령 후 7일 이내 교환·환불이 가능합니다.</AccordionItemContent>
+    </AccordionItem>
+  </Accordion>
+</Preview>
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTrigger,
+  AccordionItemContent,
+} from '@bigmobility/vinyl-ui';
+
+<Accordion
+  collapsible
+  defaultValue={['delivery']}
+>
+  <AccordionItem value="delivery">
+    <AccordionItemTrigger>배송 안내</AccordionItemTrigger>
+    <AccordionItemContent>주문 후 2~3일 내 발송됩니다.</AccordionItemContent>
+  </AccordionItem>
+  <AccordionItem value="refund">
+    <AccordionItemTrigger>환불 정책</AccordionItemTrigger>
+    <AccordionItemContent>수령 후 7일 이내 교환·환불이 가능합니다.</AccordionItemContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## 다중 펼침
+
+`multiple` props를 사용하면 여러 아이템을 동시에 펼칠 수 있습니다. (기본은 한 번에 하나만 열립니다.)
+
+<Preview>
+  <Accordion multiple defaultValue={["a", "b"]}>
+    <AccordionItem value="a">
+      <AccordionItemTrigger>첫 번째 항목</AccordionItemTrigger>
+      <AccordionItemContent>동시에 열려 있을 수 있습니다.</AccordionItemContent>
+    </AccordionItem>
+    <AccordionItem value="b">
+      <AccordionItemTrigger>두 번째 항목</AccordionItemTrigger>
+      <AccordionItemContent>다른 항목을 열어도 닫히지 않습니다.</AccordionItemContent>
+    </AccordionItem>
+  </Accordion>
+</Preview>
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTrigger,
+  AccordionItemContent,
+} from '@bigmobility/vinyl-ui';
+
+<Accordion
+  multiple
+  defaultValue={['a', 'b']}
+>
+  <AccordionItem value="a">
+    <AccordionItemTrigger>첫 번째 항목</AccordionItemTrigger>
+    <AccordionItemContent>동시에 열려 있을 수 있습니다.</AccordionItemContent>
+  </AccordionItem>
+  <AccordionItem value="b">
+    <AccordionItemTrigger>두 번째 항목</AccordionItemTrigger>
+    <AccordionItemContent>다른 항목을 열어도 닫히지 않습니다.</AccordionItemContent>
+  </AccordionItem>
+</Accordion>;
+```
+
+## Disabled
+
+`AccordionItem`에 `disabled`를 주면 해당 아이템은 열 수 없고 제목이 비활성 색으로 표시됩니다.
+
+<Preview>
+  <Accordion collapsible>
+    <AccordionItem value="active">
+      <AccordionItemTrigger>사용 가능 항목</AccordionItemTrigger>
+      <AccordionItemContent>정상적으로 펼쳐집니다.</AccordionItemContent>
+    </AccordionItem>
+    <AccordionItem value="disabled" disabled>
+      <AccordionItemTrigger>비활성 항목</AccordionItemTrigger>
+      <AccordionItemContent>이 내용은 열 수 없습니다.</AccordionItemContent>
+    </AccordionItem>
+  </Accordion>
+</Preview>
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTrigger,
+  AccordionItemContent,
+} from '@bigmobility/vinyl-ui';
+
+<Accordion collapsible>
+  <AccordionItem
+    value="disabled"
+    disabled
+  >
+    <AccordionItemTrigger>비활성 항목</AccordionItemTrigger>
+    <AccordionItemContent>이 내용은 열 수 없습니다.</AccordionItemContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## Indicator 커스텀
+
+`AccordionItemTrigger`는 기본으로 `chevron-down` 아이콘을 렌더합니다.
+`hasIndicator={false}`로 기본을 없애고 Indicator를 커스텀으로 렌더해서 사용할 수 있습니다.
+
+<Preview>
+  <Accordion collapsible>
+    <AccordionItem value="no-indicator">
+      <AccordionItemTrigger hasIndicator={false}>아이콘 없는 제목</AccordionItemTrigger>
+      <AccordionItemContent>indicator를 숨긴 트리거입니다.</AccordionItemContent>
+    </AccordionItem>
+  </Accordion>
+</Preview>
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTrigger,
+  AccordionItemContent,
+} from '@bigmobility/vinyl-ui';
+
+  <Accordion collapsible>
+    <AccordionItem value="no-indicator">
+      <AccordionItemTrigger hasIndicator={false}>아이콘 없는 제목</AccordionItemTrigger>
+      <AccordionItemContent>indicator를 숨긴 트리거입니다.</AccordionItemContent>
+    </AccordionItem>
+  </Accordion>
+```
+
+## Props
+
+<Callout type="info">
+  Accordion 파트는 Ark UI의 `Accordion`을 스타일링한 컴포넌트입니다.
+  아래 표는 자주 쓰는 props만 정리한 것으로, 그 외 Ark UI Accordion의 모든 props를 그대로 사용할 수 있습니다.
+  전체 목록은 [Ark UI Accordion 문서](https://ark-ui.com/react/docs/components/accordion)에서 확인하세요.
+</Callout>
+
+### Accordion
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string[]',
+      description: '열린 아이템 값 (제어 컴포넌트)',
+    },
+    defaultValue: {
+      type: 'string[]',
+      description: '초기 열린 아이템 값 (비제어)',
+    },
+    multiple: {
+      type: 'boolean',
+      default: 'false',
+      description: '여러 아이템 동시 펼침 허용',
+    },
+    collapsible: {
+      type: 'boolean',
+      default: 'false',
+      description: '단일 모드에서 열린 아이템을 다시 눌러 접기 허용',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '전체 아코디언 비활성화',
+    },
+    onValueChange: {
+      type: '(details: { value: ValueChangeDetails }) => void',
+      description: '열림 상태 변경 콜백',
+    },
+  }}
+/>
+
+### AccordionItem
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '아이템 식별 값 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '해당 아이템 비활성화',
+    },
+  }}
+/>
+
+### AccordionItemTrigger
+
+<PropsTable
+  type={{
+    hasIndicator: {
+      type: 'boolean',
+      default: 'true',
+      description: 'chevron 아이콘 자동 렌더 여부',
+    },
+  }}
+/>
+
+## 접근성
+
+- 제목은 네이티브 `<button>`으로 렌더되어 **키보드 포커스·Enter/Space 토글**이 기본 동작합니다.
+- 방향키(↑/↓)로 트리거 간 이동, 내용 영역은 `role="region"`으로 제목과 연결됩니다.
+- `disabled` 아이템의 트리거는 포커스·활성화되지 않습니다.
+
+## 토큰 커스터마이징
+
+Accordion은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.strong` | <Swatch token="text.strong" /> | 제목 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 제목 텍스트 |
+| `text.default` | <Swatch token="text.default" /> | 내용 텍스트 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 제목 하단 구분선 |

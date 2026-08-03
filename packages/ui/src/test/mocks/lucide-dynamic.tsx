@@ -11,6 +11,7 @@ export function DynamicIcon({ name, ...props }: ComponentProps<'svg'> & { name: 
 }
 
 export const dynamicIconImports = {
+  'chevron-down': () => Promise.resolve({}),
   'chevron-left': () => Promise.resolve({}),
   'chevron-right': () => Promise.resolve({}),
   'file-x': () => Promise.resolve({}),
