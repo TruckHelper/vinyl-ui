@@ -50,7 +50,16 @@ const Subtitle = styled('p', {
   base: {
     textStyle: 'body.small-normal',
     color: 'text.default',
-    tablet: { textStyle: 'body.large-normal' },
+    '& strong': {
+      textStyle: 'body.small-normal',
+      display: 'block',
+    },
+    tablet: {
+      textStyle: 'body.large-normal',
+      '& strong': {
+        textStyle: 'body.large-normal',
+      },
+    },
   },
 });
 
@@ -80,8 +89,10 @@ export default function Hero() {
       <Copy>
         <Title>A React + Panda CSS component library</Title>
         <Subtitle>
-          Build consistent UIs with design tokens, accessible components, and
-          TypeScript support-powered by Panda CSS.
+          Build consistent UIs with design tokens, accessible components,
+          <strong>
+            and TypeScript support-powered by Panda CSS.
+          </strong>
         </Subtitle>
       </Copy>
       <Ctas>

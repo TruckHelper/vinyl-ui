@@ -19,7 +19,16 @@ lucide 아이콘을 이름으로 렌더합니다. 사용 가능한 이름은 [Lu
 ```tsx
 import { Icon } from '@bigmobility/vinyl-ui';
 
-<Icon name="check" />;
+export default function IconExample() {
+  return (
+    <>
+      <Icon name="chevron-right" />
+      <Icon name="check" />
+      <Icon name="search" />
+      <Icon name="settings" />
+    </>
+  );
+}
 ```
 
 ## Color 변경

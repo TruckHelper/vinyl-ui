@@ -16,7 +16,12 @@ import { Button } from '@bigmobility/vinyl-ui';
 ```tsx
 import { Button } from '@bigmobility/vinyl-ui';
 
-<Button>버튼</Button>;
+export default function ButtonExample() {
+  return (
+    <Button>버튼</Button>
+  );
+}
+
 ```
 
 ## Variant
@@ -33,10 +38,16 @@ import { Button } from '@bigmobility/vinyl-ui';
 ```tsx
 import { Button } from '@bigmobility/vinyl-ui';
 
-<Button variant="primary">primary</Button>
-<Button variant="emphasis">emphasis</Button>
-<Button variant="neutral">neutral</Button>
-<Button variant="outline">outline</Button>
+export default function StyledButton() {
+  return (
+    <>
+      <Button variant="primary">primary</Button>
+      <Button variant="emphasis">emphasis</Button>
+      <Button variant="neutral">neutral</Button>
+      <Button variant="outline">outline</Button>
+    </>
+  );
+}
 ```
 
 ## Fit
@@ -54,8 +65,14 @@ import { Button } from '@bigmobility/vinyl-ui';
 ```tsx
 import { Button } from '@bigmobility/vinyl-ui';
 
-<Button fit="auto">auto</Button>
-<Button fit="block">block</Button>
+export default function adjustableButton() {
+  return (
+    <>
+      <Button fit="auto">auto</Button>
+      <Button fit="block">block </Button>
+    </>
+  );
+}
 ```
 
 ## Icon
@@ -70,8 +87,14 @@ import { Button } from '@bigmobility/vinyl-ui';
 ```tsx
 import { Button } from '@bigmobility/vinyl-ui';
 
-<Button leftIcon="chevron-left">이전</Button>
-<Button rightIcon="chevron-right">다음</Button>
+export default function IconButton() {
+  return (
+    <>
+      <Button leftIcon="chevron-left">이전</Button>
+      <Button rightIcon="chevron-right">다음</Button>
+    </>
+  );
+}
 ```
 
 ## Disabled
@@ -88,33 +111,36 @@ import { Button } from '@bigmobility/vinyl-ui';
 ```tsx
 import { Button } from '@bigmobility/vinyl-ui';
 
-<Button
-  variant="primary"
-  disabled
->
-  primary
-</Button>
-
-<Button
-  variant="emphasis"
-  disabled
->
-  emphasis
-</Button>
-
-<Button
-  variant="neutral"
-  disabled
->
-  neutral
-</Button>
-
-<Button
-  variant="outline"
-  disabled
->
-  outline
-</Button>
+export default function DisabledButton() {
+  return (
+    <>
+      <Button
+        variant="primary"
+        disabled
+      >
+        primary
+      </Button>
+      <Button
+        variant="emphasis"
+        disabled
+      >
+        emphasis
+      </Button>
+      <Button
+        variant="neutral"
+        disabled
+      >
+        neutral
+      </Button>
+      <Button
+        variant="outline"
+        disabled
+      >
+        outline
+      </Button>
+    </>
+  );
+}
 ```
 
 ## Props

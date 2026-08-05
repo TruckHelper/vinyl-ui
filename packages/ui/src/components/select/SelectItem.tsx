@@ -4,6 +4,7 @@ import { styled } from 'styled-system/jsx';
 
 export const SelectItem = styled(ArkSelect.Item, {
   base: {
+    textStyle: 'input.medium-light',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -12,7 +13,6 @@ export const SelectItem = styled(ArkSelect.Item, {
     minHeight: 'input-height',
     backgroundColor: 'layout.bg-light',
     color: 'text.input',
-    textStyle: 'input.medium-light',
     cursor: 'pointer',
     _highlighted: {
       backgroundColor: 'layout.primary-subtle',

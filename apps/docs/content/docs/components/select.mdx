@@ -1,0 +1,348 @@
+---
+title: Select
+description: 목록에서 값을 선택하는 드롭다운 컴포넌트
+---
+
+Select는 여러 파트를 조합해 사용합니다. `Select`(루트) 안에 트리거 영역(`SelectControl` > `SelectTrigger` > `SelectValue`)과
+옵션 목록(`SelectContent` > `SelectItem` > `SelectItemText`)을 구성합니다. 트리거 우측의 `chevron-down` 아이콘은
+`SelectTrigger`가 기본으로 렌더합니다.
+
+<Callout type="warning">
+  `Select`는 **제어(controlled) 컴포넌트**입니다. `value`(항상 `string[]`)와 `onChangeValue`가 필수이며, 단일 선택이어도 `value`는 배열로 관리합니다(선택값은
+  `value[0]`).
+  단일 선택 편의는 [커스텀 훅](#단일-선택-편의-훅)으로 감싸는 것을 권장합니다.
+</Callout>
+
+## 기본 예시
+
+<Preview>
+  <SelectDemo />
+</Preview>
+
+```tsx
+import { useState } from 'react';
+
+import {
+  Select,
+  SelectControl,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  SelectItemText,
+} from '@bigmobility/vinyl-ui';
+
+const REGIONS = [
+  { label: '서울', value: 'seoul' },
+  { label: '부산', value: 'busan' },
+  { label: '대구', value: 'daegu' },
+  { label: '인천 (준비 중)', value: 'incheon', disabled: true },
+];
+
+export default function RegionSelect() {
+  const [value, setValue] = useState<string[]>([]);
+
+  const handleChange = ({ value }: {
+    name: string;
+    value: string[];
+  }) => {
+    setValue(value);
+  };
+
+  return (
+    <Select
+      items={REGIONS}
+      name="region"
+      value={value}
+      onChangeValue={handleChange}
+    >
+      <SelectControl>
+        <SelectTrigger>
+          <SelectValue placeholder="지역 선택" />
+        </SelectTrigger>
+      </SelectControl>
+      <SelectContent>
+        {REGIONS.map((item) => (
+          <SelectItem
+            key={item.value}
+            item={item}
+          >
+            <SelectItemText>{item.label}</SelectItemText>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+```
+
+## Placeholder
+
+값이 선택되지 않았을 때 `SelectValue`의 `placeholder`가 표시되며, 색이 `text.input-soft`로 흐려집니다.
+
+<Preview>
+  <SelectDemo placeholder="지역을 선택하세요" />
+</Preview>
+
+```tsx
+<SelectTrigger>
+  <SelectValue placeholder="지역을 선택하세요" />
+</SelectTrigger>
+```
+
+## 다중 선택
+
+`multiple`을 주면 여러 값을 동시에 선택할 수 있습니다. `value`는 단일 선택과 동일하게 `string[]`이며, 선택된 값들이 배열에 누적됩니다.
+
+<Preview>
+  <SelectDemo multiple />
+</Preview>
+
+```tsx
+const [value, setValue] = useState<string[]>([]);
+
+<Select
+  items={REGIONS}
+  name="region"
+  value={value}
+  multiple
+  onChangeValue={handleChange}
+>
+  {/* ... */}
+</Select>
+```
+
+## Error
+
+`hasError`를 주면 트리거가 에러 스타일(배경 `layout.bg-issue`, 테두리 `layout.issue-line`)로 표시됩니다.
+
+<Preview>
+  <SelectDemo hasError />
+</Preview>
+
+```tsx
+<Select
+  items={REGIONS}
+  name="region"
+  value={value}
+  hasError
+  onChangeValue={handleChange}
+>
+  {/* ... */}
+</Select>
+```
+
+## Disabled
+
+`disabled`를 주면 트리거가 비활성화되고 열 수 없습니다.
+개별 옵션은 `items`의 각 항목에 `disabled: true`로 비활성화합니다.
+
+<Preview>
+  <SelectDemo disabled />
+</Preview>
+
+```tsx
+<Select
+  items={REGIONS}
+  name="region"
+  value={value}
+  disabled
+  onChangeValue={handleChange}
+>
+  {/* ... */}
+</Select>
+```
+
+## 옵션 그룹
+
+옵션을 묶을 때는 `SelectGroup` + `SelectGroupLabel`로 그룹 제목을 붙입니다. 루트 `items`에는 전체 옵션을 평탄하게 넘기고,
+`SelectContent` 안에서 `group` 기준으로 묶어 렌더합니다.
+
+<Preview>
+  <SelectDemo grouped />
+</Preview>
+
+```tsx
+import { SelectGroup, SelectGroupLabel } from '@bigmobility/vinyl-ui';
+
+const REGIONS = [
+  { label: '서울', value: 'seoul', group: '수도권' },
+  { label: '인천', value: 'incheon', group: '수도권' },
+  { label: '부산', value: 'busan', group: '경상권' },
+  { label: '대구', value: 'daegu', group: '경상권' },
+];
+
+const groups = [...new Set(REGIONS.map((item) => item.group))];
+
+<Select
+  items={REGIONS}
+  name="region"
+  value={value}
+  onChangeValue={handleChange}
+>
+  <SelectControl>
+    <SelectTrigger>
+      <SelectValue placeholder="지역 선택" />
+    </SelectTrigger>
+  </SelectControl>
+  <SelectContent>
+    {groups.map((group) => (
+      <SelectGroup key={group}>
+        <SelectGroupLabel>{group}</SelectGroupLabel>
+        {REGIONS.filter((item) => item.group === group).map((item) => (
+          <SelectItem
+            key={item.value}
+            item={item}
+          >
+            <SelectItemText>{item.label}</SelectItemText>
+          </SelectItem>
+        ))}
+      </SelectGroup>
+    ))}
+  </SelectContent>
+</Select>
+```
+
+## 단일 선택 편의 훅
+
+`value`가 항상 `string[]`이라 단일 선택에서는 `value[0]`으로 꺼내 써야 합니다.
+이 변환을 매번 반복하지 않도록, 커스텀 훅 사용을 권장합니다.
+
+```tsx
+import { useState } from 'react';
+
+export default function useForm({ initial }: { initial?: Record<string, any> } = {}) {
+  const [fields, setField] = useState(initial);
+
+  const [selectedValue, selectValue] = useState('');
+
+  /* ... */
+
+  const onSelect = ({ name, value }: {
+    name: string;
+    value: string[]
+  }) => {
+    setField({
+      ...fields,
+      [name]: value,
+    });
+
+    selectValue(value[0] || '');
+  };
+
+  return {
+    fields,
+    selectedValue,
+    onSelect,
+  };
+}
+```
+
+## Props
+
+<Callout type="info">
+  Select 파트는 Ark UI Select의 props를 그대로 전달할 수 있습니다.
+  전체 목록은 [Ark UI Select 문서](https://ark-ui.com/react/docs/components/select)를 확인하세요.
+</Callout>
+
+### Select
+
+<PropsTable
+  type={{
+    items: {
+      type: 'SelectItemData[]',
+      description: '옵션 목록 ({ label, value, disabled?, group? })',
+    },
+    name: {
+      type: 'string',
+      description: '폼 필드 이름 (필수)',
+    },
+    value: {
+      type: 'string[]',
+      description: '선택된 값 (제어, 단일 선택도 배열)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string[];
+  }) => void`,
+      description: '값 변경 콜백 (필수)',
+    },
+    multiple: {
+      type: 'boolean',
+      default: 'false',
+      description: '다중 선택 허용',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '전체 비활성화',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '에러 스타일 적용',
+    },
+  }}
+/>
+
+### SelectValue
+
+<PropsTable
+  type={{
+    placeholder: {
+      type: 'string',
+      description: '값이 없을 때 표시할 문구',
+    },
+  }}
+/>
+
+### SelectTrigger
+
+<PropsTable
+  type={{
+    hasIndicator: {
+      type: 'boolean',
+      default: 'true',
+      description: 'chevron 아이콘 자동 렌더 여부',
+    },
+  }}
+/>
+
+### SelectItem
+
+<PropsTable
+  type={{
+    item: {
+      type: 'SelectItemData',
+      description: '해당 옵션 데이터 (필수)',
+    },
+  }}
+/>
+
+구조용 파트로 `SelectControl`(트리거 래퍼) · `SelectContent`(옵션 목록 팝오버) · `SelectItemText`(옵션 라벨) · `SelectGroup` · `SelectGroupLabel`이 있습니다.
+
+## 접근성
+
+- Ark UI `Select` 기반으로 **listbox 역할·`aria` 속성·키보드 탐색(↑/↓·타입어헤드·Enter/Esc)** 이 기본 동작합니다.
+- 트리거는 팝오버 열림 상태를 `aria-expanded`로 노출하며, 선택된 옵션은 `data-state="checked"`로 표시됩니다.
+- `disabled` 옵션은 포커스·선택되지 않습니다.
+
+## 토큰 커스터마이징
+
+Select는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 트리거·옵션 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 트리거·목록 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | 트리거 hover·open 테두리 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 에러 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 에러 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 선택·하이라이트 옵션 배경 |
+| `text.input` | <Swatch token="text.input" /> | 입력·옵션 텍스트 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | placeholder 텍스트 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 선택·하이라이트 옵션 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
+| `text.soft` | <Swatch token="text.soft" /> | 그룹 라벨 텍스트 |

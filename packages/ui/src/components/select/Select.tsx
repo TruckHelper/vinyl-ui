@@ -26,7 +26,7 @@ export type SelectItemData = {
 type RootProps = ComponentProps<typeof ArkSelect.Root<SelectItemData>>;
 type ValueChangeDetails = Parameters<NonNullable<RootProps['onValueChange']>>[0];
 
-type SelectProps = Partial<RootProps> & {
+type SelectProps = Omit<Partial<RootProps>, 'value' | 'onValueChange'> & {
   items: SelectItemData[];
   name: string;
   value: string[];
@@ -35,7 +35,7 @@ type SelectProps = Partial<RootProps> & {
   multiple?: boolean;
   onChangeValue: ({ name, value }: {
     name: string;
-    value: string | string[];
+    value: string[];
   }) => void;
 };
 
@@ -60,11 +60,9 @@ export function Select({
   }, [items]);
 
   const handleChangeValue = (details: ValueChangeDetails) => {
-    const value = multiple ? details.value : details.value[0] ?? '';
-
     onChangeValue({
       name,
-      value,
+      value: details.value,
     });
   };
 

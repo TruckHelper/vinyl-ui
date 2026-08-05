@@ -1,8 +1,4 @@
-import Link from 'next/link';
-
 import { styled } from 'styled-system/jsx';
-
-import { GITHUB_URL } from '../../constants/site';
 
 const Container = styled('footer', {
   base: {
@@ -48,45 +44,13 @@ const Copyright = styled('span', {
   },
 });
 
-const Nav = styled('nav', {
-  base: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '24',
-  },
-});
-
-const NavLink = styled(Link, {
-  base: {
-    textStyle: 'body.small-normal',
-    color: 'text.default',
-    textDecoration: 'none',
-    transitionProperty: 'color',
-    transitionDuration: '0.2s',
-    _hover: { color: 'text.heading' },
-  },
-});
-
 export default function Footer() {
   return (
     <Container>
       <Wrapper>
         <Brand>Vinyl UI</Brand>
-        <Copyright>© 2024 @bigmobility · v2.1.0</Copyright>
+        <Copyright>© 2026 @bigmobility · v1.0.0</Copyright>
       </Wrapper>
-      <Nav>
-        <NavLink href="#">Docs</NavLink>
-        <NavLink
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </NavLink>
-        <NavLink href="#">Changelog</NavLink>
-        <NavLink href="#">Contact</NavLink>
-      </Nav>
     </Container>
   );
 }
