@@ -9,6 +9,7 @@
     "postinstall": "fumadocs-mdx",
     "dev": "next dev -p 8080",
     "build": "next build",
+    "vercel-build": "cd ../.. && npm run build -w @bigmobility/vinyl-ui && npm run css -w docs && npm run build -w docs",
     "check": "tsc --noEmit",
     "lint": "eslint --fix src",
     "test": "jest --passWithNoTests",
