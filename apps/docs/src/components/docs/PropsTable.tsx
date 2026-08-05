@@ -47,7 +47,7 @@ const Code = styled('code', {
     paddingBlock: '2',
     paddingInline: '4',
     borderRadius: '0.4rem',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'pre-wrap',
     color: 'text.accent-primary',
   },
 });
