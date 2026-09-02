@@ -29,7 +29,7 @@ const Article = styled('article', {
 
 const Title = styled('h1', {
   base: {
-    textStyle: 'heading.xlarge-bold',
+    textStyle: 'heading.xxlarge-bold',
     marginBottom: '8',
     color: 'text.heading',
   },

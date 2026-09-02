@@ -2,10 +2,19 @@ import type { TextStyles } from '@pandacss/dev';
 
 export const textStyles: TextStyles = {
   heading: {
+    'xxlarge-bold': {
+      value: {
+        fontFamily: '{fonts.body}',
+        fontSize: '{fontSizes.heading.xxlarge}',
+        fontWeight: '{fontWeights.bold}',
+        lineHeight: '1.4',
+        letterSpacing: '-0.03em',
+      },
+    },
     'xlarge-bold': {
       value: {
         fontFamily: '{fonts.body}',
-        fontSize: '{fontSizes.heading.heading-1}',
+        fontSize: '{fontSizes.heading.xlarge}',
         fontWeight: '{fontWeights.bold}',
         lineHeight: '1.4',
         letterSpacing: '-0.03em',
@@ -14,7 +23,7 @@ export const textStyles: TextStyles = {
     'large-bold': {
       value: {
         fontFamily: '{fonts.body}',
-        fontSize: '{fontSizes.heading.heading-2}',
+        fontSize: '{fontSizes.heading.large}',
         fontWeight: '{fontWeights.bold}',
         lineHeight: '1.4',
         letterSpacing: '-0.03em',
@@ -23,7 +32,7 @@ export const textStyles: TextStyles = {
     'medium-bold': {
       value: {
         fontFamily: '{fonts.body}',
-        fontSize: '{fontSizes.heading.heading-3}',
+        fontSize: '{fontSizes.heading.medium}',
         fontWeight: '{fontWeights.bold}',
         lineHeight: '1.4',
         letterSpacing: '-0.03em',
@@ -32,7 +41,7 @@ export const textStyles: TextStyles = {
     'small-bold': {
       value: {
         fontFamily: '{fonts.body}',
-        fontSize: '{fontSizes.heading.heading-4}',
+        fontSize: '{fontSizes.heading.small}',
         fontWeight: '{fontWeights.bold}',
         lineHeight: '1.4',
         letterSpacing: '-0.03em',
