@@ -118,31 +118,6 @@ export const tokens: Tokens = {
     },
     inner: { value: 'inset 0 2px 4px 0 rgba(0,0,0,0.06)' },
   },
-  fontSizes: {
-    heading: {
-      'heading-1': { value: '4rem' },
-      'heading-2': { value: '2.4rem' },
-      'heading-3': { value: '1.8rem' },
-      'heading-4': { value: '1.6rem' },
-    },
-    body: {
-      xlarge: { value: '2.4rem' },
-      large: { value: '1.8rem' },
-      medium: { value: '1.6rem' },
-      small: { value: '1.4rem' },
-      xsmall: { value: '1.2rem' },
-    },
-    button: {
-      large: { value: '1.8rem' },
-      medium: { value: '1.6rem' },
-      small: { value: '1.4rem' },
-    },
-    input: {
-      medium: { value: '1.8rem' },
-      small: { value: '1.6rem' },
-      xsmall: { value: '1.4rem' },
-    },
-  },
   zIndex: {
     base: { value: 0 },
     content: { value: 1 },

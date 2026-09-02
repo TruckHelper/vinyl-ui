@@ -40,7 +40,7 @@ const Copy = styled('div', {
 
 const Title = styled('h1', {
   base: {
-    textStyle: 'heading.xlarge-bold',
+    textStyle: 'heading.xxlarge-bold',
     color: 'text.heading',
     tablet: { textStyle: 'heading.hero' },
   },

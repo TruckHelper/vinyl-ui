@@ -28,6 +28,7 @@ export const semanticTokens: SemanticTokens = {
     text: {
       display: { value: '{colors.black.800}' },
       heading: { value: '{colors.black.800}' },
+      'heading-light': { value: '{colors.white.default}' },
       strong: { value: '{colors.black.800}' },
       default: { value: '{colors.black.600}' },
       'default-light': { value: '{colors.white.default}' },
@@ -62,6 +63,32 @@ export const semanticTokens: SemanticTokens = {
         },
       },
       gutter: { value: '{spacing.16}' },
+    },
+  },
+  fontSizes: {
+    heading: {
+      xxlarge: { value: { base: '4rem', tablet: '4.8rem', desktop: '4.8rem' } },
+      xlarge: { value: { base: '2.8rem', tablet: '4rem', desktop: '4rem' } },
+      large: { value: { base: '2.4rem', tablet: '4rem', desktop: '4rem' } },
+      medium: { value: { base: '1.8rem', tablet: '3.2rem', desktop: '3.2rem' } },
+      small: { value: { base: '1.6rem', tablet: '2rem', desktop: '2rem' } },
+    },
+    body: {
+      xlarge: { value: '2.4rem' },
+      large: { value: { base: '1.8rem', tablet: '2rem', desktop: '2rem' } },
+      medium: { value: '1.6rem' },
+      small: { value: '1.4rem' },
+      xsmall: { value: '1.2rem' },
+    },
+    button: {
+      large: { value: '1.8rem' },
+      medium: { value: '1.6rem' },
+      small: { value: '1.4rem' },
+    },
+    input: {
+      medium: { value: { base: '1.8rem', tablet: '1.6rem', desktop: '1.6rem' } },
+      small: { value: { base: '1.6rem', tablet: '1.4rem', desktop: '1.4rem' } },
+      xsmall: { value: '1.4rem' },
     },
   },
 };

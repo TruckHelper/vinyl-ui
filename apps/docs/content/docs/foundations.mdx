@@ -54,6 +54,7 @@ description: 색·간격·타이포 등 디자인 시스템의 기반 토큰
 | --- | --- | --- | --- |
 | `text.display` | <Swatch token="text.display" /> | `black.800` | 디스플레이 헤딩에 사용. 가장 큰 타이틀 텍스트 전용 |
 | `text.heading` | <Swatch token="text.heading" /> | `black.800` | 페이지 및 섹션 타이틀에 사용 |
+| `text.heading-light` | <Swatch token="text.heading-light" /> | `white.default` | 어둡거나 채도 높은 배경 위의 반전 헤딩 텍스트에 사용 |
 | `text.strong` | <Swatch token="text.strong" /> | `black.800` | 본문·리스트에서 강조가 필요한 텍스트에 사용 |
 | `text.default` | <Swatch token="text.default" /> | `black.600` | 본문·리스트 등 모든 일반 텍스트에 사용 |
 | `text.default-light` | <Swatch token="text.default-light" /> | `white.default` | 어둡거나 채도 높은 배경 위의 반전 텍스트에 사용 |
@@ -89,28 +90,31 @@ px 값을 키로, 값은 rem(`10px = 1rem`) 기준입니다. 예: `spacing.16` �
 
 `{name}.{size}-{weight}` 형태의 합성 스타일입니다. 굵기: light `400` · normal `500` · bold `700`.
 
-| textStyle | 크기 | 굵기 |
-| --- | --- | --- |
-| `heading.xlarge-bold` | 4rem | bold |
-| `heading.large-bold` | 2.4rem | bold |
-| `heading.medium-bold` | 1.8rem | bold |
-| `heading.small-bold` | 1.6rem | bold |
-| `body.large-bold` | 1.8rem | bold |
-| `body.large-normal` | 1.8rem | normal |
-| `body.large-light` | 1.8rem | light |
-| `body.medium-bold` | 1.6rem | bold |
-| `body.medium-normal` | 1.6rem | normal |
-| `body.medium-light` | 1.6rem | light |
-| `body.small-bold` | 1.4rem | bold |
-| `body.small-normal` | 1.4rem | normal |
-| `body.small-light` | 1.4rem | light |
-| `body.xsmall-light` | 1.2rem | light |
-| `button.large-normal` | 1.8rem | normal |
-| `button.medium-normal` | 1.6rem | normal |
-| `button.small-normal` | 1.4rem | normal |
-| `input.medium-light` | 1.8rem | light |
-| `input.small-light` | 1.6rem | light |
-| `input.xsmall-light` | 1.4rem | light |
+크기는 `모바일 / 태블릿 / 데스크톱` 순입니다. `heading.*` 전체와 `body.large-*` · `input.medium/small-light`는 반응형으로, tablet(≥768px)부터 데스크톱 크기로 전환됩니다. **태블릿 값은 아직 잠정(미정)이며 현재는 데스크톱과 동일합니다.** 나머지는 모든 브레이크포인트에서 동일합니다.
+
+| textStyle | 모바일 | 태블릿 | 데스크톱 | 굵기 |
+| --- | --- | --- | --- | --- |
+| `heading.xxlarge-bold` | 4rem | 4.8rem (미정) | 4.8rem | bold |
+| `heading.xlarge-bold` | 2.8rem | 4rem (미정) | 4rem | bold |
+| `heading.large-bold` | 2.4rem | 4rem (미정) | 4rem | bold |
+| `heading.medium-bold` | 1.8rem | 3.2rem (미정) | 3.2rem | bold |
+| `heading.small-bold` | 1.6rem | 2rem (미정) | 2rem | bold |
+| `body.large-bold` | 1.8rem | 2rem (미정) | 2rem | bold |
+| `body.large-normal` | 1.8rem | 2rem (미정) | 2rem | normal |
+| `body.large-light` | 1.8rem | 2rem (미정) | 2rem | light |
+| `body.medium-bold` | 1.6rem | 1.6rem | 1.6rem | bold |
+| `body.medium-normal` | 1.6rem | 1.6rem | 1.6rem | normal |
+| `body.medium-light` | 1.6rem | 1.6rem | 1.6rem | light |
+| `body.small-bold` | 1.4rem | 1.4rem | 1.4rem | bold |
+| `body.small-normal` | 1.4rem | 1.4rem | 1.4rem | normal |
+| `body.small-light` | 1.4rem | 1.4rem | 1.4rem | light |
+| `body.xsmall-light` | 1.2rem | 1.2rem | 1.2rem | light |
+| `button.large-normal` | 1.8rem | 1.8rem | 1.8rem | normal |
+| `button.medium-normal` | 1.6rem | 1.6rem | 1.6rem | normal |
+| `button.small-normal` | 1.4rem | 1.4rem | 1.4rem | normal |
+| `input.medium-light` | 1.8rem | 1.6rem (미정) | 1.6rem | light |
+| `input.small-light` | 1.6rem | 1.4rem (미정) | 1.4rem | light |
+| `input.xsmall-light` | 1.4rem | 1.4rem | 1.4rem | light |
 
 ## Radius (radii)
 
