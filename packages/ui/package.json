@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Bigmobility own Design System. Beautifully designed components built with Ark UI and Panda CSS that work with React frameworks.",
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist"
   ],
@@ -21,9 +24,25 @@
     "url": "https://bigmobility.co.kr"
   },
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+    "./field": {
+      "types": "./dist/field.d.ts",
+      "import": "./dist/field.js"
+    },
+    "./select": {
+      "types": "./dist/select.d.ts",
+      "import": "./dist/select.js"
+    },
+    "./accordion": {
+      "types": "./dist/accordion.d.ts",
+      "import": "./dist/accordion.js"
+    },
+    "./button": {
+      "types": "./dist/button.d.ts",
+      "import": "./dist/button.js"
+    },
+    "./icon": {
+      "types": "./dist/icon.d.ts",
+      "import": "./dist/icon.js"
     },
     "./preset": {
       "types": "./dist/preset/index.d.ts",
@@ -46,6 +65,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "jest": "^30.4.2",

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Icon } from '@bigmobility/vinyl-ui';
+import { Icon } from '@bigmobility/vinyl-ui/icon';
 
 import { styled } from 'styled-system/jsx';
 

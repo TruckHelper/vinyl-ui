@@ -1,6 +1,8 @@
+'use client';
+
 import { Select as ArkSelect } from '@ark-ui/react';
 
-import { styled } from 'styled-system/jsx';
+import { styled } from 'styled-system/jsx/factory';
 
 export const SelectIndicator = styled(ArkSelect.Indicator, {
   base: {

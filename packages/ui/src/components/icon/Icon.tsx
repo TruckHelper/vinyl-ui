@@ -2,7 +2,7 @@ import type { LucideProps } from 'lucide-react';
 
 import { DynamicIcon, dynamicIconImports } from 'lucide-react/dynamic';
 
-import { styled } from 'styled-system/jsx';
+import { styled } from 'styled-system/jsx/factory';
 
 const Container = styled('span', {
   base: {

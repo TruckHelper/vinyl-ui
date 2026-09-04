@@ -1,4 +1,4 @@
-import { Icon, type IconName } from '@bigmobility/vinyl-ui';
+import { Icon, type IconName } from '@bigmobility/vinyl-ui/icon';
 import type { ReactNode } from 'react';
 
 import { styled } from 'styled-system/jsx';

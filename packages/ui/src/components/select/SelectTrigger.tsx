@@ -1,8 +1,10 @@
+'use client';
+
 import type { ComponentProps } from 'react';
 
 import { Select as ArkSelect } from '@ark-ui/react';
 
-import { styled } from 'styled-system/jsx';
+import { styled } from 'styled-system/jsx/factory';
 
 import { Icon } from '../icon/Icon';
 import { SelectIndicator } from './SelectIndicator';

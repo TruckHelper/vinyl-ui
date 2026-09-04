@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, type ButtonProps } from '@bigmobility/vinyl-ui';
+import { Button, type ButtonProps } from '@bigmobility/vinyl-ui/button';
 
 import { GITHUB_URL } from '../../constants/site';
 
