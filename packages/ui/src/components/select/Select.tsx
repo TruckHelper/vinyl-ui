@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import { createListCollection, Select as ArkSelect } from '@ark-ui/react';
 
-import { styled } from 'styled-system/jsx';
+import { styled } from 'styled-system/jsx/factory';
 
 const Container = styled('div', {
   base: {

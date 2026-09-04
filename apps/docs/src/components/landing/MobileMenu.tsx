@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 
-import { Icon } from '@bigmobility/vinyl-ui';
+import { Icon } from '@bigmobility/vinyl-ui/icon';
 
 import { styled } from 'styled-system/jsx';
 

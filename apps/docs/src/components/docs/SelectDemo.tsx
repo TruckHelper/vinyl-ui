@@ -12,7 +12,7 @@ import {
   SelectItemText,
   SelectTrigger,
   SelectValue,
-} from '@bigmobility/vinyl-ui';
+} from '@bigmobility/vinyl-ui/select';
 
 import { styled } from 'styled-system/jsx';
 

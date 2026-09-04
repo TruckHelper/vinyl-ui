@@ -2,7 +2,7 @@
 
 import { Accordion as ArkAccordion } from '@ark-ui/react';
 
-import { styled } from 'styled-system/jsx';
+import { styled } from 'styled-system/jsx/factory';
 
 export const Accordion = styled(ArkAccordion.Root, {
   base: {

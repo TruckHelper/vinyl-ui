@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 
-import { styled } from 'styled-system/jsx';
+import { styled } from 'styled-system/jsx/factory';
 
 import { Icon, type IconName } from '../icon/Icon';
 

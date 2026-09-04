@@ -1,4 +1,4 @@
-import { Button } from '@bigmobility/vinyl-ui';
+import { Button } from '@bigmobility/vinyl-ui/button';
 
 import { css } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';

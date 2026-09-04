@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon } from '@bigmobility/vinyl-ui';
+import { Icon } from '@bigmobility/vinyl-ui/icon';
 import type { ComponentPropsWithoutRef } from 'react';
 import { useRef } from 'react';
 

@@ -30,7 +30,7 @@ import {
   SelectContent,
   SelectItem,
   SelectItemText,
-} from '@bigmobility/vinyl-ui';
+} from '@bigmobility/vinyl-ui/select';
 
 const REGIONS = [
   { label: '서울', value: 'seoul' },
@@ -163,7 +163,7 @@ const [value, setValue] = useState<string[]>([]);
 </Preview>
 
 ```tsx
-import { SelectGroup, SelectGroupLabel } from '@bigmobility/vinyl-ui';
+import { SelectGroup, SelectGroupLabel } from '@bigmobility/vinyl-ui/select';
 
 const REGIONS = [
   { label: '서울', value: 'seoul', group: '수도권' },
