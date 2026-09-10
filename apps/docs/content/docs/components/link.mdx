@@ -1,0 +1,189 @@
+---
+title: Link
+description: 앱 내 다른 위치나 외부 웹사이트로 이동하는 링크 컴포넌트
+---
+
+import NextLink from 'next/link';
+
+import { Link } from '@bigmobility/vinyl-ui/link';
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+
+## 기본 예시
+
+<Preview>
+  <Link href="#">링크 텍스트</Link>
+</Preview>
+
+```tsx
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+export default function LinkExample() {
+  return (
+    <Link href="#">링크 텍스트</Link>
+  );
+}
+```
+
+## Underline
+
+링크의 밑줄 표시 여부를 정합니다. 기본값은 `true`입니다.
+
+<Preview>
+  <Link href="#">underline</Link>
+  <Link underline={false} href="#">no underline</Link>
+</Preview>
+
+```tsx
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+export default function UnderlineLink() {
+  return (
+    <>
+      <Link href="#">underline</Link>
+      <Link
+        underline={false}
+        href="#"
+      >
+        no underline
+      </Link>
+    </>
+  );
+}
+```
+
+## Icon
+
+Icon을 children으로 직접 배치합니다. `Icon` 컴포넌트의 `size`로 크기를 조절할 수 있습니다. 사용 가능한 이름은 [Lucide 아이콘 목록](https://lucide.dev/icons/)에서 확인하세요.
+
+<Preview>
+  <Link underline={false} href="#"><Icon name="link" />왼쪽 아이콘</Link>
+  <Link underline={false} href="#">오른쪽 아이콘 <Icon name="external-link" /></Link>
+</Preview>
+
+```tsx
+import { Link } from '@bigmobility/vinyl-ui/link';
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+
+export default function IconLink() {
+  return (
+    <>
+      <Link
+        underline={false}
+        href="#"
+      >
+        <Icon name="link" />
+        왼쪽 아이콘
+      </Link>
+      <Link
+        underline={false}
+        href="#"
+      >
+        오른쪽 아이콘
+        <Icon name="external-link" />
+      </Link>
+    </>
+  );
+}
+```
+
+## Disabled
+
+링크 이동이 비활성되고 텍스트가 비활성 색으로 표시됩니다.
+
+<Preview>
+  <Link href="#" disabled>비활성 링크</Link>
+  <Link underline={false} href="#" disabled><Icon name="link" />비활성 링크</Link>
+</Preview>
+
+```tsx
+import { Link } from '@bigmobility/vinyl-ui/link';
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+
+export default function DisabledLink() {
+  return (
+    <>
+      <Link
+        href="#"
+        disabled
+      >
+        비활성 링크
+      </Link>
+      <Link
+        underline={false}
+        href="#"
+        disabled
+      >
+        <Icon name="link" />
+        비활성 링크
+      </Link>
+    </>
+  );
+}
+```
+
+## 라우팅 라이브러리
+
+`asChild`를 사용하면 Link가 자체 `<a>` 요소 대신 자식 라우팅 컴포넌트를 렌더하며, 스타일과 속성이 자식에 병합됩니다. 자식은 반드시 단일 요소여야 합니다. 프로젝트에서 사용하는 라우팅 라이브러리에 맞게 링크를 구성할 수 있습니다. 아래는 Next.js Link와 조합한 예시입니다.
+
+<Preview>
+  <Link asChild><NextLink href="#">링크 텍스트</NextLink></Link>
+</Preview>
+
+```tsx
+import NextLink from 'next/link';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+export default function AsChildLink() {
+  return (
+    <Link asChild>
+      <NextLink href="/">링크 텍스트</NextLink>
+    </Link>
+  );
+}
+```
+
+## Props
+
+<PropsTable
+  type={{
+    href: {
+      type: 'string',
+      required: true,
+      description: '링크 URL',
+    },
+    underline: {
+      type: 'boolean',
+      default: 'true',
+      description: '밑줄 표시 여부',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '링크 비활성화',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: '자식 요소를 렌더링 요소로 사용. 자식은 단일 요소여야 함',
+    },
+  }}
+/>
+
+## 접근성
+
+- 네이티브 `<a>` 요소를 사용하므로 **키보드 포커스·Enter 활성화**가 기본 동작합니다.
+- `<a>` 요소는 네이티브 `disabled` 속성을 지원하지 않으므로, `disabled`를 전달하면 `aria-disabled="true"`로 보조 기기에 비활성 상태를 전달하고 `tabIndex={-1}`로 키보드 포커스 순서에서 제외합니다.
+- 새 창/탭으로 열리는 링크(`target="_blank"`)에는 `aria-label`을 추가하여 화면 낭독기 사용자에게 고지하세요.
+- `href` 없이 클릭 동작만 필요한 경우에는 이 컴포넌트 대신 `Button`을 사용하세요.
+
+## 토큰 커스터마이징
+
+Link는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.default` | <Swatch token="text.default" /> | 기본 텍스트·아이콘 색상 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | hover·active 텍스트·아이콘 색상 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트·아이콘 색상 |
+
+타이포는 `body.medium-normal` textStyle을 사용합니다.
