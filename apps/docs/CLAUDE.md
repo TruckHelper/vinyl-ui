@@ -46,3 +46,13 @@
 
 - Turbopack 캐시 주의. `panda.config.ts` 변경 후 dev에서 설정이 안 잡히거나 이전 에러가 남으면 `rm -rf .next` 후 재시작한다(설정 번들 캐시 문제).
 - dev는 반드시 `apps/docs`에서 실행(루트 cwd에서 띄우면 경로 해석이 어긋난다).
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
