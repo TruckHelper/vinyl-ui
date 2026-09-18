@@ -36,15 +36,15 @@ const iconButtonStyle = {
   fontSize: '2rem',
 } as const;
 
-export const PrevTriggerContainer = styled(ArkPagination.PrevTrigger, {
+export const PreviousContainer = styled(ArkPagination.PrevTrigger, {
   base: iconButtonStyle,
 });
 
-export const NextTriggerContainer = styled(ArkPagination.NextTrigger, {
+export const NextContainer = styled(ArkPagination.NextTrigger, {
   base: iconButtonStyle,
 });
 
-export const GroupJumpTriggerContainer = styled('button', {
+export const GroupJumpContainer = styled('button', {
   base: iconButtonStyle,
 });
 

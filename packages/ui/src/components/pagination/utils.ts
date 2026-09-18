@@ -1,22 +1,20 @@
-type GroupStartParams = {
-  page: number;
-  groupSize: number;
-};
-
-type PageGroupParams = GroupStartParams & {
-  totalPages: number;
-};
-
 export const DEFAULT_GROUP_SIZE = 10;
 
-export function getGroupStartPage({ page, groupSize }: GroupStartParams) {
+export function getGroupStartPage({ page, groupSize }: {
+  page: number;
+  groupSize: number;
+}) {
   const size = Math.max(1, Math.floor(groupSize));
   const currentPage = Math.max(1, Math.floor(page));
 
   return Math.floor((currentPage - 1) / size) * size + 1;
 }
 
-export function getPageGroup({ page, totalPages, groupSize }: PageGroupParams) {
+export function getPageGroup({ page, totalPages, groupSize }: {
+  page: number;
+  totalPages: number;
+  groupSize: number;
+}) {
   if (totalPages <= 0) {
     return [];
   }

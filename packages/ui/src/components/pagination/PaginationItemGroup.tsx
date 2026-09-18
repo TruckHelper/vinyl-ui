@@ -3,8 +3,10 @@
 import { usePaginationContext } from '@ark-ui/react';
 
 import { usePaginationGroupSize } from './PaginationContext';
-import { PaginationItem } from './PaginationItem';
+
 import { getPageGroup } from './utils';
+
+import { PaginationItem } from './PaginationItem';
 
 export function PaginationItemGroup() {
   const { page, totalPages } = usePaginationContext();

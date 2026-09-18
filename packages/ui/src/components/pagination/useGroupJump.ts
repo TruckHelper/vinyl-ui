@@ -7,7 +7,7 @@ import { getGroupStartPage } from './utils';
 
 type GroupJumpEdge = 'first' | 'last';
 
-export function useGroupJumpTrigger(edge: GroupJumpEdge) {
+export function useGroupJump(edge: GroupJumpEdge) {
   const api = usePaginationContext();
   const groupSize = usePaginationGroupSize();
 

@@ -1,11 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import { Pagination, type PaginationProps } from './Pagination';
-import { PaginationFirstTrigger } from './PaginationFirstTrigger';
+import { PaginationFirst } from './PaginationFirst';
+import { PaginationNext } from './PaginationNext';
 import { PaginationItemGroup } from './PaginationItemGroup';
-import { PaginationLastTrigger } from './PaginationLastTrigger';
-import { PaginationNextTrigger } from './PaginationNextTrigger';
-import { PaginationPrevTrigger } from './PaginationPrevTrigger';
+import { PaginationPrevious } from './PaginationPrevious';
+import { PaginationLast } from './PaginationLast';
 
 const context = describe;
 
@@ -16,9 +16,9 @@ function renderPagination(props: Partial<PaginationProps> = {}) {
       pageSize={10}
       {...props}
     >
-      <PaginationPrevTrigger />
+      <PaginationPrevious />
       <PaginationItemGroup />
-      <PaginationNextTrigger />
+      <PaginationNext />
     </Pagination>
   ));
 }
@@ -93,7 +93,7 @@ describe('Pagination', () => {
       await waitFor(() => expect(pageButton(4)).toHaveAttribute('aria-current', 'page'));
     });
 
-    it('moves one page on next trigger', async () => {
+    it('moves one page on next', async () => {
       renderPagination({ defaultPage: 3 });
 
       fireEvent.click(screen.getByRole('button', { name: 'next page' }));
@@ -124,7 +124,7 @@ describe('Pagination', () => {
     });
   });
 
-  describe('first and last triggers', () => {
+  describe('first and last', () => {
     function renderComposed(props: Partial<PaginationProps> = {}) {
       return render((
         <Pagination
@@ -132,11 +132,11 @@ describe('Pagination', () => {
           pageSize={10}
           {...props}
         >
-          <PaginationFirstTrigger />
-          <PaginationPrevTrigger />
+          <PaginationFirst />
+          <PaginationPrevious />
           <PaginationItemGroup />
-          <PaginationNextTrigger />
-          <PaginationLastTrigger />
+          <PaginationNext />
+          <PaginationLast />
         </Pagination>
       ));
     }
@@ -170,14 +170,14 @@ describe('Pagination', () => {
     });
 
     context('when the current page is in the first group', () => {
-      it('disables the first trigger on every page of the group', () => {
+      it('disables the first on every page of the group', () => {
         renderComposed({ defaultPage: 1 });
 
         expect(screen.getByRole('button', { name: 'first page' })).toBeDisabled();
         expect(screen.getByRole('button', { name: 'last page' })).toBeEnabled();
       });
 
-      it('disables the first trigger in the middle of the group too', () => {
+      it('disables the first in the middle of the group too', () => {
         renderComposed({ defaultPage: 7 });
 
         expect(screen.getByRole('button', { name: 'first page' })).toBeDisabled();
@@ -186,14 +186,14 @@ describe('Pagination', () => {
     });
 
     context('when the current page is in the last group', () => {
-      it('disables the last trigger on the last page', () => {
+      it('disables the last on the last page', () => {
         renderComposed({ defaultPage: 25 });
 
         expect(screen.getByRole('button', { name: 'last page' })).toBeDisabled();
         expect(screen.getByRole('button', { name: 'first page' })).toBeEnabled();
       });
 
-      it('disables the last trigger in the middle of the group too', () => {
+      it('disables the last in the middle of the group too', () => {
         renderComposed({ defaultPage: 23 });
 
         expect(screen.getByRole('button', { name: 'last page' })).toBeDisabled();
@@ -202,7 +202,7 @@ describe('Pagination', () => {
     });
 
     context('when the current page is in a middle group', () => {
-      it('enables both triggers', () => {
+      it('enables both', () => {
         renderComposed({ defaultPage: 12 });
 
         expect(screen.getByRole('button', { name: 'first page' })).toBeEnabled();

@@ -6,8 +6,9 @@ import { Pagination as ArkPagination } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
 
-import { PaginationContextProvider } from './PaginationContext';
 import { DEFAULT_GROUP_SIZE } from './utils';
+
+import { PaginationContextProvider } from './PaginationContext';
 
 // `page` 는 Panda 의 CSS 속성이라 styled(ArkPagination.Root) 로 감싸면
 // 스타일 prop 으로 가로채여 Ark 에 전달되지 않는다. asChild 로 분리한다.
@@ -22,9 +23,9 @@ const Container = styled('nav', {
 
 type RootProps = ComponentProps<typeof ArkPagination.Root>;
 
-// `type: 'link'` 은 Ark 가 href 값만 만들고 앵커 렌더는 asChild 로 맡긴다.
-// 파트가 asChild 를 열지 않는 지금 구조에서는 <button href> 라는 잘못된 HTML 이
-// 나오므로 막는다. 링크 페이지네이션을 지원할 때 함께 걷어낸다.
+// TODO: `type: 'link'` 은 Ark 가 href 값만 만들고 앵커 렌더는 asChild 로 맡긴다.
+// 파트가 asChild 를 열지 않는 지금 구조에서는 <button href> 라는 잘못된 HTML이 나오므로 막는다.
+// 링크 페이지네이션을 지원할 때 함께 걷어낸다.
 export type PaginationProps = Omit<
   RootProps,
   'siblingCount' | 'boundaryCount' | 'onPageChange' | 'asChild' | 'type' | 'getPageUrl'
@@ -40,7 +41,7 @@ export function Pagination({
   onChangePage,
   ...props
 }: PaginationProps) {
-  const handlePageChange = ({ page }: { page: number }) => {
+  const handleChangePage = ({ page }: { page: number }) => {
     onChangePage?.({ page });
   };
 
@@ -48,7 +49,7 @@ export function Pagination({
     <PaginationContextProvider value={{ groupSize }}>
       <ArkPagination.Root
         asChild
-        onPageChange={handlePageChange}
+        onPageChange={handleChangePage}
         {...props}
       >
         <Container className={className}>
