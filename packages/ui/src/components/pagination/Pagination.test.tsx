@@ -2,9 +2,9 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import { Pagination, type PaginationProps } from './Pagination';
 import { PaginationFirst } from './PaginationFirst';
-import { PaginationNext } from './PaginationNext';
-import { PaginationItemGroup } from './PaginationItemGroup';
 import { PaginationPrevious } from './PaginationPrevious';
+import { PaginationItemGroup } from './PaginationItemGroup';
+import { PaginationNext } from './PaginationNext';
 import { PaginationLast } from './PaginationLast';
 
 const context = describe;
@@ -55,7 +55,7 @@ describe('Pagination', () => {
     });
   });
 
-  describe('page group', () => {
+  describe('page items', () => {
     it('renders the group the current page belongs to', () => {
       renderPagination({ defaultPage: 12 });
 
@@ -63,6 +63,13 @@ describe('Pagination', () => {
       expect(pageButton(20)).toBeInTheDocument();
       expect(screen.queryByRole('button', { name: 'page 10' })).not.toBeInTheDocument();
       expect(screen.queryByRole('button', { name: 'page 21' })).not.toBeInTheDocument();
+    });
+
+    it('marks the current page', () => {
+      renderPagination({ defaultPage: 3 });
+
+      expect(pageButton(3)).toHaveAttribute('aria-current', 'page');
+      expect(pageButton(4)).not.toHaveAttribute('aria-current');
     });
 
     context('with a group size of 5', () => {
@@ -75,17 +82,10 @@ describe('Pagination', () => {
         expect(screen.queryByRole('button', { name: 'page 11' })).not.toBeInTheDocument();
       });
     });
-
-    it('marks the current page', () => {
-      renderPagination({ defaultPage: 3 });
-
-      expect(pageButton(3)).toHaveAttribute('aria-current', 'page');
-      expect(pageButton(4)).not.toHaveAttribute('aria-current');
-    });
   });
 
-  describe('paging', () => {
-    it('moves to the clicked page', async () => {
+  context('when a page button is clicked', () => {
+    it('marks that page as current', async () => {
       renderPagination({ defaultPage: 1 });
 
       fireEvent.click(pageButton(4));
@@ -93,7 +93,19 @@ describe('Pagination', () => {
       await waitFor(() => expect(pageButton(4)).toHaveAttribute('aria-current', 'page'));
     });
 
-    it('moves one page on next', async () => {
+    it('calls onChangePage with the clicked page', async () => {
+      const handleChangePage = jest.fn();
+
+      renderPagination({ defaultPage: 1, onChangePage: handleChangePage });
+
+      fireEvent.click(pageButton(4));
+
+      await waitFor(() => expect(handleChangePage).toHaveBeenCalledWith({ page: 4 }));
+    });
+  });
+
+  context('when the next button is clicked', () => {
+    it('marks the following page as current', async () => {
       renderPagination({ defaultPage: 3 });
 
       fireEvent.click(screen.getByRole('button', { name: 'next page' }));
@@ -102,7 +114,7 @@ describe('Pagination', () => {
     });
 
     context('at the group boundary', () => {
-      it('moves to the next group', async () => {
+      it('renders the next group', async () => {
         renderPagination({ defaultPage: 10 });
 
         fireEvent.click(screen.getByRole('button', { name: 'next page' }));
@@ -112,19 +124,9 @@ describe('Pagination', () => {
         expect(screen.queryByRole('button', { name: 'page 10' })).not.toBeInTheDocument();
       });
     });
-
-    it('calls onChangePage with the next page', async () => {
-      const handleChangePage = jest.fn();
-
-      renderPagination({ defaultPage: 1, onChangePage: handleChangePage });
-
-      fireEvent.click(pageButton(5));
-
-      await waitFor(() => expect(handleChangePage).toHaveBeenCalledWith({ page: 5 }));
-    });
   });
 
-  describe('first and last', () => {
+  context('with first and last buttons', () => {
     function renderComposed(props: Partial<PaginationProps> = {}) {
       return render((
         <Pagination
@@ -141,43 +143,47 @@ describe('Pagination', () => {
       ));
     }
 
-    it('moves to the first page of the first group', async () => {
-      renderComposed({ defaultPage: 12 });
+    context('when the first button is clicked', () => {
+      it('marks the first page of the first group as current', async () => {
+        renderComposed({ defaultPage: 12 });
 
-      fireEvent.click(screen.getByRole('button', { name: 'first page' }));
+        fireEvent.click(screen.getByRole('button', { name: 'first page' }));
 
-      await waitFor(() => expect(pageButton(1)).toHaveAttribute('aria-current', 'page'));
+        await waitFor(() => expect(pageButton(1)).toHaveAttribute('aria-current', 'page'));
+      });
     });
 
-    it('moves to the first page of the last group, not the last page', async () => {
-      renderComposed({ defaultPage: 12 });
-
-      fireEvent.click(screen.getByRole('button', { name: 'last page' }));
-
-      await waitFor(() => expect(pageButton(21)).toHaveAttribute('aria-current', 'page'));
-      expect(screen.getByRole('button', { name: 'last page, page 25' }))
-        .not.toHaveAttribute('aria-current');
-    });
-
-    context('with a group size of 5', () => {
-      it('moves to the first page of the last group of five', async () => {
-        renderComposed({ defaultPage: 1, groupSize: 5 });
+    context('when the last button is clicked', () => {
+      it('marks the first page of the last group as current, not the last page', async () => {
+        renderComposed({ defaultPage: 12 });
 
         fireEvent.click(screen.getByRole('button', { name: 'last page' }));
 
         await waitFor(() => expect(pageButton(21)).toHaveAttribute('aria-current', 'page'));
+        expect(screen.getByRole('button', { name: 'last page, page 25' }))
+          .not.toHaveAttribute('aria-current');
+      });
+
+      context('with a group size of 5', () => {
+        it('marks the first page of the last group of five as current', async () => {
+          renderComposed({ defaultPage: 1, groupSize: 5 });
+
+          fireEvent.click(screen.getByRole('button', { name: 'last page' }));
+
+          await waitFor(() => expect(pageButton(21)).toHaveAttribute('aria-current', 'page'));
+        });
       });
     });
 
     context('when the current page is in the first group', () => {
-      it('disables the first on every page of the group', () => {
+      it('disables the first button on the first page', () => {
         renderComposed({ defaultPage: 1 });
 
         expect(screen.getByRole('button', { name: 'first page' })).toBeDisabled();
         expect(screen.getByRole('button', { name: 'last page' })).toBeEnabled();
       });
 
-      it('disables the first in the middle of the group too', () => {
+      it('disables the first button in the middle of the group', () => {
         renderComposed({ defaultPage: 7 });
 
         expect(screen.getByRole('button', { name: 'first page' })).toBeDisabled();
@@ -186,14 +192,14 @@ describe('Pagination', () => {
     });
 
     context('when the current page is in the last group', () => {
-      it('disables the last on the last page', () => {
+      it('disables the last button on the last page', () => {
         renderComposed({ defaultPage: 25 });
 
         expect(screen.getByRole('button', { name: 'last page' })).toBeDisabled();
         expect(screen.getByRole('button', { name: 'first page' })).toBeEnabled();
       });
 
-      it('disables the last in the middle of the group too', () => {
+      it('disables the last button in the middle of the group', () => {
         renderComposed({ defaultPage: 23 });
 
         expect(screen.getByRole('button', { name: 'last page' })).toBeDisabled();
@@ -202,7 +208,7 @@ describe('Pagination', () => {
     });
 
     context('when the current page is in a middle group', () => {
-      it('enables both', () => {
+      it('enables both buttons', () => {
         renderComposed({ defaultPage: 12 });
 
         expect(screen.getByRole('button', { name: 'first page' })).toBeEnabled();

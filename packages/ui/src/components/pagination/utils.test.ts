@@ -26,14 +26,14 @@ describe('getGroupStartPage', () => {
   });
 
   context('when the group size is below one', () => {
-    it('treats every page as its own group', () => {
+    it('returns the page itself', () => {
       expect(getGroupStartPage({ page: 7, groupSize: 0 })).toBe(7);
     });
   });
 });
 
 describe('getPageGroup', () => {
-  it('returns the fixed group the current page belongs to', () => {
+  it('returns the page numbers of the group the current page belongs to', () => {
     expect(getPageGroup({ page: 1, totalPages: 25, groupSize: 10 }))
       .toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
@@ -44,14 +44,16 @@ describe('getPageGroup', () => {
       .toEqual([11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
   });
 
-  it('keeps the same group while the page stays inside it', () => {
-    const group = getPageGroup({ page: 12, totalPages: 25, groupSize: 10 });
+  context('when the page moves within the same group', () => {
+    it('returns the same page numbers', () => {
+      const group = getPageGroup({ page: 12, totalPages: 25, groupSize: 10 });
 
-    expect(getPageGroup({ page: 17, totalPages: 25, groupSize: 10 })).toEqual(group);
+      expect(getPageGroup({ page: 17, totalPages: 25, groupSize: 10 })).toEqual(group);
+    });
   });
 
   context('when the last group is shorter than the group size', () => {
-    it('stops at the total page count', () => {
+    it('returns only the pages up to the total page count', () => {
       expect(getPageGroup({ page: 25, totalPages: 25, groupSize: 10 }))
         .toEqual([21, 22, 23, 24, 25]);
     });

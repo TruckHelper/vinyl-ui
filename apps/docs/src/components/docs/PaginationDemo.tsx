@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 import {
   Pagination,
-  PaginationFirstTrigger,
+  PaginationFirst,
   PaginationItemGroup,
-  PaginationLastTrigger,
-  PaginationNextTrigger,
-  PaginationPrevTrigger,
+  PaginationLast,
+  PaginationNext,
+  PaginationPrevious,
 } from '@bigmobility/vinyl-ui/pagination';
 
 import { styled } from 'styled-system/jsx';
@@ -63,11 +63,11 @@ export default function PaginationDemo({
         groupSize={groupSize}
         onChangePage={({ page }) => setPage(page)}
       >
-        {hasEdgeTriggers && <PaginationFirstTrigger />}
-        <PaginationPrevTrigger />
+        {hasEdgeTriggers && <PaginationFirst />}
+        <PaginationPrevious />
         <PaginationItemGroup />
-        <PaginationNextTrigger />
-        {hasEdgeTriggers && <PaginationLastTrigger />}
+        <PaginationNext />
+        {hasEdgeTriggers && <PaginationLast />}
       </Pagination>
       <Status>
         전체
