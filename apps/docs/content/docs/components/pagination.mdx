@@ -3,7 +3,7 @@ title: Pagination
 description: 목록을 여러 페이지로 나눠 이동하는 페이지네이션 컴포넌트
 ---
 
-import { Pagination, PaginationFirstTrigger, PaginationItemGroup, PaginationLastTrigger, PaginationNextTrigger, PaginationPrevTrigger, } from '@bigmobility/vinyl-ui/pagination';
+import { Pagination, PaginationFirst, PaginationItemGroup, PaginationLast, PaginationNext, PaginationPrevious, } from '@bigmobility/vinyl-ui/pagination';
 
 Pagination은 여러 파트를 조합해 사용합니다. 루트인 `Pagination`에 전체 데이터 수(`count`)와 페이지 크기(`pageSize`)를 넘기면
 총 페이지 수가 계산되고, 그 안에 트리거와 번호 버튼을 나열합니다.
@@ -18,22 +18,22 @@ Pagination은 여러 파트를 조합해 사용합니다. 루트인 `Pagination`
 
 ## 기본 예시
 
-`Pagination` 안에는 **이전(`PaginationPrevTrigger`) · 번호(`PaginationItemGroup`) · 다음(`PaginationNextTrigger`)** 을 필수로 넣어야 합니다.
+`Pagination` 안에는 **이전(`PaginationPrevious`) · 번호(`PaginationItemGroup`) · 다음(`PaginationNext`)** 을 필수로 넣어야 합니다.
 
 <Preview>
   <Pagination count={250} pageSize={10}>
-    <PaginationPrevTrigger />
+    <PaginationPrevious />
     <PaginationItemGroup />
-    <PaginationNextTrigger />
+    <PaginationNext />
   </Pagination>
 </Preview>
 
 ```tsx
 import {
   Pagination,
-  PaginationPrevTrigger,
+  PaginationPrevious,
   PaginationItemGroup,
-  PaginationNextTrigger,
+  PaginationNext,
 } from '@bigmobility/vinyl-ui/pagination';
 
 export default function BasicPagination() {
@@ -42,9 +42,9 @@ export default function BasicPagination() {
       count={250}
       pageSize={10}
     >
-      <PaginationPrevTrigger />
+      <PaginationPrevious />
       <PaginationItemGroup />
-      <PaginationNextTrigger />
+      <PaginationNext />
     </Pagination>
   );
 }
@@ -52,16 +52,16 @@ export default function BasicPagination() {
 
 ## 처음 · 마지막 트리거
 
-처음 트리거(`PaginationFirstTrigger`)와 마지막 트리거(`PaginationLastTrigger`) 는 **양 끝 그룹으로 점프하고, 그 그룹의 첫 페이지에 놓입니다.**
+처음 트리거(`PaginationFirst`)와 마지막 트리거(`PaginationLast`) 는 **양 끝 그룹으로 점프하고, 그 그룹의 첫 페이지에 놓입니다.**
 이미 그 그룹에 있으면 비활성됩니다. 처음 · 마지막 트리거는 필수 요소가 아닌 선택사항 입니다.
 
 <Preview>
   <Pagination count={250} pageSize={10} defaultPage={12}>
-    <PaginationFirstTrigger />
-    <PaginationPrevTrigger />
+    <PaginationFirst />
+    <PaginationPrevious />
     <PaginationItemGroup />
-    <PaginationNextTrigger />
-    <PaginationLastTrigger />
+    <PaginationNext />
+    <PaginationLast />
   </Pagination>
 </Preview>
 
@@ -74,11 +74,11 @@ export default function BasicPagination() {
   pageSize={10}
   defaultPage={12}
 >
-  <PaginationFirstTrigger />
-  <PaginationPrevTrigger />
+  <PaginationFirst />
+  <PaginationPrevious />
   <PaginationItemGroup />
-  <PaginationNextTrigger />
-  <PaginationLastTrigger />
+  <PaginationNext />
+  <PaginationLast />
 </Pagination>
 ```
 
@@ -90,9 +90,9 @@ export default function BasicPagination() {
 
 <Preview>
   <Pagination count={250} pageSize={10}>
-    <PaginationPrevTrigger />
+    <PaginationPrevious />
     <PaginationItemGroup />
-    <PaginationNextTrigger />
+    <PaginationNext />
   </Pagination>
 </Preview>
 
@@ -100,9 +100,9 @@ export default function BasicPagination() {
 
 <Preview>
   <Pagination count={250} pageSize={10} groupSize={5}>
-    <PaginationPrevTrigger />
+    <PaginationPrevious />
     <PaginationItemGroup />
-    <PaginationNextTrigger />
+    <PaginationNext />
   </Pagination>
 </Preview>
 
