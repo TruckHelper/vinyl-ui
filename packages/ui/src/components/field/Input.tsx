@@ -4,9 +4,7 @@ import type { ComponentProps } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
 
-import { createErrorId } from './utils';
-
-import { useFieldContext } from './FieldContext';
+import { useInputState } from './useInputState';
 
 const StyledInput = styled('input', {
   base: {
@@ -58,25 +56,19 @@ export function Input({
   ref,
   ...props
 }: InputProps) {
-  const field = useFieldContext();
-
-  const resolvedId = id ?? field?.inputId;
-  const resolvedHasError = hasError ?? field?.hasError ?? false;
-  const resolvedDisabled = disabled ?? field?.disabled ?? false;
-  const resolvedRequired = required ?? field?.required ?? false;
-  const describedBy = resolvedHasError && resolvedId ? createErrorId(resolvedId) : undefined;
+  const state = useInputState({ id, hasError, disabled, required });
 
   return (
     <StyledInput
       ref={ref}
       className={className}
       type={type}
-      id={resolvedId}
-      hasError={resolvedHasError}
-      disabled={resolvedDisabled}
-      required={resolvedRequired}
-      aria-invalid={resolvedHasError || undefined}
-      aria-describedby={describedBy}
+      id={state.id}
+      hasError={state.hasError}
+      disabled={state.disabled}
+      required={state.required}
+      aria-invalid={state.hasError || undefined}
+      aria-describedby={state.describedBy}
       {...props}
     />
   );

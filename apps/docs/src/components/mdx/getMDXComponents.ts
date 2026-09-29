@@ -10,6 +10,7 @@ import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
 import Swatch from '../docs/Swatch';
 import TextFieldDemo from '../docs/TextFieldDemo';
+import UnitFieldDemo from '../docs/UnitFieldDemo';
 
 import Code from './Code';
 
@@ -52,6 +53,7 @@ const baseComponents: MDXComponents = {
   Palette,
   SelectDemo,
   TextFieldDemo,
+  UnitFieldDemo,
   TypeTable: PropsTable,
 };
 
