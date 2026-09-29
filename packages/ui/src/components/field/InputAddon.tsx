@@ -1,16 +1,26 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import type { ComponentProps } from 'react';
 
-export type InputAddonProps = {
-  className?: string;
-  children?: ReactNode;
-};
+import { styled } from 'styled-system/jsx/factory';
 
-export function InputAddon({ className, children }: InputAddonProps) {
+const Container = styled('span', {
+  base: {
+    display: 'inline-flex',
+    flexShrink: 0,
+    alignItems: 'center',
+  },
+});
+
+export type InputAddonProps = ComponentProps<'span'>;
+
+export function InputAddon({ className, children, ...props }: InputAddonProps) {
   return (
-    <span className={className}>
+    <Container
+      className={className}
+      {...props}
+    >
       {children}
-    </span>
+    </Container>
   );
 }
