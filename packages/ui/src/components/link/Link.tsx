@@ -1,6 +1,6 @@
 'use client';
 
-import { type ComponentProps } from 'react';
+import { type ComponentProps, type MouseEvent } from 'react';
 
 import { ark } from '@ark-ui/react';
 
@@ -52,15 +52,27 @@ export type LinkProps = ComponentProps<typeof Container> & {
 export function Link({
   disabled,
   asChild,
+  onClick,
   children,
   ...props
 }: LinkProps) {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
+
   return (
     <Container
       asChild={asChild}
-      aria-disabled={disabled}
-      data-disabled={disabled}
+      aria-disabled={disabled || undefined}
       tabIndex={disabled ? -1 : undefined}
+      onClick={handleClick}
       {...props}
     >
       {children}

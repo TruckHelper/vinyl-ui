@@ -148,7 +148,6 @@ export default function AsChildLink() {
   type={{
     href: {
       type: 'string',
-      required: true,
       description: '링크 URL',
     },
     underline: {
@@ -173,6 +172,7 @@ export default function AsChildLink() {
 
 - 네이티브 `<a>` 요소를 사용하므로 **키보드 포커스·Enter 활성화**가 기본 동작합니다.
 - `<a>` 요소는 네이티브 `disabled` 속성을 지원하지 않으므로, `disabled`를 전달하면 `aria-disabled="true"`로 보조 기기에 비활성 상태를 전달하고 `tabIndex={-1}`로 키보드 포커스 순서에서 제외합니다.
+- 화면 낭독기의 읽기 커서 등으로 활성화되는 경우에도 클릭 시 링크 이동이 막힙니다.
 - 새 창/탭으로 열리는 링크(`target="_blank"`)에는 `aria-label`을 추가하여 화면 낭독기 사용자에게 고지하세요.
 - `href` 없이 클릭 동작만 필요한 경우에는 이 컴포넌트 대신 `Button`을 사용하세요.
 

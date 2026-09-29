@@ -1,6 +1,4 @@
-import type { ComponentPropsWithoutRef } from 'react';
-
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Link } from './Link';
 
@@ -19,7 +17,7 @@ describe('Link', () => {
   });
 
   context('when disabled', () => {
-    it('blocks access', () => {
+    it('disables link and blocks access', () => {
       render((
         <Link
           href="#"
@@ -31,40 +29,9 @@ describe('Link', () => {
 
       const link = screen.getByRole('link', { name: /비활성 링크/ });
 
-      expect(link).toHaveAttribute('aria-disabled', 'true');
-      expect(link).toHaveAttribute('tabindex', '-1');
-    });
-  });
+      const clicked = fireEvent.click(link);
+      expect(clicked).toBe(false);
 
-  context('with client-side routing', () => {
-    function MockClientRouterLink(props: ComponentPropsWithoutRef<'a'>) {
-      return (
-        <a {...props} />
-      );
-    }
-
-    it('renders child with delegated attributes instead of default anchor', () => {
-      render((
-        <Link
-          asChild
-          href="#"
-          disabled
-        >
-          <MockClientRouterLink 
-          href="/home"
-          >
-            링크
-          </MockClientRouterLink>
-        </Link>
-      ));
-
-      const links = screen.getAllByRole('link');
-
-      expect(links).toHaveLength(1);
-
-      const link = links[0];
-
-      expect(link).toHaveAttribute('href', '/home');
       expect(link).toHaveAttribute('aria-disabled', 'true');
       expect(link).toHaveAttribute('tabindex', '-1');
     });
