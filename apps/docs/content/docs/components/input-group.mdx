@@ -1,56 +1,41 @@
 ---
 title: InputGroup
-description: 입력 영역 안에 단위·아이콘·버튼 등을 함께 배치하는 InputGroup, InputAddon 컴포넌트
+description: 입력 영역 안에 단위·아이콘·버튼 등을 함께 배치하는 InputGroup, InputGroupInput, InputAddon 컴포넌트
 ---
 
-import { ErrorMessage, Field, Input, InputAddon, InputGroup, Label } from '@bigmobility/vinyl-ui/field';
+import { ErrorMessage, Field, InputAddon, InputGroup, InputGroupInput, Label } from '@bigmobility/vinyl-ui/field';
 import { Icon } from '@bigmobility/vinyl-ui/icon';
 
 ## 개요
 
-`InputGroup`은 하나의 입력 박스 안에 `Input`과 부가 요소를 함께 배치하는 오픈 프리미티브입니다.
-테두리·배경·상태(hover·focus·에러·비활성) 스타일은 `InputGroup`이 담당하고, 안에 들어간 `Input`은 박스 스타일 없이 남은 폭을 채웁니다.
+`InputGroup`은 하나의 입력 박스 안에 입력과 부가 요소를 함께 배치하는 오픈 프리미티브입니다.
+테두리·배경·상태(hover·focus·에러·비활성) 스타일은 `InputGroup`이 담당합니다.
 
-`InputAddon`은 `InputGroup` 테두리 안쪽에 단위·아이콘·버튼 등 부가 요소를 넣는 자리입니다. 배치만 담당하므로 색·텍스트 스타일은 안에 넣는 요소가 정합니다.
+`InputGroupInput`은 `InputGroup` 전용 입력입니다. 박스 스타일 없이 남은 폭을 채우며, `InputGroup`의 상태를 읽어 사용합니다.
+`InputGroup` 안에서는 `Input` 대신 `InputGroupInput`을 사용하세요. `Input`은 자체 박스 스타일을 가진 단독 입력입니다.
 
-이 프리미티브는 [`UnitField`](/docs/components/unit-field) 같은 완성형 컴포넌트로 표현할 수 없는 **배치를 직접 조합**해야 할 때 사용합니다.
+`InputAddon`은 `InputGroup` 테두리 안쪽에 단위·아이콘·버튼 등 부가 요소를 넣는 자리입니다. `InputAddon` 자체는 색을 지정하지 않으며, 기본 글자색은 `InputGroup`에서 물려받고 그 밖의 스타일은 안에 넣는 요소가 정합니다.
 
-## 기본 예시
+이 프리미티브는 완성형 컴포넌트로 표현할 수 없는 **배치를 직접 조합**해야 할 때 사용합니다.
+
+## 커스텀 예시
 
 부가 요소의 위치는 children 순서로 정해집니다.
 
 <Preview>
   <InputGroup>
-    <Input placeholder="0" />
+    <InputGroupInput placeholder="0" />
     <InputAddon>kg</InputAddon>
   </InputGroup>
-</Preview>
-
-```tsx
-import { Input, InputAddon, InputGroup } from '@bigmobility/vinyl-ui/field';
-
-export default function InputGroupExample() {
-  return (
-    <InputGroup>
-      <Input placeholder="0" />
-      <InputAddon>kg</InputAddon>
-    </InputGroup>
-  );
-}
-```
-
-## 앞·양쪽 배치
-
-<Preview>
   <InputGroup>
     <InputAddon>
       <Icon name="search" />
     </InputAddon>
-    <Input placeholder="검색어를 입력하세요" />
+    <InputGroupInput placeholder="검색어를 입력하세요" />
   </InputGroup>
   <InputGroup>
     <InputAddon>₩</InputAddon>
-    <Input placeholder="0" />
+    <InputGroupInput placeholder="0" />
     <InputAddon>
       <Icon name="info" />
     </InputAddon>
@@ -58,36 +43,54 @@ export default function InputGroupExample() {
 </Preview>
 
 ```tsx
-import { Input, InputAddon, InputGroup } from '@bigmobility/vinyl-ui/field';
+import { InputAddon, InputGroup, InputGroupInput } from '@bigmobility/vinyl-ui/field';
 import { Icon } from '@bigmobility/vinyl-ui/icon';
 
-<InputGroup>
-  <InputAddon>
-    <Icon name="search" />
-  </InputAddon>
-  <Input placeholder="검색어를 입력하세요" />
-</InputGroup>
-
-<InputGroup>
-  <InputAddon>₩</InputAddon>
-  <Input placeholder="0" />
-  <InputAddon>
-    <Icon name="info" />
-  </InputAddon>
-</InputGroup>
+export default function InputGroupExample() {
+  return (
+    <>
+      <InputGroup>
+        <InputGroupInput placeholder="0" />
+        <InputAddon>kg</InputAddon>
+      </InputGroup>
+      <InputGroup>
+        <InputAddon>
+          <Icon name="search" />
+        </InputAddon>
+        <InputGroupInput placeholder="검색어를 입력하세요" />
+      </InputGroup>
+      <InputGroup>
+        <InputAddon>₩</InputAddon>
+        <InputGroupInput placeholder="0" />
+        <InputAddon>
+          <Icon name="info" />
+        </InputAddon>
+      </InputGroup>
+    </>
+  );
+}
 ```
 
-## 에러 상태
+## 상태
 
-`InputGroup`에 `hasError`를 주면 그룹 스타일이 에러 상태로 바뀌고, 안의 `Input`에도 `aria-invalid`가 자동으로 적용됩니다.
+`InputGroup`에 `hasError`·`disabled`를 주면 그룹 스타일이 바뀌고, 안의 `InputGroupInput`에도 `aria-invalid`·`disabled`가 자동으로 적용됩니다.
 `Field` 없이 `InputGroup`만으로 동작합니다.
+
+`InputAddon` 안의 텍스트·아이콘은 `InputGroup`의 상태에 따른 글자색을 물려받습니다.
 
 <Preview>
   <InputGroup hasError>
     <InputAddon>
       <Icon name="info" />
     </InputAddon>
-    <Input placeholder="0" />
+    <InputGroupInput placeholder="0" />
+    <InputAddon>kg</InputAddon>
+  </InputGroup>
+  <InputGroup disabled>
+    <InputAddon>
+      <Icon name="info" />
+    </InputAddon>
+    <InputGroupInput placeholder="0" />
     <InputAddon>kg</InputAddon>
   </InputGroup>
 </Preview>
@@ -97,32 +100,15 @@ import { Icon } from '@bigmobility/vinyl-ui/icon';
   <InputAddon>
     <Icon name="info" />
   </InputAddon>
-  <Input placeholder="0" />
+  <InputGroupInput placeholder="0" />
   <InputAddon>kg</InputAddon>
 </InputGroup>
-```
 
-## 비활성 상태
-
-`InputGroup`에 `disabled`를 주면 그룹 스타일이 비활성 상태로 바뀌고, 안의 `Input`도 `disabled`가 됩니다.
-`InputAddon` 안의 텍스트·아이콘은 비활성 글자색을 물려받습니다.
-
-<Preview>
-  <InputGroup disabled>
-    <InputAddon>
-      <Icon name="info" />
-    </InputAddon>
-    <Input placeholder="0" />
-    <InputAddon>kg</InputAddon>
-  </InputGroup>
-</Preview>
-
-```tsx
 <InputGroup disabled>
   <InputAddon>
     <Icon name="info" />
   </InputAddon>
-  <Input placeholder="0" />
+  <InputGroupInput placeholder="0" />
   <InputAddon>kg</InputAddon>
 </InputGroup>
 ```
@@ -130,13 +116,13 @@ import { Icon } from '@bigmobility/vinyl-ui/icon';
 ## Field와 함께 사용
 
 `Field`로 감싸면 `Field`의 `hasError`·`disabled`를 `InputGroup`이 읽어 사용합니다.
-상태 값은 `Input` props → `InputGroup` props → `Field` 순서로 우선합니다.
+상태 값은 `InputGroupInput` props → `InputGroup` props → `Field` 순서로 우선합니다.
 
 <Preview>
   <Field hasError>
     <Label>적재 중량</Label>
     <InputGroup>
-      <Input placeholder="0" />
+      <InputGroupInput placeholder="0" />
       <InputAddon>kg</InputAddon>
     </InputGroup>
     <ErrorMessage>최대 적재 중량을 초과했습니다</ErrorMessage>
@@ -144,14 +130,14 @@ import { Icon } from '@bigmobility/vinyl-ui/icon';
 </Preview>
 
 ```tsx
-import { ErrorMessage, Field, Input, InputAddon, InputGroup, Label } from '@bigmobility/vinyl-ui/field';
+import { ErrorMessage, Field, InputAddon, InputGroup, InputGroupInput, Label } from '@bigmobility/vinyl-ui/field';
 
 export default function InputGroupFieldExample() {
   return (
     <Field hasError>
       <Label>적재 중량</Label>
       <InputGroup>
-        <Input placeholder="0" />
+        <InputGroupInput placeholder="0" />
         <InputAddon>kg</InputAddon>
       </InputGroup>
       <ErrorMessage>최대 적재 중량을 초과했습니다</ErrorMessage>
@@ -168,11 +154,32 @@ export default function InputGroupFieldExample() {
   type={{
     hasError: {
       type: 'boolean',
-      description: '에러 상태. 미지정 시 Field 값을 사용하며, 안의 Input에 전파',
+      description: '에러 상태. 미지정 시 Field 값을 사용하며, 안의 InputGroupInput에 전파',
     },
     disabled: {
       type: 'boolean',
-      description: '비활성화. 미지정 시 Field 값을 사용하며, 안의 Input에 전파',
+      description: '비활성화. 미지정 시 Field 값을 사용하며, 안의 InputGroupInput에 전파',
+    },
+  }}
+/>
+
+## InputGroupInput Props
+
+`<input>`의 표준 속성(`value`·`onChange`·`placeholder`·`disabled` 등)을 그대로 사용 가능합니다.
+
+<PropsTable
+  type={{
+    hasError: {
+      type: 'boolean',
+      description: '에러 상태(aria-invalid). 미지정 시 InputGroup → Field 값을 사용',
+    },
+    disabled: {
+      type: 'boolean',
+      description: '비활성화. 미지정 시 InputGroup → Field 값을 사용',
+    },
+    ref: {
+      type: 'Ref',
+      description: 'input(HTMLInputElement) 요소 ref',
     },
   }}
 />
@@ -183,7 +190,7 @@ export default function InputGroupFieldExample() {
 
 ## 접근성
 
-- `InputGroup` 안의 `Input`도 `Field`가 연결한 `id`·`aria-invalid`·`aria-describedby`를 그대로 유지합니다.
+- `InputGroupInput`도 `Field`가 연결한 `id`·`aria-invalid`·`aria-describedby`를 그대로 유지합니다.
 - `InputAddon`은 배치만 담당하며 접근성 속성을 추가하지 않습니다. 장식용 아이콘은 `Icon`이 `aria-hidden`을 적용합니다.
 - focus 스타일은 `InputGroup` 안의 어떤 요소(버튼 등)에 포커스가 가도 그룹 테두리에 표시됩니다.
 
@@ -193,11 +200,12 @@ InputGroup은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/themin
 
 | 토큰 | 미리보기 | 용도 |
 | --- | --- | --- |
-| `text.input` | <Swatch token="text.input" /> | 부가 요소 기본 글자색 |
-| `text.disable` | <Swatch token="text.disable" /> | 비활성 부가 요소 글자색 |
+| `text.input` | <Swatch token="text.input" /> | 입력 텍스트·부가 요소 기본 글자색 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | 플레이스홀더 |
 | `layout.bg-light` | <Swatch token="layout.bg-light" /> | 그룹 배경 |
 | `layout.default-line` | <Swatch token="layout.default-line" /> | 그룹 테두리 |
 | `layout.strong-line` | <Swatch token="layout.strong-line" /> | hover·focus 테두리 |
 | `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 에러 배경 |
 | `layout.issue-line` | <Swatch token="layout.issue-line" /> | 에러 테두리 |
 | `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 입력 텍스트·부가 요소 글자색 |

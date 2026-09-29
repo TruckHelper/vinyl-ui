@@ -4,10 +4,7 @@ import type { ComponentProps } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
 
-import { createErrorId } from './utils';
-
-import { useFieldContext } from './FieldContext';
-import { useInputGroupContext } from './InputGroupContext';
+import { useInputState } from './useInputState';
 
 const StyledInput = styled('input', {
   base: {
@@ -34,22 +31,6 @@ const StyledInput = styled('input', {
     },
   },
   variants: {
-    inGroup: {
-      true: {
-        flex: 1,
-        minWidth: 0,
-        paddingInline: 0,
-        height: '100%',
-        border: 'none',
-        backgroundColor: 'transparent',
-        _hover: { borderColor: 'transparent' },
-        _focus: { borderColor: 'transparent' },
-        _disabled: {
-          backgroundColor: 'transparent',
-          borderColor: 'transparent',
-        },
-      },
-    },
     hasError: {
       true: {
         backgroundColor: 'layout.bg-issue',
@@ -75,28 +56,19 @@ export function Input({
   ref,
   ...props
 }: InputProps) {
-  const field = useFieldContext();
-  const group = useInputGroupContext();
-
-  const inGroup = !!group;
-  const resolvedId = id ?? field?.inputId;
-  const resolvedHasError = hasError ?? group?.hasError ?? field?.hasError ?? false;
-  const resolvedDisabled = disabled ?? group?.disabled ?? field?.disabled ?? false;
-  const resolvedRequired = required ?? field?.required ?? false;
-  const describedBy = resolvedHasError && resolvedId ? createErrorId(resolvedId) : undefined;
+  const state = useInputState({ id, hasError, disabled, required });
 
   return (
     <StyledInput
       ref={ref}
       className={className}
       type={type}
-      id={resolvedId}
-      inGroup={inGroup}
-      hasError={!inGroup && resolvedHasError}
-      disabled={resolvedDisabled}
-      required={resolvedRequired}
-      aria-invalid={resolvedHasError || undefined}
-      aria-describedby={describedBy}
+      id={state.id}
+      hasError={state.hasError}
+      disabled={state.disabled}
+      required={state.required}
+      aria-invalid={state.hasError || undefined}
+      aria-describedby={state.describedBy}
       {...props}
     />
   );
