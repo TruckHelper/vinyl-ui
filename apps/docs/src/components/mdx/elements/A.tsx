@@ -1,25 +1,35 @@
 import type { ComponentPropsWithoutRef } from 'react';
 
-import { styled } from 'styled-system/jsx';
+import NextLink from 'next/link';
 
-const StyledLink = styled('a', {
-  base: {
-    color: 'text.accent-primary',
-    textDecoration: 'underline',
-    textUnderlineOffset: '2px',
-    _hover: { color: 'layout.primary-dark' },
-  },
-});
+import { Link } from '@bigmobility/vinyl-ui/link';
 
-export default function A({ href, target, rel, ...props }: ComponentPropsWithoutRef<'a'>) {
+export default function A({ href, target, rel, children, ...props }: ComponentPropsWithoutRef<'a'>) {
   const isExternal = !!href && /^https?:\/\//.test(href);
 
+  if (isExternal) {
+    return (
+      <Link
+        href={href}
+        target={target ?? '_blank'}
+        rel={rel ?? 'noopener noreferrer'}
+        {...props}
+      >
+        {children}
+      </Link>
+    );
+  }
+
   return (
-    <StyledLink
-      href={href}
-      target={target ?? (isExternal ? '_blank' : undefined)}
-      rel={rel ?? (isExternal ? 'noopener noreferrer' : undefined)}
-      {...props}
-    />
+    <Link asChild>
+      <NextLink
+        href={href ?? ''}
+        target={target}
+        rel={rel}
+        {...props}
+      >
+        {children}
+      </NextLink>
+    </Link>
   );
 }

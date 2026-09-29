@@ -7,6 +7,7 @@ import { styled } from 'styled-system/jsx/factory';
 const Container = styled('span', {
   base: {
     display: 'inline-flex',
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'center',
     width: '1em',

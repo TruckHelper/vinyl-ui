@@ -45,6 +45,11 @@
       "import": "./dist/icon.js",
       "default": "./dist/icon.js"
     },
+    "./link": {
+      "types": "./dist/link.d.ts",
+      "import": "./dist/link.js",
+      "default": "./dist/link.js"
+    },
     "./select": {
       "types": "./dist/select.d.ts",
       "import": "./dist/select.js",
