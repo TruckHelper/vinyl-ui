@@ -40,7 +40,7 @@ export default function UnitFieldExample() {
       ...field,
       [name]: value,
     });
-  }
+  };
 
   return (
     <UnitField
@@ -56,6 +56,47 @@ export default function UnitFieldExample() {
   );
 }
 ```
+
+## 단위와 아이콘
+
+`unit`에는 단위 텍스트를, `icon`에는 [Lucide 아이콘](https://lucide.dev/icons/) 이름을 전달합니다.
+둘 다 입력값 오른쪽에 고정되며, 함께 전달하면 입력값 → 단위 → 아이콘 순서로 배치됩니다.
+
+<Preview>
+  <UnitFieldDemo
+    name="weight"
+    label="적재 중량"
+    unit="kg"
+    placeholder="0"
+  />
+  <UnitFieldDemo
+    name="vehicle"
+    label="차량 번호"
+    icon="truck"
+    placeholder="12가 3456"
+  />
+  <UnitFieldDemo
+    name="distance"
+    label="운행 거리"
+    unit="km"
+    icon="info"
+    placeholder="0"
+  />
+</Preview>
+
+```tsx
+<UnitField
+  name="distance"
+  label="운행 거리"
+  value={field.distance}
+  unit="km"
+  icon="info"
+  placeholder="0"
+  onChangeField={handleChange}
+/>
+```
+
+왼쪽 배치 등 다른 구성이 필요하면 [`InputGroup`](/docs/components/input-group)으로 파트를 직접 조합하세요.
 
 ## 에러
 
@@ -79,30 +120,6 @@ export default function UnitFieldExample() {
   unit="kg"
   placeholder="0"
   errorMessage={field.error}
-  onChangeField={handleChange}
-/>
-```
-
-## 단위와 아이콘
-
-<Preview>
-  <UnitFieldDemo
-    name="distance"
-    label="운행 거리"
-    unit="km"
-    icon="info"
-    placeholder="0"
-  />
-</Preview>
-
-```tsx
-<UnitField
-  name="distance"
-  label="운행 거리"
-  value={field.distance}
-  unit="km"
-  icon="info"
-  placeholder="0"
   onChangeField={handleChange}
 />
 ```

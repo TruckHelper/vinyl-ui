@@ -3,9 +3,9 @@
 import type { ChangeEvent, Ref } from 'react';
 
 import { Field } from './Field';
-import { Input } from './Input';
 import { InputAddon } from './InputAddon';
 import { InputGroup } from './InputGroup';
+import { InputGroupInput } from './InputGroupInput';
 import { InputUnit } from './InputUnit';
 import { Label } from './Label';
 import { ErrorMessage } from './ErrorMessage';
@@ -66,7 +66,7 @@ export function UnitField({
           </Label>)
         : null}
       <InputGroup>
-        <Input
+        <InputGroupInput
           ref={ref}
           type={type}
           name={name}
