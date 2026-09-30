@@ -28,19 +28,6 @@ function pageButton(page: number) {
 }
 
 describe('Pagination', () => {
-  context('without children', () => {
-    it('renders no part', () => {
-      render((
-        <Pagination
-          count={250}
-          pageSize={10}
-        />
-      ));
-
-      expect(screen.queryAllByRole('button')).toHaveLength(0);
-    });
-  });
-
   context('with children', () => {
     it('renders the composed parts only', () => {
       renderPagination();
@@ -55,6 +42,19 @@ describe('Pagination', () => {
     });
   });
 
+  context('without children', () => {
+    it('renders no part', () => {
+      render((
+        <Pagination
+          count={250}
+          pageSize={10}
+        />
+      ));
+
+      expect(screen.queryAllByRole('button')).toHaveLength(0);
+    });
+  });
+  
   describe('page items', () => {
     it('renders the group the current page belongs to', () => {
       renderPagination({ defaultPage: 12 });

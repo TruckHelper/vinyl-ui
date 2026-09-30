@@ -3,6 +3,7 @@
 import { usePaginationContext } from '@ark-ui/react';
 
 import { usePaginationGroupSize } from './PaginationContext';
+
 import { getGroupStartPage } from './utils';
 
 type GroupJumpEdge = 'first' | 'last';

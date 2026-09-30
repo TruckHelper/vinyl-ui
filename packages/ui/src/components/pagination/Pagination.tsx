@@ -10,8 +10,6 @@ import { DEFAULT_GROUP_SIZE } from './utils';
 
 import { PaginationContextProvider } from './PaginationContext';
 
-// `page` 는 Panda 의 CSS 속성이라 styled(ArkPagination.Root) 로 감싸면
-// 스타일 prop 으로 가로채여 Ark 에 전달되지 않는다. asChild 로 분리한다.
 const Container = styled('nav', {
   base: {
     display: 'flex',
