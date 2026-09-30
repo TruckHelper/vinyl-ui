@@ -4,7 +4,7 @@ import { usePaginationContext } from '@ark-ui/react';
 
 import { usePaginationGroupSize } from './PaginationContext';
 
-import { getGroupStartPage } from './utils';
+import { firstPageNumberInGroup } from './utils';
 
 type GroupJumpEdge = 'first' | 'last';
 
@@ -17,13 +17,13 @@ export function useGroupJump(edge: GroupJumpEdge) {
     : api.getLastTriggerProps();
 
   const edgePage = edge === 'first' ? 1 : api.totalPages;
-  const targetPage = getGroupStartPage({ page: edgePage, groupSize });
-  const currentGroupStartPage = getGroupStartPage({ page: api.page, groupSize });
+  const targetFirstPageNumber = firstPageNumberInGroup({ page: edgePage, groupSize });
+  const currentFirstPageNumber = firstPageNumberInGroup({ page: api.page, groupSize });
 
-  const disabled = currentGroupStartPage === targetPage;
+  const disabled = currentFirstPageNumber === targetFirstPageNumber;
 
   const handleClick = () => {
-    api.setPage(targetPage);
+    api.setPage(targetFirstPageNumber);
   };
 
   return {

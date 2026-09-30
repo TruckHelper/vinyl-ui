@@ -21,9 +21,6 @@ const Container = styled('nav', {
 
 type RootProps = ComponentProps<typeof ArkPagination.Root>;
 
-// TODO: `type: 'link'` 은 Ark 가 href 값만 만들고 앵커 렌더는 asChild 로 맡긴다.
-// 파트가 asChild 를 열지 않는 지금 구조에서는 <button href> 라는 잘못된 HTML이 나오므로 막는다.
-// 링크 페이지네이션을 지원할 때 함께 걷어낸다.
 export type PaginationProps = Omit<
   RootProps,
   'siblingCount' | 'boundaryCount' | 'onPageChange' | 'asChild' | 'type' | 'getPageUrl'
