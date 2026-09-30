@@ -1,0 +1,210 @@
+---
+title: Pagination
+description: 목록을 여러 페이지로 나눠 이동하는 페이지네이션 컴포넌트
+---
+
+import { Pagination, PaginationFirst, PaginationItemGroup, PaginationLast, PaginationNext, PaginationPrevious, } from '@bigmobility/vinyl-ui/pagination';
+
+Pagination은 여러 파트를 조합해 사용합니다. 루트인 `Pagination`에 전체 데이터 수(`count`)와 페이지 크기(`pageSize`)를 넘기면
+총 페이지 수가 계산되고, 그 안에 트리거와 번호 버튼을 나열합니다.
+
+번호는 `groupSize` 단위로 끊어 보여줍니다. 10이면 `1~10` / `11~20`처럼 구간이 고정되고, 현재 페이지가 속한 구간만 표시됩니다.
+
+| prop | 세는 대상 | 예 |
+| --- | --- | --- |
+| `count` | 전체 데이터 | 250건 |
+| `pageSize` | 한 페이지에 담을 **데이터** | 10건 → 총 25페이지 |
+| `groupSize` | 한 번에 보여줄 **페이지 번호** | 5개 → `1~5` / `6~10` / … / `21~25` |
+
+## 기본 예시
+
+`Pagination` 안에는 **이전(`PaginationPrevious`) · 번호(`PaginationItemGroup`) · 다음(`PaginationNext`)** 을 필수로 넣어야 합니다.
+
+<Preview>
+  <Pagination count={250} pageSize={10}>
+    <PaginationPrevious />
+    <PaginationItemGroup />
+    <PaginationNext />
+  </Pagination>
+</Preview>
+
+```tsx
+import {
+  Pagination,
+  PaginationPrevious,
+  PaginationItemGroup,
+  PaginationNext,
+} from '@bigmobility/vinyl-ui/pagination';
+
+export default function BasicPagination() {
+  return (
+    <Pagination
+      count={250}
+      pageSize={10}
+    >
+      <PaginationPrevious />
+      <PaginationItemGroup />
+      <PaginationNext />
+    </Pagination>
+  );
+}
+```
+
+## 처음 · 마지막 트리거
+
+처음 트리거(`PaginationFirst`)와 마지막 트리거(`PaginationLast`) 는 **양 끝 그룹으로 점프하고, 그 그룹의 첫 페이지에 놓입니다.**
+이미 그 그룹에 있으면 비활성됩니다. 처음 · 마지막 트리거는 필수 요소가 아닌 선택사항 입니다.
+
+<Preview>
+  <Pagination count={250} pageSize={10} defaultPage={12}>
+    <PaginationFirst />
+    <PaginationPrevious />
+    <PaginationItemGroup />
+    <PaginationNext />
+    <PaginationLast />
+  </Pagination>
+</Preview>
+
+25페이지 · `groupSize` 10이면 그룹은 `1~10` / `11~20` / `21~25`입니다.
+12페이지에서 마지막을 누르면 25가 아니라 마지막 그룹의 첫 페이지인 21로 이동합니다.
+
+```tsx
+<Pagination
+  count={250}
+  pageSize={10}
+  defaultPage={12}
+>
+  <PaginationFirst />
+  <PaginationPrevious />
+  <PaginationItemGroup />
+  <PaginationNext />
+  <PaginationLast />
+</Pagination>
+```
+
+## 그룹 크기
+
+`groupSize`로 한 번에 보여줄 번호 개수를 정합니다. 기본값은 10이고, 마지막 그룹은 총 페이지 수에 맞춰 짧아집니다.
+
+`groupSize` 10 — `1~10` / `11~20` / `21~25`
+
+<Preview>
+  <Pagination count={250} pageSize={10}>
+    <PaginationPrevious />
+    <PaginationItemGroup />
+    <PaginationNext />
+  </Pagination>
+</Preview>
+
+`groupSize` 5 — `1~5` / `6~10` / … / `21~25`
+
+<Preview>
+  <Pagination count={250} pageSize={10} groupSize={5}>
+    <PaginationPrevious />
+    <PaginationItemGroup />
+    <PaginationNext />
+  </Pagination>
+</Preview>
+
+```tsx
+<Pagination
+  count={250}
+  pageSize={10}
+  groupSize={5}
+>
+  {/* ... */}
+</Pagination>
+```
+
+## 페이지 상태
+
+`defaultPage`만 주면 컴포넌트가 내부에서 페이지를 관리합니다(비제어). 앞의 예시들이 모두 이 방식입니다.
+
+```tsx
+<Pagination
+  count={250}
+  pageSize={10}
+  defaultPage={12}
+/>
+```
+
+페이지가 바뀔 때 데이터를 다시 조회해야 한다면 `page`와 `onChangePage`로 상태를 직접 관리합니다(제어).
+
+<Preview>
+  <PaginationDemo hasEdgeTriggers />
+</Preview>
+
+```tsx
+const [page, setPage] = useState(1);
+
+const handleChangePage = ({ page }: { page: number }) => {
+  setPage(page);
+};
+
+<Pagination
+  count={250}
+  pageSize={10}
+  page={page}
+  onChangePage={handleChangePage}
+>
+  {/* ... */}
+</Pagination>
+```
+
+## Props
+
+### Pagination
+
+<PropsTable
+  type={{
+    count: {
+      type: 'number',
+      description: '전체 데이터 수 (필수)',
+    },
+    pageSize: {
+      type: 'number',
+      default: '10',
+      description: '한 페이지에 담을 데이터 수',
+    },
+    page: {
+      type: 'number',
+      description: '현재 페이지 (제어)',
+    },
+    defaultPage: {
+      type: 'number',
+      default: '1',
+      description: '초기 페이지 (비제어)',
+    },
+    onChangePage: {
+      type: `({ page }: {
+    page: number;
+  }) => void`,
+      description: '페이지 변경 콜백',
+    },
+    groupSize: {
+      type: 'number',
+      default: '10',
+      description: '한 번에 보여줄 번호 개수',
+    },
+  }}
+/>
+
+## 접근성
+
+- 루트가 `nav` 요소로 렌더되고 `aria-label`을 가집니다.
+- 현재 페이지 번호는 `aria-current="page"`와 `data-selected`로 표시됩니다.
+- 트리거는 더 이동할 곳이 없으면 자동으로 `disabled`가 됩니다.
+- 각 버튼은 `aria-label`을 가지며(`previous page` · `page 3` 등), 루트에 `translations`를 넘겨 문구를 바꿀 수 있습니다.
+
+## 토큰 커스터마이징
+
+Pagination은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.soft` | <Swatch token="text.soft" /> | 기본 번호 · 아이콘 색 |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | hover 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 현재 페이지 · 눌린 상태 배경 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 현재 페이지 · 눌린 상태 전경 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 트리거 배경 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 트리거 전경 |

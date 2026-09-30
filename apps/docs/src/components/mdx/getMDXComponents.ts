@@ -3,6 +3,7 @@ import type { MDXComponents } from 'mdx/types';
 import Badge from '../docs/Badge';
 import Callout from '../docs/Callout';
 import CodeBlock from '../docs/CodeBlock';
+import PaginationDemo from '../docs/PaginationDemo';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
@@ -50,6 +51,7 @@ const baseComponents: MDXComponents = {
   Section,
   Swatch,
   Palette,
+  PaginationDemo,
   SelectDemo,
   TextFieldDemo,
   TypeTable: PropsTable,

@@ -14,5 +14,7 @@ export const dynamicIconImports = {
   'chevron-down': () => Promise.resolve({}),
   'chevron-left': () => Promise.resolve({}),
   'chevron-right': () => Promise.resolve({}),
+  'chevrons-left': () => Promise.resolve({}),
+  'chevrons-right': () => Promise.resolve({}),
   'file-x': () => Promise.resolve({}),
 };

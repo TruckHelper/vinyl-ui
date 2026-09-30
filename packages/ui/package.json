@@ -45,6 +45,11 @@
       "import": "./dist/icon.js",
       "default": "./dist/icon.js"
     },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "import": "./dist/pagination.js",
+      "default": "./dist/pagination.js"
+    },
     "./select": {
       "types": "./dist/select.d.ts",
       "import": "./dist/select.js",
