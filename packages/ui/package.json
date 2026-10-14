@@ -30,6 +30,11 @@
       "import": "./dist/accordion.js",
       "default": "./dist/accordion.js"
     },
+    "./badge": {
+      "types": "./dist/badge.d.ts",
+      "import": "./dist/badge.js",
+      "default": "./dist/badge.js"
+    },
     "./button": {
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js",

@@ -1,6 +1,8 @@
 import type { MDXComponents } from 'mdx/types';
 
 import Badge from '../docs/Badge';
+import BadgeDemo from '../docs/BadgeDemo';
+import BadgeSample from '../docs/BadgeSample';
 import Callout from '../docs/Callout';
 import CodeBlock from '../docs/CodeBlock';
 import Palette from '../docs/Palette';
@@ -47,6 +49,8 @@ const baseComponents: MDXComponents = {
   PropsTable,
   Callout,
   Badge,
+  BadgeDemo,
+  BadgeSample,
   Section,
   Swatch,
   Palette,
