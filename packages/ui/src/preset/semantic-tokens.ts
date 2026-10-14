@@ -19,6 +19,7 @@ export const semanticTokens: SemanticTokens = {
       'bg-light-gray': { value: '{colors.black.100}' },
       'bg-disable': { value: '{colors.black.100}' },
       'bg-issue': { value: '{colors.red.100}' },
+      'bg-pending': { value: '{colors.orange.100}' },
       'default-line': { value: '{colors.black.200}' },
       'strong-line': { value: '{colors.black.500}' },
       'highlight-line': { value: '{colors.navy.300}' },
@@ -40,6 +41,8 @@ export const semanticTokens: SemanticTokens = {
       'input-strong': { value: '{colors.black.600}' },
       disable: { value: '{colors.black.300}' },
       issue: { value: '{colors.red.500}' },
+      pending: { value: '{colors.orange.600}' },
+      processing: { value: '{colors.blue.500}' },
     },
   },
   sizes: {

@@ -20,8 +20,8 @@ const Container = styled('label', {
         _after: {
           content: '""',
           flexShrink: 0,
-          width: '4',
-          height: '4',
+          width: '0.4rem',
+          height: '0.4rem',
           borderRadius: 'full',
           backgroundColor: 'layout.primary',
         },

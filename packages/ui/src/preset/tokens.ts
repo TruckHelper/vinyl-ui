@@ -63,6 +63,9 @@ export const tokens: Tokens = {
       700: { value: '#22263A' },
       800: { value: '#13172A' },
     },
+    blue: {
+      500: { value: '#2C66D1' },
+    },
     white: {
       default: { value: '#FFFFFF' },
     },
@@ -117,6 +120,8 @@ export const tokens: Tokens = {
         '0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10)',
     },
     inner: { value: 'inset 0 2px 4px 0 rgba(0,0,0,0.06)' },
+    floating: { value: '0 0 30px -1px rgba(0,0,0,0.06)' },
+    toast: { value: '0 10px 40px -3px rgba(0,0,0,0.06)' },
   },
   zIndex: {
     base: { value: 0 },
