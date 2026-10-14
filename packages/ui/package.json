@@ -50,6 +50,11 @@
       "import": "./dist/field.js",
       "default": "./dist/field.js"
     },
+    "./help-text": {
+      "types": "./dist/help-text.d.ts",
+      "import": "./dist/help-text.js",
+      "default": "./dist/help-text.js"
+    },
     "./icon": {
       "types": "./dist/icon.d.ts",
       "import": "./dist/icon.js",
