@@ -40,6 +40,11 @@
       "import": "./dist/button.js",
       "default": "./dist/button.js"
     },
+    "./caption": {
+      "types": "./dist/caption.d.ts",
+      "import": "./dist/caption.js",
+      "default": "./dist/caption.js"
+    },
     "./field": {
       "types": "./dist/field.d.ts",
       "import": "./dist/field.js",

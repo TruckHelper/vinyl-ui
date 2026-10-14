@@ -1,0 +1,71 @@
+---
+title: Caption
+description: 안내 문구 앞에 강조 마커를 붙여 보여 주는 컴포넌트
+---
+
+
+import { Caption } from '@bigmobility/vinyl-ui/caption';
+
+마커 `*`는 CSS 가상 요소(`::before`)로 그려져 DOM에는 본문만 남고, 스크린 리더에는 읽히지 않도록 대체 텍스트를 비워 두었습니다.
+
+## 기본 예시
+
+<Preview>
+  <Caption>텍스트</Caption>
+</Preview>
+
+```tsx
+import { Caption } from '@bigmobility/vinyl-ui/caption';
+
+export default function CaptionExample() {
+  return (
+    <Caption>텍스트</Caption>
+  );
+}
+```
+
+## 마커 변경
+
+`styled(Caption, …)`로 감싸 `_before`의 `content`와 `color`를 지정하면 마커를 바꾸거나 없앨 수 있습니다. 마커 없이 쓸 때는 들여쓰기도 함께 없앱니다.
+
+<Preview>
+  <CaptionDemo />
+</Preview>
+
+```tsx
+import { Caption } from '@bigmobility/vinyl-ui/caption';
+
+import { styled } from 'styled-system/jsx';
+
+const NoticeCaption = styled(Caption, {
+  base: { _before: { content: '"※" / ""' } },
+});
+
+const PlainCaption = styled(Caption, {
+  base: {
+    paddingInlineStart: 0,
+    _before: { content: 'none' },
+  },
+});
+
+export default function CaptionMarker() {
+  return (
+    <div>
+      <Caption>기본 마커</Caption>
+      <NoticeCaption>교체된 마커</NoticeCaption>
+      <PlainCaption>마커 없음</PlainCaption>
+    </div>
+  );
+}
+```
+
+## Props
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '마커 뒤에 표시할 본문',
+    },
+  }}
+/>
