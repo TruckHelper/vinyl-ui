@@ -49,6 +49,15 @@ export const textStyles: TextStyles = {
     },
   },
   body: {
+    'xlarge-bold': {
+      value: {
+        fontFamily: '{fonts.body}',
+        fontSize: '{fontSizes.body.xlarge}',
+        fontWeight: '{fontWeights.bold}',
+        lineHeight: '1.4',
+        letterSpacing: '-0.03em',
+      },
+    },
     'large-bold': {
       value: {
         fontFamily: '{fonts.body}',
