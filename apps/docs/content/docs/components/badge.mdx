@@ -1,0 +1,87 @@
+---
+title: Badge
+description: 처리 상태 등을 짧은 라벨로 보여 주는 컴포넌트
+---
+
+import { Badge } from '@bigmobility/vinyl-ui/badge';
+
+## 기본 예시
+
+<Preview>
+  <Badge>처리 중</Badge>
+</Preview>
+
+```tsx
+import { Badge } from '@bigmobility/vinyl-ui/badge';
+
+export default function BadgeExample() {
+  return (
+    <Badge>처리 중</Badge>
+  );
+}
+```
+
+## 커스터마이징
+
+`backgroundColor`와 `color`를 지정하면 기본 색이 교체됩니다.
+
+<Preview>
+  <BadgeDemo />
+</Preview>
+
+```tsx
+import { Badge } from '@bigmobility/vinyl-ui/badge';
+
+import { styled } from 'styled-system/jsx';
+
+const SuccessBadge = styled(Badge, {
+  base: { backgroundColor: 'layout.bg-light-green', color: 'text.accent-secondary' },
+});
+
+const PendingBadge = styled(Badge, {
+  base: { backgroundColor: 'layout.bg-pending', color: 'text.pending' },
+});
+
+const IssueBadge = styled(Badge, {
+  base: { backgroundColor: 'layout.bg-issue', color: 'text.issue' },
+});
+
+const DisableBadge = styled(Badge, {
+  base: { backgroundColor: 'layout.bg-disable', color: 'text.soft' },
+});
+
+export default function StatusBadges() {
+  return (
+    <>
+      <Badge>처리 중</Badge>
+      <SuccessBadge>발급 완료</SuccessBadge>
+      <PendingBadge>보완 필요</PendingBadge>
+      <IssueBadge>결제 오류</IssueBadge>
+      <DisableBadge>취소</DisableBadge>
+    </>
+  );
+}
+```
+
+### 색상 그룹 가이드
+
+Figma의 상태 11종은 아래 5개 색 그룹으로 나뉩니다.
+
+| 색 그룹 | 예제 | 배경 | 글자 | 예시상태 |
+| --- | --- | --- | --- | --- |
+| 파랑 (기본) | <BadgeSample group="blue" /> | `layout.bg-light-blue` | `text.processing` | 접수, 처리 중, 재검토중, 결제중 |
+| 초록 | <BadgeSample group="green" /> | `layout.bg-light-green` | `text.accent-secondary` | 발급 완료, 결제 완료 |
+| 노랑 | <BadgeSample group="yellow" /> | `layout.bg-pending` | `text.pending` | 보완 필요 |
+| 빨강 | <BadgeSample group="red" /> | `layout.bg-issue` | `text.issue` | 취소 처리중, 결제 오류 |
+| 회색 | <BadgeSample group="gray" /> | `layout.bg-disable` | `text.soft` | 취소, 취소 대기 |
+
+## Props
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '배지 안에 표시할 내용',
+    },
+  }}
+/>
