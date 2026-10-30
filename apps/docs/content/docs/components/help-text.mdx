@@ -1,0 +1,102 @@
+---
+title: HelpText
+description: 정보 아이콘과 함께 안내 문구를 보여 주는 컴포넌트
+---
+
+import { HelpText } from '@bigmobility/vinyl-ui/help-text';
+
+## 기본 예시
+
+<Preview>
+  <HelpText>기본 안내 문구</HelpText>
+</Preview>
+
+```tsx
+import { HelpText } from '@bigmobility/vinyl-ui/help-text';
+
+export default function HelpTextExample() {
+  return (
+    <HelpText>기본 안내 문구</HelpText>
+  );
+}
+```
+
+## 상태와 형태
+
+`state`로 문구와 아이콘의 색을, `type`으로 배경 유무를 정합니다. `fill`은 배경과 안쪽 여백이 있고, `text`는 문구만 보여 줍니다.
+
+<Preview>
+  <HelpTextDemo />
+</Preview>
+
+```tsx
+import { HelpText } from '@bigmobility/vinyl-ui/help-text';
+
+import { styled } from 'styled-system/jsx';
+
+const Grid = styled('div', {
+  base: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, max-content)',
+    alignItems: 'center',
+    gap: '16',
+  },
+});
+
+export default function HelpTextStates() {
+  return (
+    <Grid>
+      <HelpText>기본 안내 문구</HelpText>
+      <HelpText type="text">기본 안내 문구</HelpText>
+      <HelpText state="notice-warning">확인이 필요한 문구</HelpText>
+      <HelpText
+        state="notice-warning"
+        type="text"
+      >
+        확인이 필요한 문구
+      </HelpText>
+      <HelpText state="notice-error">오류 안내 문구</HelpText>
+      <HelpText
+        state="notice-error"
+        type="text"
+      >
+        오류 안내 문구
+      </HelpText>
+    </Grid>
+  );
+}
+```
+
+## 접근성
+
+HelpText는 role을 지정하지 않습니다. 화면에 늘 보이는 안내는 그대로 쓰고, 입력 오류처럼 바로 알려야 하는 문구는 `role="alert"`를, 상태 변경 알림은 `role="status"`를 직접 지정합니다. 정보 아이콘은 스크린 리더가 읽지 않습니다. `role="alert"`는 요소가 새로 나타날 때 읽히므로, 처음부터 렌더하지 말고 오류가 생길 때 렌더합니다.
+
+```tsx
+<HelpText
+  state="notice-error"
+  role="alert"
+>
+  사업자등록번호를 다시 확인해 주세요.
+</HelpText>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    state: {
+      type: "default | notice-warning | notice-error",
+      default: "default",
+      description: '문구와 아이콘의 색',
+    },
+    type: {
+      type: "fill | text",
+      default: "fill",
+      description: '배경과 안쪽 여백 유무',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '아이콘 뒤에 표시할 안내 문구',
+    },
+  }}
+/>
