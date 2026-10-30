@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@pandacss/eslint-plugin": "^0.3.2",
+    "@pandacss/eslint-plugin": "^2.4.0",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
