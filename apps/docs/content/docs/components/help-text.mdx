@@ -1,0 +1,86 @@
+---
+title: HelpText
+description: 정보 아이콘과 함께 안내 문구를 보여 주는 컴포넌트
+---
+
+import { HelpText } from '@bigmobility/vinyl-ui/help-text';
+
+아이콘은 글자 색을 따르고, 스크린 리더에는 읽히지 않습니다.
+
+## 기본 예시
+
+<Preview>
+  <HelpText>기본 안내 문구</HelpText>
+</Preview>
+
+```tsx
+import { HelpText } from '@bigmobility/vinyl-ui/help-text';
+
+export default function HelpTextExample() {
+  return (
+    <HelpText>기본 안내 문구</HelpText>
+  );
+}
+```
+
+## 커스터마이징
+
+`styled(HelpText, …)`로 감싸 `backgroundColor`와 `color`를 지정하면 기본 색이 교체됩니다. 아이콘은 글자 색을 따라 함께 바뀝니다. 배경 없이 문구만 쓸 때는 배경을 투명으로 바꾸고 안쪽 여백도 함께 없앱니다.
+
+<Preview>
+  <HelpTextDemo />
+</Preview>
+
+```tsx
+import { HelpText } from '@bigmobility/vinyl-ui/help-text';
+
+import { styled } from 'styled-system/jsx';
+
+const WarningHelpText = styled(HelpText, {
+  base: { backgroundColor: 'layout.bg-pending', color: 'text.pending' },
+});
+
+const ErrorHelpText = styled(HelpText, {
+  base: { backgroundColor: 'layout.bg-issue', color: 'text.issue' },
+});
+
+const PlainHelpText = styled(HelpText, {
+  base: { backgroundColor: 'transparent', padding: 0 },
+});
+
+const Stack = styled('div', {
+  base: { display: 'flex', flexDirection: 'column', gap: '8' },
+});
+
+export default function CustomHelpTexts() {
+  return (
+    <Stack>
+      <HelpText>기본 안내 문구</HelpText>
+      <WarningHelpText>확인이 필요한 문구</WarningHelpText>
+      <ErrorHelpText>오류 안내 문구</ErrorHelpText>
+      <PlainHelpText>배경 없는 안내 문구</PlainHelpText>
+    </Stack>
+  );
+}
+```
+
+### 색상 조합 가이드
+
+아래 배경과 글자 색 조합으로 사용하는걸 권장합니다.
+
+| 예제 | 배경 | 글자 |
+| --- | --- | --- |
+| <HelpTextSample group="default" /> | `layout.primary-subtle` | `text.accent-primary` |
+| <HelpTextSample group="warning" /> | `layout.bg-pending` | `text.pending` |
+| <HelpTextSample group="error" /> | `layout.bg-issue` | `text.issue` |
+
+## Props
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '아이콘 뒤에 표시할 안내 문구',
+    },
+  }}
+/>
