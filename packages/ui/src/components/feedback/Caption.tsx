@@ -2,19 +2,29 @@ import type { ComponentProps } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
 
-export const Caption = styled('p', {
+const Container = styled('p', {
   base: {
     textStyle: 'body.small-light',
-    position: 'relative',
-    paddingInlineStart: '1.1rem',
+    display: 'flex',
+    gap: '4',
     color: 'text.soft',
     _before: {
       content: '"*" / ""',
-      position: 'absolute',
-      insetInlineStart: 0,
+      flexShrink: 0,
       color: 'text.accent-primary',
     },
   },
 });
 
-export type CaptionProps = ComponentProps<typeof Caption>;
+export type CaptionProps = ComponentProps<'p'>;
+
+export function Caption({ className, children, ...props }: CaptionProps) {
+  return (
+    <Container
+      className={className}
+      {...props}
+    >
+      <span>{children}</span>
+    </Container>
+  );
+}
