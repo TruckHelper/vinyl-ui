@@ -12,6 +12,7 @@ import HelpTextSample from '../docs/HelpTextSample';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
+import ResultStateDemo from '../docs/ResultStateDemo';
 import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
 import Swatch from '../docs/Swatch';
@@ -54,6 +55,7 @@ const baseComponents: MDXComponents = {
   Callout,
   CaptionDemo,
   EmptyStateDemo,
+  ResultStateDemo,
   HelpTextDemo,
   HelpTextSample,
   Badge,

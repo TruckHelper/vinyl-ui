@@ -65,6 +65,11 @@
       "import": "./dist/icon.js",
       "default": "./dist/icon.js"
     },
+    "./result-state": {
+      "types": "./dist/result-state.d.ts",
+      "import": "./dist/result-state.js",
+      "default": "./dist/result-state.js"
+    },
     "./select": {
       "types": "./dist/select.d.ts",
       "import": "./dist/select.js",

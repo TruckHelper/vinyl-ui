@@ -1,0 +1,128 @@
+---
+title: ResultState
+description: 작업을 마친 뒤 결과를 이미지와 안내 문구로 보여 주는 컴포넌트
+---
+
+import {
+  ResultState, ResultStateDescription, ResultStateImage, ResultStateTitle,
+} from '@bigmobility/vinyl-ui/result-state';
+
+이미지, 제목, 보조 문구를 파트로 조합합니다. 기본 이미지는 스크린 리더에 읽히지 않습니다.
+
+## 기본 예시
+
+<Preview>
+  <ResultState>
+    <ResultStateImage />
+    <ResultStateTitle>결제가 완료됐어요</ResultStateTitle>
+  </ResultState>
+</Preview>
+
+```tsx
+import { ResultState, ResultStateImage, ResultStateTitle } from '@bigmobility/vinyl-ui/result-state';
+
+export default function ResultStateExample() {
+  return (
+    <ResultState>
+      <ResultStateImage />
+      <ResultStateTitle>결제가 완료됐어요</ResultStateTitle>
+    </ResultState>
+  );
+}
+```
+
+## 보조 문구
+
+`ResultStateDescription`을 더하면 제목 아래에 보조 문구가 표시됩니다.
+
+<Preview>
+  <ResultState>
+    <ResultStateImage />
+    <ResultStateTitle>결제가 완료됐어요</ResultStateTitle>
+    <ResultStateDescription>주문 내역에서 확인할 수 있어요</ResultStateDescription>
+  </ResultState>
+</Preview>
+
+```tsx
+import {
+  ResultState, ResultStateDescription, ResultStateImage, ResultStateTitle,
+} from '@bigmobility/vinyl-ui/result-state';
+
+export default function ResultStateDescriptionExample() {
+  return (
+    <ResultState>
+      <ResultStateImage />
+      <ResultStateTitle>결제가 완료됐어요</ResultStateTitle>
+      <ResultStateDescription>주문 내역에서 확인할 수 있어요</ResultStateDescription>
+    </ResultState>
+  );
+}
+```
+
+## 이미지 변경
+
+`ResultStateImage` 대신 다른 아이콘을 넣습니다. 크기와 색은 직접 지정합니다.
+
+<Preview>
+  <ResultStateDemo />
+</Preview>
+
+```tsx
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+import { ResultState, ResultStateDescription, ResultStateTitle } from '@bigmobility/vinyl-ui/result-state';
+
+import { styled } from 'styled-system/jsx';
+
+const ResultIcon = styled(Icon, {
+  base: { fontSize: '8rem', color: 'layout.primary' },
+});
+
+export default function ResultStateDemo() {
+  return (
+    <ResultState>
+      <ResultIcon name="send" />
+      <ResultStateTitle>신청이 접수됐어요</ResultStateTitle>
+      <ResultStateDescription>검토가 끝나면 알림으로 알려 드려요</ResultStateDescription>
+    </ResultState>
+  );
+}
+```
+
+## Props
+
+### ResultState
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '이미지, 제목, 보조 문구',
+    },
+  }}
+/>
+
+### ResultStateImage
+
+svg 속성을 그대로 전달합니다.
+
+### ResultStateTitle
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '제목',
+    },
+  }}
+/>
+
+### ResultStateDescription
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '제목 아래에 표시할 보조 문구',
+    },
+  }}
+/>
