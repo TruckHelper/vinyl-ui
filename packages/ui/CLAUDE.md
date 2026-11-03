@@ -6,6 +6,7 @@
 
 - 스타일 = `styled` 팩토리 + 객체 문법 사용함. 별도 레시피 파일(`cva`/`sva`) 금지. 단일 요소는 `styled('button', { base, variants })`.
 - 멀티파트 = 플랫 export. Ark 파트를 각각 `styled`로 감싸 평평하게 내보냄.
+- 파일 하나에 컴포넌트 하나만 export함. 멀티파트는 파트마다 파일을 나눔(`AccordionItem.tsx`). 그 컴포넌트의 Props 타입은 같은 파일에서 함께 export함.
 - 타입은 `type`으로 사용함.
 - JSX prop 2개 이상은 줄바꿈. prop이 2개 이상이면 각 prop을 한 줄에 하나씩, 1개면 인라인 유지.
 - props에 컴포넌트를 넣지 않음(slotProps·children 슬롯 교체 금지).
