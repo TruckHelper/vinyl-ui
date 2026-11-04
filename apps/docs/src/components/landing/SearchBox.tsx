@@ -2,7 +2,7 @@ import { Icon } from '@bigmobility/vinyl-ui/icon';
 
 import { styled } from 'styled-system/jsx';
 
-// UI만 구현 — 검색 동작(⌘K·결과)은 fumadocs-core 검색 Phase에서 배선한다.
+// TODO: 검색 동작(⌘K·결과)을 fumadocs-core 검색 Phase에서 연결
 
 const Box = styled('button', {
   base: {

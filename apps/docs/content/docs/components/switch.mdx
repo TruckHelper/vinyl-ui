@@ -1,0 +1,187 @@
+---
+title: Switch
+description: 켜짐과 꺼짐 두 가지 상태를 전환하는 컴포넌트
+---
+
+트랙, 썸, 라벨을 파트로 조합합니다. 스크린 리더에는 스위치로 읽힙니다.
+
+## 기본 예시
+
+`checked`와 `onChangeChecked`로 상태를 관리합니다. `onChangeChecked`는 `{ name, value }`를 받습니다.
+
+<Preview>
+  <SwitchDemo label="알림 받기" />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from '@bigmobility/vinyl-ui/switch';
+
+export default function SwitchExample() {
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = ({ value }: { name: string; value: boolean }) => {
+    setChecked(value);
+  };
+
+  return (
+    <Switch
+      name="alarm"
+      checked={checked}
+      onChangeChecked={handleChange}
+    >
+      <SwitchControl>
+        <SwitchThumb />
+      </SwitchControl>
+      <SwitchLabel>알림 받기</SwitchLabel>
+    </Switch>
+  );
+}
+```
+
+## 라벨 없이 쓰기
+
+화면에 라벨을 보여 주지 않을 때는 `aria-label`로 이름을 지정합니다.
+
+<Preview>
+  <SwitchDemo aria-label="알림 받기" />
+</Preview>
+
+```tsx
+<Switch
+  name="alarm"
+  checked={checked}
+  aria-label="알림 받기"
+  onChangeChecked={handleChange}
+>
+  <SwitchControl>
+    <SwitchThumb />
+  </SwitchControl>
+</Switch>
+```
+
+## 비활성
+
+<Preview>
+  <SwitchDemo
+    label="알림 받기"
+    disabled
+  />
+  <SwitchDemo
+    label="알림 받기"
+    disabled
+    initialChecked
+  />
+</Preview>
+
+```tsx
+<Switch
+  name="alarm"
+  checked={checked}
+  disabled
+  onChangeChecked={handleChange}
+>
+  <SwitchControl>
+    <SwitchThumb />
+  </SwitchControl>
+  <SwitchLabel>알림 받기</SwitchLabel>
+</Switch>
+```
+
+## 크기 변경
+
+`SwitchControl`을 감싸서 `width`를 지정하면 높이와 `SwitchThumb`가 비율대로 맞춰집니다. `height`로 지정할 때는 `width: 'auto'`를 함께 지정합니다.
+
+<Preview>
+  <SwitchSizeDemo />
+</Preview>
+
+```tsx
+import { Switch, SwitchControl, SwitchLabel, SwitchThumb } from '@bigmobility/vinyl-ui/switch';
+
+import { styled } from 'styled-system/jsx';
+
+const WideSwitchControl = styled(SwitchControl, {
+  base: { width: '6.4rem' },
+});
+
+const TallSwitchControl = styled(SwitchControl, {
+  base: { height: '3.2rem', width: 'auto' },
+});
+
+<Switch
+  name="wide"
+  checked={form.wide}
+  onChangeChecked={handleChange}
+>
+  <WideSwitchControl>
+    <SwitchThumb />
+  </WideSwitchControl>
+  <SwitchLabel>width로 변경</SwitchLabel>
+</Switch>
+<Switch
+  name="tall"
+  checked={form.tall}
+  onChangeChecked={handleChange}
+>
+  <TallSwitchControl>
+    <SwitchThumb />
+  </TallSwitchControl>
+  <SwitchLabel>height로 변경</SwitchLabel>
+</Switch>
+```
+
+## Props
+
+### Switch
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '폼 필드 이름 (필수)',
+    },
+    checked: {
+      type: 'boolean',
+      description: '켜짐 여부 (제어, 필수)',
+    },
+    onChangeChecked: {
+      type: `({ name, value }: {
+    name: string;
+    value: boolean;
+  }) => void`,
+      description: '켜짐 여부가 바뀔 때 호출 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '스위치와 라벨',
+    },
+  }}
+/>
+
+### SwitchControl
+
+트랙을 그립니다. 자식으로 `SwitchThumb`를 넣습니다. 크기는 `width` 또는 `height`로 바꿉니다.
+
+### SwitchThumb
+
+트랙 안에서 움직이는 손잡이를 그립니다. 크기는 트랙에 맞춰 정해집니다.
+
+### SwitchLabel
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '라벨 문구',
+    },
+  }}
+/>

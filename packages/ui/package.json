@@ -75,6 +75,11 @@
       "import": "./dist/select.js",
       "default": "./dist/select.js"
     },
+    "./switch": {
+      "types": "./dist/switch.d.ts",
+      "import": "./dist/switch.js",
+      "default": "./dist/switch.js"
+    },
     "./preset": {
       "types": "./dist/preset/index.d.ts",
       "import": "./dist/preset/index.js",
