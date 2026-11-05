@@ -19,6 +19,10 @@ import Swatch from '../docs/Swatch';
 import SwitchDemo from '../docs/SwitchDemo';
 import SwitchSizeDemo from '../docs/SwitchSizeDemo';
 import TextFieldDemo from '../docs/TextFieldDemo';
+import ToastCustomDemo from '../docs/ToastCustomDemo';
+import ToastDemo from '../docs/ToastDemo';
+import ToastDurationDemo from '../docs/ToastDurationDemo';
+import ToastPlacementDemo from '../docs/ToastPlacementDemo';
 
 import Code from './Code';
 
@@ -70,6 +74,10 @@ const baseComponents: MDXComponents = {
   SwitchDemo,
   SwitchSizeDemo,
   TextFieldDemo,
+  ToastDemo,
+  ToastCustomDemo,
+  ToastDurationDemo,
+  ToastPlacementDemo,
   TypeTable: PropsTable,
 };
 

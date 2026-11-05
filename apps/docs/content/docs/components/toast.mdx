@@ -1,0 +1,154 @@
+---
+title: Toast
+description: 화면 아래나 위에 짧은 안내 문구를 잠시 보여 주는 컴포넌트
+---
+
+기본으로 화면 하단에 3초 동안 보인 뒤 닫힙니다. 포인터를 올리거나 포커스가 들어가거나 탭이 숨겨지면 시간이 멈춥니다. 좌우에 16px 여백을 두고 화면 너비에 맞춰 늘어납니다. 스크린 리더에는 상태 메시지로 읽힙니다.
+
+## 기본 예시
+
+`open`으로 표시 여부를 관리합니다. 토스트가 닫히기 시작하면 `onClose`가 호출됩니다. 3초가 지났을 때와 `open`을 `false`로 바꿨을 때 모두 호출됩니다. `onClose`에서 `open`을 `false`로 바꿉니다.
+
+<Preview>
+  <ToastDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Button } from '@bigmobility/vinyl-ui/button';
+import { Toast, ToastContent } from '@bigmobility/vinyl-ui/toast';
+
+export default function ToastExample() {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>저장하기</Button>
+      <Toast
+        open={open}
+        onClose={handleClose}
+      >
+        <ToastContent>저장되었습니다</ToastContent>
+      </Toast>
+    </>
+  );
+}
+```
+
+## 시간 변경
+
+`duration`으로 보이는 시간을 ms 단위로 지정합니다. 토스트가 열릴 때의 값을 쓰고, 열린 뒤에 바꾼 값은 다음에 열 때 적용됩니다. `Infinity`를 지정하면 `open`을 `false`로 바꿀 때까지 보입니다.
+
+<Preview>
+  <ToastDurationDemo />
+</Preview>
+
+```tsx
+<Toast
+  open={open}
+  duration={5000}
+  onClose={handleClose}
+>
+  <ToastContent>저장되었습니다</ToastContent>
+</Toast>
+```
+
+## 위치 변경
+
+`placement`로 위쪽이나 아래쪽을 지정하고, `align`으로 왼쪽, 센터, 오른쪽을 지정합니다. 토스트는 기본으로 양옆 16px 여백을 뺀 화면 너비를 채우므로, `align`은 `ToastContent`의 `maxWidth`를 줄였을 때 보입니다.
+
+토스트가 열려 있을 때 `placement`나 `align`을 바꾸면 토스트가 새 위치로 옮겨지고 보이는 시간이 처음부터 다시 시작됩니다. 위치와 `open`을 한 번에 바꾸면 `onClose`가 호출되지 않습니다.
+
+<Preview>
+  <ToastPlacementDemo />
+</Preview>
+
+```tsx
+const NarrowToastContent = styled(ToastContent, {
+  base: { maxWidth: '24rem' },
+});
+
+<Toast
+  open={open}
+  placement="top"
+  align="right"
+  onClose={handleClose}
+>
+  <NarrowToastContent>저장되었습니다</NarrowToastContent>
+</Toast>
+```
+
+## 스타일 변경
+
+`ToastContent`를 감싸서 색과 너비를 바꿉니다. `maxWidth`를 지정하면 `align`에 맞춰 정렬됩니다.
+
+<Preview>
+  <ToastCustomDemo />
+</Preview>
+
+```tsx
+import { Toast, ToastContent } from '@bigmobility/vinyl-ui/toast';
+
+import { styled } from 'styled-system/jsx';
+
+const NarrowToastContent = styled(ToastContent, {
+  base: {
+    maxWidth: '36rem',
+    backgroundColor: 'layout.primary',
+  },
+});
+
+<Toast
+  open={open}
+  onClose={handleClose}
+>
+  <NarrowToastContent>쿠폰이 발급되었습니다</NarrowToastContent>
+</Toast>
+```
+
+## Props
+
+### Toast
+
+<PropsTable
+  type={{
+    open: {
+      type: 'boolean',
+      description: '표시 여부 (제어, 필수)',
+    },
+    duration: {
+      type: 'number',
+      default: '3000',
+      description: '보이는 시간 (ms)',
+    },
+    placement: {
+      type: "'top' | 'bottom'",
+      default: "'bottom'",
+      description: '세로 위치',
+    },
+    align: {
+      type: "'left' | 'center' | 'right'",
+      default: "'center'",
+      description: '가로 정렬',
+    },
+    onClose: {
+      type: '() => void',
+      description: '토스트가 닫힐 때 호출 (필수)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '토스트 내용 (필수)',
+    },
+  }}
+/>
+
+### ToastContent
+
+토스트 상자를 그립니다. 자식으로 문구를 넣습니다.
