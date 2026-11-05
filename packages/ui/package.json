@@ -80,6 +80,11 @@
       "import": "./dist/switch.js",
       "default": "./dist/switch.js"
     },
+    "./toast": {
+      "types": "./dist/toast.d.ts",
+      "import": "./dist/toast.js",
+      "default": "./dist/toast.js"
+    },
     "./preset": {
       "types": "./dist/preset/index.d.ts",
       "import": "./dist/preset/index.js",
