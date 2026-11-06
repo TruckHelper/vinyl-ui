@@ -45,6 +45,11 @@
       "import": "./dist/caption.js",
       "default": "./dist/caption.js"
     },
+    "./combobox": {
+      "types": "./dist/combobox.d.ts",
+      "import": "./dist/combobox.js",
+      "default": "./dist/combobox.js"
+    },
     "./empty-state": {
       "types": "./dist/empty-state.d.ts",
       "import": "./dist/empty-state.js",
