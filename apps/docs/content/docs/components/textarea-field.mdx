@@ -1,0 +1,248 @@
+---
+title: TextareaField
+description: 라벨·여러 줄 입력·에러를 묶은 통합형 텍스트 영역 필드
+---
+
+## 개요
+
+`TextareaField`는 여러 줄을 입력받는 필드입니다. `TextField`와 같은 `Label`·`ErrorMessage`를 쓰고, 입력 부분만 `<textarea>`입니다.
+높이는 8rem으로 고정되어 있고, 내용이 넘치면 안에서 스크롤됩니다.
+
+## 기본 예시
+
+`value`와 `onChangeValue`로 값을 관리합니다. `onChangeValue`는 `{ name, value }`를 받습니다.
+
+<Preview>
+  <TextareaFieldDemo
+    name="memo"
+    label="메모"
+    placeholder="요청 사항을 입력하세요"
+  />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { TextareaField } from '@bigmobility/vinyl-ui/field';
+
+export default function TextareaFieldExample() {
+  const [memo, setMemo] = useState('');
+
+  const handleChange = ({ value }: { name: string; value: string }) => {
+    setMemo(value);
+  };
+
+  return (
+    <TextareaField
+      name="memo"
+      label="메모"
+      value={memo}
+      placeholder="요청 사항을 입력하세요"
+      onChangeValue={handleChange}
+    />
+  );
+}
+```
+
+## 필수
+
+`required`를 주면 라벨 옆에 필수 표시가 붙고 `<textarea>`에 `required` 속성이 들어갑니다.
+
+<Preview>
+  <TextareaFieldDemo
+    name="reason"
+    label="사유"
+    placeholder="사유를 입력하세요"
+    required
+  />
+</Preview>
+
+```tsx
+<TextareaField
+  name="reason"
+  label="사유"
+  value={reason}
+  placeholder="사유를 입력하세요"
+  required
+  onChangeValue={handleChange}
+/>
+```
+
+## 에러
+
+`errorMessage`를 주면 에러 상태가 되고 메시지가 나옵니다. 메시지 없이 에러 스타일만 보여 줄 때는 `hasError`를 씁니다.
+
+<Preview>
+  <TextareaFieldDemo
+    name="memo"
+    label="메모"
+    initialValue="입력한 내용"
+    errorMessage="메모를 다시 확인해 주세요"
+  />
+  <TextareaFieldDemo
+    name="note"
+    label="비고"
+    initialValue="입력한 내용"
+    hasError
+  />
+</Preview>
+
+```tsx
+<TextareaField
+  name="memo"
+  label="메모"
+  value={memo}
+  errorMessage="메모를 다시 확인해 주세요"
+  onChangeValue={handleChange}
+/>
+<TextareaField
+  name="note"
+  label="비고"
+  value={note}
+  hasError
+  onChangeValue={handleChange}
+/>
+```
+
+## 비활성
+
+<Preview>
+  <TextareaFieldDemo
+    name="memo"
+    label="메모"
+    placeholder="입력할 수 없습니다"
+    disabled
+  />
+</Preview>
+
+```tsx
+<TextareaField
+  name="memo"
+  label="메모"
+  value={memo}
+  placeholder="입력할 수 없습니다"
+  disabled
+  onChangeValue={handleChange}
+/>
+```
+
+## 직접 조합하기
+
+`Field` 안에서 `Textarea`를 쓰면 `Input`과 같은 방식으로 라벨·에러가 연결됩니다. [Field](/docs/components/field) 참고.
+
+```tsx
+import { ErrorMessage, Field, Label, Textarea } from '@bigmobility/vinyl-ui/field';
+
+<Field hasError={!!error}>
+  <Label>메모</Label>
+  <Textarea
+    name="memo"
+    value={memo}
+    onChange={(event) => setMemo(event.target.value)}
+  />
+  <ErrorMessage>{error}</ErrorMessage>
+</Field>
+```
+
+## Props
+
+### TextareaField
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '필드 이름 (필수). id 생성(`textarea-{name}`)과 onChangeValue 인자에 쓰임',
+    },
+    value: {
+      type: 'string',
+      description: '입력 값 (제어, 필수)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string;
+  }) => void`,
+      description: '값이 바뀔 때 호출 (필수)',
+    },
+    label: {
+      type: 'string',
+      description: '라벨 텍스트 (없으면 라벨 미표시)',
+    },
+    placeholder: {
+      type: 'string',
+      description: '플레이스홀더',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: '필수 입력 표시',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '에러 상태. `errorMessage`가 있으면 따로 주지 않아도 에러 상태',
+    },
+    errorMessage: {
+      type: 'string',
+      description: '에러 메시지',
+    },
+    className: {
+      type: 'string',
+      description: '루트 요소에 붙일 클래스',
+    },
+    ref: {
+      type: 'Ref<HTMLTextAreaElement>',
+      description: '내부 textarea 요소 ref',
+    },
+  }}
+/>
+
+### Textarea
+
+`<textarea>`의 표준 속성을 그대로 받습니다. `Field` 안에서는 `id`·`hasError`·`required`·`disabled`를 context에서 받습니다.
+
+<PropsTable
+  type={{
+    hasError: {
+      type: 'boolean',
+      description: '에러 스타일·aria',
+    },
+    ref: {
+      type: 'Ref<HTMLTextAreaElement>',
+      description: 'textarea 요소 ref',
+    },
+  }}
+/>
+
+## 접근성
+
+- 라벨과 `<textarea>`가 `htmlFor`·`id`로 연결되어 스크린 리더가 라벨을 읽습니다.
+- 에러 상태에서는 `aria-invalid`가 붙고, 메시지가 있으면 `aria-describedby`가 메시지를 가리킵니다. 메시지는 `role="alert"`로 바로 읽힙니다.
+- Enter는 줄바꿈입니다. 폼을 제출하지 않습니다.
+
+## 토큰 커스터마이징
+
+TextareaField는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.default` | <Swatch token="text.default" /> | 입력 텍스트 |
+| `text.input` | <Swatch token="text.input" /> | 라벨 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | 플레이스홀더 |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 입력 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 입력 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | hover·focus 테두리 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 에러 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 에러 테두리 |
+| `text.issue` | <Swatch token="text.issue" /> | 에러 메시지 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 필수 표시 점 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
