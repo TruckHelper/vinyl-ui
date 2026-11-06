@@ -6,6 +6,8 @@ import BadgeSample from '../docs/BadgeSample';
 import Callout from '../docs/Callout';
 import CaptionDemo from '../docs/CaptionDemo';
 import CodeBlock from '../docs/CodeBlock';
+import DashboardHeaderDemo from '../docs/DashboardHeaderDemo';
+import DashboardHeaderMenuDemo from '../docs/DashboardHeaderMenuDemo';
 import EmptyStateDemo from '../docs/EmptyStateDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
@@ -61,6 +63,8 @@ const baseComponents: MDXComponents = {
   PropsTable,
   Callout,
   CaptionDemo,
+  DashboardHeaderDemo,
+  DashboardHeaderMenuDemo,
   EmptyStateDemo,
   ResultStateDemo,
   HelpTextDemo,
