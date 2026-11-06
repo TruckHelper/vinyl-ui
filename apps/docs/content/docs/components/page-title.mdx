@@ -1,0 +1,122 @@
+---
+title: PageTitle
+description: 페이지 맨 위에 제목과 오른쪽 보조 영역을 배치하는 컴포넌트
+---
+
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+import { Link } from '@bigmobility/vinyl-ui/link';
+import { PageTitle, PageTitleAside, PageTitleHeading } from '@bigmobility/vinyl-ui/page-title';
+
+제목과 오른쪽 영역을 파트로 조합합니다. 제목은 `h1`로 렌더링되고 앞에 원형 표시가 붙습니다.
+
+## 기본 예시
+
+<Preview>
+  <PageTitle>
+    <PageTitleHeading>주문 관리</PageTitleHeading>
+  </PageTitle>
+</Preview>
+
+```tsx
+import { PageTitle, PageTitleHeading } from '@bigmobility/vinyl-ui/page-title';
+
+export default function PageTitleExample() {
+  return (
+    <PageTitle>
+      <PageTitleHeading>주문 관리</PageTitleHeading>
+    </PageTitle>
+  );
+}
+```
+
+## 오른쪽 영역
+
+`PageTitleAside`를 더하면 제목 반대쪽 끝에 내용이 배치됩니다. Breadcrumb 같은 경로 안내를 넣습니다. 태블릿보다 좁은 화면에서는 오른쪽 영역이 숨겨지므로 꼭 필요한 기능(버튼 등)은 넣지 않습니다.
+
+<Preview>
+  <PageTitle>
+    <PageTitleHeading>주문 관리</PageTitleHeading>
+    <PageTitleAside>
+      <nav aria-label="경로">
+        <Link href="/docs">문서</Link>
+        <Icon name="chevron-right" />
+        <Link href="/docs/components">컴포넌트</Link>
+      </nav>
+    </PageTitleAside>
+  </PageTitle>
+</Preview>
+
+```tsx
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+import { Link } from '@bigmobility/vinyl-ui/link';
+import { PageTitle, PageTitleAside, PageTitleHeading } from '@bigmobility/vinyl-ui/page-title';
+
+export default function PageTitleAsideExample() {
+  return (
+    <PageTitle>
+      <PageTitleHeading>주문 관리</PageTitleHeading>
+      <PageTitleAside>
+        <nav aria-label="경로">
+          <Link href="/docs">문서</Link>
+          <Icon name="chevron-right" />
+          <Link href="/docs/components">컴포넌트</Link>
+        </nav>
+      </PageTitleAside>
+    </PageTitle>
+  );
+}
+```
+
+## Props
+
+### PageTitle
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '제목과 오른쪽 영역',
+    },
+  }}
+/>
+
+### PageTitleHeading
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '페이지 제목',
+    },
+  }}
+/>
+
+### PageTitleAside
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '제목 반대쪽에 배치할 내용',
+    },
+  }}
+/>
+
+## 접근성
+
+- 루트는 `header`, 제목은 `h1`로 렌더링됩니다. 페이지마다 하나만 사용합니다.
+- 사이트 헤더와 `banner` 랜드마크가 겹치지 않게 `main` 안에 둡니다.
+- 제목 앞 원형 표시는 가상 요소라 스크린 리더에 읽히지 않습니다.
+- 오른쪽 영역에 경로 안내를 넣을 때는 `nav`와 `aria-label`로 감쌉니다.
+- 오른쪽 영역은 좁은 화면에서 `display: none`이 되어 보조 기술에도 노출되지 않습니다. 모바일에서도 필요한 내용은 다른 위치에 둡니다.
+
+## 토큰 커스터마이징
+
+PageTitle은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.heading` | <Swatch token="text.heading" /> | 제목 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 제목 앞 원형 표시 |
+
+이 밖에 타이포는 태블릿 미만에서 `heading.large-bold`, 태블릿 이상에서 `heading.small-bold`를 사용합니다.
