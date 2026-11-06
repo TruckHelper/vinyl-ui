@@ -7,6 +7,7 @@ import { styled } from 'styled-system/jsx/factory';
 import { createErrorId } from './utils';
 
 import { useFieldContext } from './FieldContext';
+import { useFieldGroupContext } from './FieldGroupContext';
 
 import { Icon } from '../icon/Icon';
 
@@ -34,8 +35,10 @@ export type ErrorMessageProps = Omit<ComponentProps<'div'>, 'children'> & {
 
 export function ErrorMessage({ id, className, children, ...props }: ErrorMessageProps) {
   const field = useFieldContext();
+  const group = useFieldGroupContext();
+  const owner = field ?? group;
 
-  if (field && !field.hasError) {
+  if (owner && !owner.hasError) {
     return null;
   }
 
@@ -43,7 +46,7 @@ export function ErrorMessage({ id, className, children, ...props }: ErrorMessage
     return null;
   }
 
-  const resolvedId = id ? createErrorId(id) : field?.errorId;
+  const resolvedId = id ? createErrorId(id) : owner?.errorId;
 
   return (
     <Container

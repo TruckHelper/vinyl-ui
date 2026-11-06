@@ -7,6 +7,7 @@ import Callout from '../docs/Callout';
 import CaptionDemo from '../docs/CaptionDemo';
 import CodeBlock from '../docs/CodeBlock';
 import EmptyStateDemo from '../docs/EmptyStateDemo';
+import FieldGroupDemo from '../docs/FieldGroupDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
 import Palette from '../docs/Palette';
@@ -62,6 +63,7 @@ const baseComponents: MDXComponents = {
   Callout,
   CaptionDemo,
   EmptyStateDemo,
+  FieldGroupDemo,
   ResultStateDemo,
   HelpTextDemo,
   HelpTextSample,
