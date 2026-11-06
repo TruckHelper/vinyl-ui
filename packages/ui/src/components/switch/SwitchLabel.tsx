@@ -1,10 +1,12 @@
 'use client';
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { Switch as ArkSwitch } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type SwitchLabelProps = Omit<ComponentProps<typeof ArkSwitch.Label>, 'asChild'>;
 
 export const SwitchLabel = styled(ArkSwitch.Label, {
   base: {
@@ -12,6 +14,4 @@ export const SwitchLabel = styled(ArkSwitch.Label, {
     color: 'text.input',
     _disabled: { color: 'text.disable' },
   },
-});
-
-export type SwitchLabelProps = ComponentProps<typeof SwitchLabel>;
+}) as unknown as FC<SwitchLabelProps>;

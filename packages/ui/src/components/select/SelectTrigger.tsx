@@ -48,7 +48,7 @@ const Container = styled(ArkSelect.Trigger, {
   },
 });
 
-type SelectTriggerProps = ComponentProps<typeof Container> & {
+export type SelectTriggerProps = Omit<ComponentProps<typeof ArkSelect.Trigger>, 'asChild'> & {
   hasIndicator?: boolean;
 };
 

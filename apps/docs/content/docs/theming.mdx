@@ -51,3 +51,25 @@ export default defineConfig({
 
 간격(`spacing`)·모서리(`radii`)·그림자(`shadows`) 등도 `tokens`에서 동일하게 재정의할 수 있습니다.
 다만 이런 구조 토큰은 보통 브랜드 간 공유하고, 브랜드 차이는 주로 컬러와 폰트로 표현합니다.
+
+## 컴포넌트 스타일 바꾸기
+
+브랜드 차이(색, 폰트 등)는 위의 토큰 교체로 처리합니다.
+
+한 컴포넌트의 색이나 크기만 바꾸려면 Panda `styled()`로 컴포넌트를 감쌉니다.
+`SwitchControl`, `SelectItem` 같은 파트 컴포넌트는 감싸면 기본 스타일과 합쳐집니다.
+`Button`, `HelpText` 같은 함수 컴포넌트를 감싸 같은 CSS 속성을 덮어쓰면 결과가 보장되지 않습니다(개선 예정).
+
+```tsx
+import { styled } from 'styled-system/jsx';
+import { SwitchControl } from '@bigmobility/vinyl-ui/switch';
+
+export const WideSwitchControl = styled(SwitchControl, {
+  base: { width: '6.4rem' },
+});
+```
+
+`className`은 바깥 여백이나 배치 같은 레이아웃 용도로 씁니다.
+컴포넌트 자체 속성을 `className`으로 덮어쓰면 결과가 CSS 순서에 달려 있어 보장되지 않습니다.
+
+컴포넌트는 `width`, `color` 같은 스타일 prop과 `css`, `as` prop을 받지 않습니다.

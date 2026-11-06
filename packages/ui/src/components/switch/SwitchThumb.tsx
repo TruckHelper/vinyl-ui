@@ -1,10 +1,12 @@
 'use client';
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { Switch as ArkSwitch } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type SwitchThumbProps = Omit<ComponentProps<typeof ArkSwitch.Thumb>, 'asChild'>;
 
 export const SwitchThumb = styled(ArkSwitch.Thumb, {
   base: {
@@ -31,6 +33,4 @@ export const SwitchThumb = styled(ArkSwitch.Thumb, {
       borderColor: 'layout.default-line',
     },
   },
-});
-
-export type SwitchThumbProps = ComponentProps<typeof SwitchThumb>;
+}) as unknown as FC<SwitchThumbProps>;

@@ -1,12 +1,12 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type ResultStateDescriptionProps = ComponentProps<'p'>;
 
 export const ResultStateDescription = styled('p', {
   base: {
     textStyle: 'body.medium-light',
     color: 'text.soft',
   },
-});
-
-export type ResultStateDescriptionProps = ComponentProps<typeof ResultStateDescription>;
+}) as unknown as FC<ResultStateDescriptionProps>;

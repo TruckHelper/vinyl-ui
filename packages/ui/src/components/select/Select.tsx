@@ -26,7 +26,7 @@ export type SelectItemData = {
 type RootProps = ComponentProps<typeof ArkSelect.Root<SelectItemData>>;
 type ValueChangeDetails = Parameters<NonNullable<RootProps['onValueChange']>>[0];
 
-type SelectProps = Omit<Partial<RootProps>, 'value' | 'onValueChange'> & {
+export type SelectProps = Omit<Partial<RootProps>, 'value' | 'onValueChange'> & {
   items: SelectItemData[];
   name: string;
   value: string[];

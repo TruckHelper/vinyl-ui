@@ -1,6 +1,8 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type ResultStateProps = ComponentProps<'div'>;
 
 export const ResultState = styled('div', {
   base: {
@@ -10,6 +12,4 @@ export const ResultState = styled('div', {
     gap: '8',
     textAlign: 'center',
   },
-});
-
-export type ResultStateProps = ComponentProps<typeof ResultState>;
+}) as unknown as FC<ResultStateProps>;

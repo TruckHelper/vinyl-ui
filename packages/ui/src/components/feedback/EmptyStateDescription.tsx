@@ -1,12 +1,12 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type EmptyStateDescriptionProps = ComponentProps<'p'>;
 
 export const EmptyStateDescription = styled('p', {
   base: {
     textStyle: 'body.medium-light',
     color: 'text.soft',
   },
-});
-
-export type EmptyStateDescriptionProps = ComponentProps<typeof EmptyStateDescription>;
+}) as unknown as FC<EmptyStateDescriptionProps>;

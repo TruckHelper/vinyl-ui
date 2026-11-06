@@ -1,10 +1,12 @@
 'use client';
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { Switch as ArkSwitch } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type SwitchControlProps = Omit<ComponentProps<typeof ArkSwitch.Control>, 'asChild'>;
 
 export const SwitchControl = styled(ArkSwitch.Control, {
   base: {
@@ -39,6 +41,4 @@ export const SwitchControl = styled(ArkSwitch.Control, {
       backgroundColor: 'layout.bg-disable',
     },
   },
-});
-
-export type SwitchControlProps = ComponentProps<typeof SwitchControl>;
+}) as unknown as FC<SwitchControlProps>;
