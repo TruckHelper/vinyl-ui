@@ -1,0 +1,203 @@
+---
+title: Card
+description: 이미지, 라벨, 제목, 본문, 날짜로 소식을 보여 주는 카드 컴포넌트
+---
+
+import NextLink from 'next/link';
+
+import {
+  Card, CardContent, CardDate, CardImage, CardInfo, CardLabel, CardText, CardTitle,
+} from '@bigmobility/vinyl-ui/card';
+
+이미지, 라벨, 제목, 본문, 날짜를 파트로 조합합니다. 라벨과 본문은 필요할 때만 넣습니다. 폭은 320px이며, 이미지는 320:213 비율로 채워지고 불러오기 전에는 회색 배경이 보입니다.
+
+## 기본 예시
+
+<Preview>
+  <Card>
+    <CardImage alt="" />
+    <CardInfo>
+      <CardContent>
+        <CardLabel>공지</CardLabel>
+        <CardTitle>서비스 점검 안내</CardTitle>
+        <CardText>11월 10일 새벽 2시부터 4시까지 서비스 점검이 진행됩니다.</CardText>
+      </CardContent>
+      <CardDate dateTime="2026-11-06">2026.11.06</CardDate>
+    </CardInfo>
+  </Card>
+</Preview>
+
+```tsx
+import {
+  Card, CardContent, CardDate, CardImage, CardInfo, CardLabel, CardText, CardTitle,
+} from '@bigmobility/vinyl-ui/card';
+
+export default function CardExample() {
+  return (
+    <Card>
+      <CardImage
+        src="/images/notice.png"
+        alt=""
+      />
+      <CardInfo>
+        <CardContent>
+          <CardLabel>공지</CardLabel>
+          <CardTitle>서비스 점검 안내</CardTitle>
+          <CardText>11월 10일 새벽 2시부터 4시까지 서비스 점검이 진행됩니다.</CardText>
+        </CardContent>
+        <CardDate dateTime="2026-11-06">2026.11.06</CardDate>
+      </CardInfo>
+    </Card>
+  );
+}
+```
+
+## 구성
+
+라벨이나 본문을 빼면 남은 파트끼리 간격이 맞춰집니다. 본문은 한 줄을 넘으면 말줄임표로 줄어듭니다.
+
+<Preview>
+  <Card>
+    <CardImage alt="" />
+    <CardInfo>
+      <CardContent>
+        <CardLabel>이벤트</CardLabel>
+        <CardTitle>신규 가입 혜택</CardTitle>
+      </CardContent>
+      <CardDate dateTime="2026-11-01">2026.11.01</CardDate>
+    </CardInfo>
+  </Card>
+  <Card>
+    <CardImage alt="" />
+    <CardInfo>
+      <CardContent>
+        <CardTitle>앱 업데이트 소식</CardTitle>
+        <CardText>화물 조회 화면이 더 빨라지고 알림 설정이 추가되었습니다.</CardText>
+      </CardContent>
+      <CardDate dateTime="2026-10-28">2026.10.28</CardDate>
+    </CardInfo>
+  </Card>
+</Preview>
+
+```tsx
+<Card>
+  <CardImage
+    src="/images/event.png"
+    alt=""
+  />
+  <CardInfo>
+    <CardContent>
+      <CardLabel>이벤트</CardLabel>
+      <CardTitle>신규 가입 혜택</CardTitle>
+    </CardContent>
+    <CardDate dateTime="2026-11-01">2026.11.01</CardDate>
+  </CardInfo>
+</Card>
+<Card>
+  <CardImage
+    src="/images/update.png"
+    alt=""
+  />
+  <CardInfo>
+    <CardContent>
+      <CardTitle>앱 업데이트 소식</CardTitle>
+      <CardText>화물 조회 화면이 더 빨라지고 알림 설정이 추가되었습니다.</CardText>
+    </CardContent>
+    <CardDate dateTime="2026-10-28">2026.10.28</CardDate>
+  </CardInfo>
+</Card>
+```
+
+## 링크 카드
+
+카드 전체를 링크로 만들려면 라우터 링크로 `Card`를 감쌉니다. 링크 이름은 카드 안의 텍스트로 읽힙니다.
+
+<Preview>
+  <NextLink href="#링크-카드">
+    <Card>
+      <CardImage alt="" />
+      <CardInfo>
+        <CardContent>
+          <CardTitle>서비스 점검 안내</CardTitle>
+        </CardContent>
+        <CardDate dateTime="2026-11-06">2026.11.06</CardDate>
+      </CardInfo>
+    </Card>
+  </NextLink>
+</Preview>
+
+```tsx
+import NextLink from 'next/link';
+
+import {
+  Card, CardContent, CardDate, CardImage, CardInfo, CardTitle,
+} from '@bigmobility/vinyl-ui/card';
+
+export default function CardLinkExample() {
+  return (
+    <NextLink href="/news/1">
+      <Card>
+        <CardImage
+          src="/images/notice.png"
+          alt=""
+        />
+        <CardInfo>
+          <CardContent>
+            <CardTitle>서비스 점검 안내</CardTitle>
+          </CardContent>
+          <CardDate dateTime="2026-11-06">2026.11.06</CardDate>
+        </CardInfo>
+      </Card>
+    </NextLink>
+  );
+}
+```
+
+## Props
+
+### CardImage
+
+<PropsTable
+  type={{
+    alt: {
+      type: 'string',
+      description: '이미지 대체 텍스트(필수). 제목과 같은 내용이면 빈 문자열',
+    },
+  }}
+/>
+
+나머지 파트는 해당 HTML 요소의 속성을 그대로 받습니다.
+
+| 파트 | 요소 | 역할 |
+| --- | --- | --- |
+| `Card` | `article` | 카드 루트 |
+| `CardImage` | `img` | 이미지 |
+| `CardInfo` | `div` | 내용과 날짜 묶음 |
+| `CardContent` | `div` | 라벨, 제목, 본문 묶음 |
+| `CardLabel` | `span` | 분류 라벨 |
+| `CardTitle` | `h3` | 제목 |
+| `CardText` | `p` | 한 줄 본문 |
+| `CardDate` | `time` | 날짜. `dateTime`으로 기계가 읽는 날짜를 넣음 |
+
+## 접근성
+
+- 루트는 `article`이라 하나의 독립된 소식으로 읽힙니다.
+- 제목은 `h3`입니다. 페이지 제목 구조에 맞지 않으면 문서 구조를 조정하세요.
+- `CardImage`는 `alt`가 필수입니다. 제목이 내용을 전달하면 `alt=""`로 두어 스크린 리더가 건너뛰게 합니다.
+- 본문의 말줄임은 화면에서만 적용되고, 스크린 리더는 전체 문장을 읽습니다.
+- 날짜는 `time` 요소라 `dateTime`에 `2026-11-06` 형식을 넣으면 기계가 날짜로 인식합니다.
+
+## 토큰 커스터마이징
+
+Card는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-soft-gray` | <Swatch token="layout.bg-soft-gray" /> | 이미지 자리 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 라벨 배경 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 라벨 글자 |
+| `text.heading` | <Swatch token="text.heading" /> | 제목 |
+| `text.default` | <Swatch token="text.default" /> | 본문 |
+| `text.soft` | <Swatch token="text.soft" /> | 날짜 |
+
+이 밖에 타이포는 제목 `heading.medium-bold`, 라벨 `body.small-normal`, 본문·날짜 `body.medium-light`를 사용합니다.
