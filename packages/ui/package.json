@@ -70,6 +70,11 @@
       "import": "./dist/link.js",
       "default": "./dist/link.js"
     },
+    "./page-title": {
+      "types": "./dist/page-title.d.ts",
+      "import": "./dist/page-title.js",
+      "default": "./dist/page-title.js"
+    },
     "./result-state": {
       "types": "./dist/result-state.d.ts",
       "import": "./dist/result-state.js",
