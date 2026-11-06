@@ -1,0 +1,318 @@
+---
+title: Combobox
+description: 입력한 글자로 목록을 좁혀 값을 선택하는 컴포넌트
+---
+
+Combobox는 [Select](/docs/components/select)와 같은 구조에 검색 입력을 더한 컴포넌트입니다. `Combobox`(루트) 안에 입력 영역(`ComboboxControl` > `ComboboxInput`)과
+옵션 목록(`ComboboxContent` > `ComboboxItem` > `ComboboxItemText`)을 구성합니다. 입력 영역 우측의 `chevron-down` 아이콘은
+`ComboboxControl`이 기본으로 렌더합니다.
+
+루트 `items`에 전체 옵션을 넘기고 `ComboboxContent` 안에서 전체 옵션을 그대로 렌더하면, 입력한 글자를 포함하지 않는 옵션은 자동으로 숨겨집니다.
+필터링을 위해 따로 상태를 관리할 필요가 없습니다.
+
+<Callout type="warning">
+  `Combobox`는 **제어(controlled) 컴포넌트**입니다. `value`(항상 `string[]`)와 `onChangeValue`가 필수이며, 단일 선택이어도 `value`는 배열로 관리합니다(선택값은
+  `value[0]`).
+</Callout>
+
+## 기본 예시
+
+<Preview>
+  <ComboboxDemo />
+</Preview>
+
+```tsx
+import { useState } from 'react';
+
+import {
+  Combobox,
+  ComboboxControl,
+  ComboboxInput,
+  ComboboxContent,
+  ComboboxItem,
+  ComboboxItemText,
+} from '@bigmobility/vinyl-ui/combobox';
+
+const REGIONS = [
+  { label: '서울', value: 'seoul' },
+  { label: '부산', value: 'busan' },
+  { label: '대구', value: 'daegu' },
+  { label: '대전', value: 'daejeon' },
+  { label: '인천 (준비 중)', value: 'incheon', disabled: true },
+];
+
+export default function RegionCombobox() {
+  const [value, setValue] = useState<string[]>([]);
+
+  const handleChange = ({ value }: {
+    name: string;
+    value: string[];
+  }) => {
+    setValue(value);
+  };
+
+  return (
+    <Combobox
+      items={REGIONS}
+      name="region"
+      value={value}
+      onChangeValue={handleChange}
+    >
+      <ComboboxControl>
+        <ComboboxInput placeholder="지역 검색" />
+      </ComboboxControl>
+      <ComboboxContent>
+        {REGIONS.map((item) => (
+          <ComboboxItem
+            key={item.value}
+            item={item}
+          >
+            <ComboboxItemText>{item.label}</ComboboxItemText>
+          </ComboboxItem>
+        ))}
+      </ComboboxContent>
+    </Combobox>
+  );
+}
+```
+
+## Placeholder
+
+입력이 비어 있을 때 `ComboboxInput`의 `placeholder`가 표시되며, 색이 `text.input-soft`로 흐려집니다.
+
+<Preview>
+  <ComboboxDemo placeholder="지역 이름을 입력하세요" />
+</Preview>
+
+```tsx
+<ComboboxControl>
+  <ComboboxInput placeholder="지역 이름을 입력하세요" />
+</ComboboxControl>
+```
+
+## 다중 선택
+
+`multiple`을 주면 여러 값을 동시에 선택할 수 있습니다. `value`는 단일 선택과 동일하게 `string[]`입니다.
+
+<Preview>
+  <ComboboxDemo multiple />
+</Preview>
+
+```tsx
+<Combobox
+  items={REGIONS}
+  name="region"
+  value={value}
+  multiple
+  onChangeValue={handleChange}
+>
+  {/* ... */}
+</Combobox>
+```
+
+## Error
+
+`hasError`를 주면 입력 영역이 에러 스타일(배경 `layout.bg-issue`, 테두리 `layout.issue-line`)로 표시됩니다.
+
+<Preview>
+  <ComboboxDemo hasError />
+</Preview>
+
+```tsx
+<Combobox
+  items={REGIONS}
+  name="region"
+  value={value}
+  hasError
+  onChangeValue={handleChange}
+>
+  {/* ... */}
+</Combobox>
+```
+
+## Disabled
+
+`disabled`를 주면 입력과 목록 열기가 모두 막힙니다.
+개별 옵션은 `items`의 각 항목에 `disabled: true`로 비활성화합니다.
+
+<Preview>
+  <ComboboxDemo disabled />
+</Preview>
+
+```tsx
+<Combobox
+  items={REGIONS}
+  name="region"
+  value={value}
+  disabled
+  onChangeValue={handleChange}
+>
+  {/* ... */}
+</Combobox>
+```
+
+## 옵션 그룹
+
+옵션을 묶을 때는 `ComboboxGroup` + `ComboboxGroupLabel`로 그룹 제목을 붙입니다. 검색 결과에 남은 옵션이 없는 그룹은 제목까지 함께 숨겨집니다.
+
+<Preview>
+  <ComboboxDemo grouped />
+</Preview>
+
+```tsx
+import { ComboboxGroup, ComboboxGroupLabel } from '@bigmobility/vinyl-ui/combobox';
+
+const REGIONS = [
+  { label: '서울', value: 'seoul', group: '수도권' },
+  { label: '인천', value: 'incheon', group: '수도권' },
+  { label: '부산', value: 'busan', group: '경상권' },
+  { label: '대구', value: 'daegu', group: '경상권' },
+];
+
+const groups = [...new Set(REGIONS.map((item) => item.group))];
+
+<Combobox
+  items={REGIONS}
+  name="region"
+  value={value}
+  onChangeValue={handleChange}
+>
+  <ComboboxControl>
+    <ComboboxInput placeholder="지역 검색" />
+  </ComboboxControl>
+  <ComboboxContent>
+    {groups.map((group) => (
+      <ComboboxGroup key={group}>
+        <ComboboxGroupLabel>{group}</ComboboxGroupLabel>
+        {REGIONS.filter((item) => item.group === group).map((item) => (
+          <ComboboxItem
+            key={item.value}
+            item={item}
+          >
+            <ComboboxItemText>{item.label}</ComboboxItemText>
+          </ComboboxItem>
+        ))}
+      </ComboboxGroup>
+    ))}
+  </ComboboxContent>
+</Combobox>
+```
+
+## Props
+
+<Callout type="info">
+  Combobox 파트는 Ark UI Combobox의 props를 그대로 전달할 수 있습니다.
+  전체 목록은 [Ark UI Combobox 문서](https://ark-ui.com/react/docs/components/combobox)를 확인하세요.
+</Callout>
+
+### Combobox
+
+<PropsTable
+  type={{
+    items: {
+      type: 'ComboboxItemData[]',
+      description: '전체 옵션 목록 ({ label, value, disabled?, group? }). 입력한 글자로 자동 필터링',
+    },
+    name: {
+      type: 'string',
+      description: '폼 필드 이름 (필수)',
+    },
+    value: {
+      type: 'string[]',
+      description: '선택된 값 (제어, 단일 선택도 배열)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string[];
+  }) => void`,
+      description: '값 변경 콜백 (필수)',
+    },
+    multiple: {
+      type: 'boolean',
+      default: 'false',
+      description: '다중 선택 허용',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '전체 비활성화',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '에러 스타일 적용',
+    },
+    translations: {
+      type: '{ triggerLabel?: string; clearTriggerLabel?: string }',
+      default: "{ triggerLabel: '목록 열기', clearTriggerLabel: '입력 지우기' }",
+      description: '버튼 접근 이름',
+    },
+  }}
+/>
+
+### ComboboxInput
+
+<PropsTable
+  type={{
+    placeholder: {
+      type: 'string',
+      description: '입력이 비어 있을 때 표시할 문구',
+    },
+  }}
+/>
+
+### ComboboxControl
+
+<PropsTable
+  type={{
+    hasIndicator: {
+      type: 'boolean',
+      default: 'true',
+      description: 'chevron 아이콘(목록 열기 버튼) 자동 렌더 여부',
+    },
+  }}
+/>
+
+### ComboboxItem
+
+<PropsTable
+  type={{
+    item: {
+      type: 'ComboboxItemData',
+      description: '해당 옵션 데이터 (필수)',
+    },
+  }}
+/>
+
+구조용 파트로 `ComboboxTrigger`(목록 열기 버튼) · `ComboboxContent`(옵션 목록 팝오버) · `ComboboxItemText`(옵션 라벨) · `ComboboxGroup` · `ComboboxGroupLabel`이 있습니다.
+
+## 접근성
+
+- Ark UI `Combobox` 기반으로 입력에 **`combobox` 역할**, 목록에 **`listbox` 역할**이 붙고 `aria-expanded`·`aria-activedescendant`가 기본 동작합니다.
+- 키보드: 입력에서 ↑/↓로 옵션을 이동하고 Enter로 선택하며, Esc로 목록을 닫습니다.
+- 입력한 글자와 맞는 옵션이 없으면 목록이 닫히고 `aria-expanded`가 `false`가 됩니다. 맞는 옵션이 다시 생기면 열립니다.
+- chevron 버튼의 접근 이름은 기본으로 "목록 열기"입니다. 루트 `translations`의 `triggerLabel`로 바꿀 수 있습니다.
+- 입력에 포커스가 있으면 입력 영역에 포커스 링이 표시됩니다.
+- `hasError`이면 입력에 `aria-invalid`가 붙습니다. `disabled` 옵션은 하이라이트·선택되지 않습니다.
+
+## 토큰 커스터마이징
+
+Combobox는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 입력 영역·옵션 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 입력 영역·목록 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | 입력 영역 hover·focus·open 테두리 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 포커스 링 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 에러 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 에러 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 선택·하이라이트 옵션 배경 |
+| `text.input` | <Swatch token="text.input" /> | 입력·옵션 텍스트 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | placeholder 텍스트, 에러·비활성 아이콘 |
+| `text.input-strong` | <Swatch token="text.input-strong" /> | chevron 아이콘 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 선택·하이라이트 옵션 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
+| `text.soft` | <Swatch token="text.soft" /> | 그룹 라벨 텍스트 |
