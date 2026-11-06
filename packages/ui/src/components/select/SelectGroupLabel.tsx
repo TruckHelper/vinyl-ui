@@ -10,9 +10,15 @@ export type SelectGroupLabelProps = Omit<ComponentProps<typeof ArkSelect.ItemGro
 
 export const SelectGroupLabel = styled(ArkSelect.ItemGroupLabel, {
   base: {
-    textStyle: 'body.medium-bold',
+    textStyle: 'body.large-normal',
+    display: 'flex',
+    alignItems: 'center',
     paddingInline: '12',
-    paddingBlock: '8',
-    color: 'text.soft',
+    minHeight: 'input-height',
+    borderBlockWidth: '1px',
+    borderBlockStyle: 'solid',
+    borderBlockColor: 'layout.default-line',
+    backgroundColor: 'layout.bg-light-gray',
+    color: 'text.strong',
   },
 }) as unknown as FC<SelectGroupLabelProps>;
