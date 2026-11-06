@@ -13,5 +13,10 @@ export const AccordionItem = styled(ArkAccordion.Item, {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    '[data-variant=filled] > &': {
+      padding: '8',
+      borderRadius: '16',
+      backgroundColor: 'layout.bg-light-gray',
+    },
   },
 }) as unknown as FC<AccordionItemProps>;
