@@ -95,6 +95,11 @@
       "import": "./dist/selector-button.js",
       "default": "./dist/selector-button.js"
     },
+    "./step": {
+      "types": "./dist/step.d.ts",
+      "import": "./dist/step.js",
+      "default": "./dist/step.js"
+    },
     "./switch": {
       "types": "./dist/switch.d.ts",
       "import": "./dist/switch.js",

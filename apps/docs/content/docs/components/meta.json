@@ -1,4 +1,4 @@
 {
   "title": "컴포넌트",
-  "pages": ["accordion", "badge", "button", "caption", "empty-state", "result-state", "field", "text-field", "help-text", "icon", "icon-button", "link", "list", "news-card", "select", "selector-button", "switch", "toast"]
+  "pages": ["accordion", "badge", "button", "caption", "empty-state", "result-state", "field", "text-field", "help-text", "icon", "icon-button", "link", "list", "news-card", "select", "selector-button", "step", "switch", "toast"]
 }
