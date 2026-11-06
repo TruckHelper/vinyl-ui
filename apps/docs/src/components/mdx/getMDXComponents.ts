@@ -11,6 +11,7 @@ import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
+import ProcessIndicatorDemo from '../docs/ProcessIndicatorDemo';
 import PropsTable from '../docs/PropsTable';
 import ResultStateDemo from '../docs/ResultStateDemo';
 import Section from '../docs/Section';
@@ -59,6 +60,7 @@ const baseComponents: MDXComponents = {
   td: Td,
   Preview,
   PropsTable,
+  ProcessIndicatorDemo,
   Callout,
   CaptionDemo,
   EmptyStateDemo,

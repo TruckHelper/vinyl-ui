@@ -1,0 +1,168 @@
+---
+title: Process
+description: 여러 단계로 나뉜 진행 흐름에서 현재 단계를 보여 주는 컴포넌트
+---
+
+import { ProcessIndicator, ProcessItem } from '@bigmobility/vinyl-ui/process';
+
+`ProcessIndicator` 안에 단계 수만큼 `ProcessItem`을 나열해 조합합니다. 항목 사이 구분선은 자동으로 그려지고, 구분선이 남는 폭을 나눠 가져 `ProcessIndicator`는 부모 폭을 가득 채웁니다. 클릭할 수 없는 표시용 컴포넌트입니다.
+
+## 기본 예시
+
+`ProcessItem`마다 0부터 시작하는 `index`를 주고, `ProcessIndicator`의 `current`로 현재 단계를 지정합니다. `index`가 `current`와 같은 항목만 활성 원으로 표시되고, 나머지는 대기 원으로 표시됩니다. `current`를 주지 않으면 첫 단계가 현재 단계입니다.
+
+<Preview>
+  <ProcessIndicator aria-label="신청 단계">
+    <ProcessItem index={0}>정보 입력</ProcessItem>
+    <ProcessItem index={1}>완료</ProcessItem>
+  </ProcessIndicator>
+</Preview>
+
+```tsx
+import { ProcessIndicator, ProcessItem } from '@bigmobility/vinyl-ui/process';
+
+export default function ProcessExample() {
+  return (
+    <ProcessIndicator aria-label="신청 단계">
+      <ProcessItem index={0}>정보 입력</ProcessItem>
+      <ProcessItem index={1}>완료</ProcessItem>
+    </ProcessIndicator>
+  );
+}
+```
+
+## 단계 이동
+
+`current`를 상태로 관리하면 진행에 따라 현재 단계가 바뀝니다. 단계 수에 제한은 없습니다.
+
+<Preview>
+  <ProcessIndicatorDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Button } from '@bigmobility/vinyl-ui/button';
+import { ProcessIndicator, ProcessItem } from '@bigmobility/vinyl-ui/process';
+
+const STEPS = ['정보 입력', '서류 확인', '결제', '완료'];
+
+export default function ProcessStepExample() {
+  const [current, setCurrent] = useState(0);
+
+  return (
+    <>
+      <ProcessIndicator
+        current={current}
+        aria-label="신청 단계"
+      >
+        {STEPS.map((step, index) => (
+          <ProcessItem
+            key={step}
+            index={index}
+          >
+            {step}
+          </ProcessItem>
+        ))}
+      </ProcessIndicator>
+      <Button
+        variant="outline"
+        disabled={current === 0}
+        onClick={() => setCurrent(current - 1)}
+      >
+        이전
+      </Button>
+      <Button
+        disabled={current === STEPS.length - 1}
+        onClick={() => setCurrent(current + 1)}
+      >
+        다음
+      </Button>
+    </>
+  );
+}
+```
+
+## 항목 상태 직접 지정
+
+`ProcessItem`에 `type`을 주면 `index`와 `current` 비교보다 우선합니다. 서버에서 받은 상태를 그대로 보여 줄 때처럼 항목마다 상태를 정할 때 씁니다. `aria-current="step"`은 현재 단계 하나를 뜻하므로 `active`는 한 항목에만 지정합니다.
+
+<Preview>
+  <ProcessIndicator aria-label="처리 단계">
+    <ProcessItem type="pending">접수</ProcessItem>
+    <ProcessItem type="active">검토</ProcessItem>
+    <ProcessItem type="pending">승인</ProcessItem>
+  </ProcessIndicator>
+</Preview>
+
+```tsx
+<ProcessIndicator aria-label="처리 단계">
+  <ProcessItem type="pending">접수</ProcessItem>
+  <ProcessItem type="active">검토</ProcessItem>
+  <ProcessItem type="pending">승인</ProcessItem>
+</ProcessIndicator>
+```
+
+## Props
+
+### ProcessIndicator
+
+<PropsTable
+  type={{
+    current: {
+      type: 'number',
+      default: '0',
+      description: '현재 단계의 index (0부터)',
+    },
+    'aria-label': {
+      type: 'string',
+      description: '단계 목록의 이름 (권장)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'ProcessItem 목록',
+    },
+  }}
+/>
+
+### ProcessItem
+
+<PropsTable
+  type={{
+    index: {
+      type: 'number',
+      description: '단계 순서 (0부터). `ProcessIndicator`의 `current`와 같으면 활성. `type`이 없으면 필수',
+    },
+    type: {
+      type: "'pending' | 'active'",
+      description: '상태를 직접 지정. 주면 `index` 비교보다 우선. `index`가 없으면 필수',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '단계 이름',
+    },
+  }}
+/>
+
+## 접근성
+
+- `ProcessIndicator`는 순서 있는 목록(`ol`), `ProcessItem`은 목록 항목(`li`)으로 렌더링되어 스크린 리더가 단계 수와 순서를 읽습니다.
+- 현재 단계 항목에는 `aria-current="step"`이 지정됩니다.
+- 완료 상태가 따로 없어 지난 단계도 다음 단계와 같은 대기 원으로 보입니다. 지난 단계를 구분해야 하면 단계 이름으로 알려 줍니다.
+- 원은 장식이라 `aria-hidden`으로 숨기고, 상태는 `aria-current`로만 전달합니다.
+- 상호작용이 없어 포커스를 받지 않습니다. 목록 이름은 `aria-label`로 지정합니다.
+
+## 토큰 커스터마이징
+
+Process는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.primary` | <Swatch token="layout.primary" /> | 활성 원 배경 |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 대기 원 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 원 테두리, 항목 사이 구분선 |
+| `text.default` | <Swatch token="text.default" /> | 단계 이름 |
+
+이 밖에 타이포는 `body.small-light`를 사용합니다.
