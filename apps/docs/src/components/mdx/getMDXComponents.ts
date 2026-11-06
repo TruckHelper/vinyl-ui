@@ -9,6 +9,7 @@ import CaptionDemo from '../docs/CaptionDemo';
 import CheckboxDemo from '../docs/CheckboxDemo';
 import CodeBlock from '../docs/CodeBlock';
 import EmptyStateDemo from '../docs/EmptyStateDemo';
+import FieldGroupDemo from '../docs/FieldGroupDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
 import NewsCardGrid from '../docs/NewsCardGrid';
@@ -74,6 +75,7 @@ const baseComponents: MDXComponents = {
   CheckboxDemo,
   AgreementItemDemo,
   EmptyStateDemo,
+  FieldGroupDemo,
   ResultStateDemo,
   HelpTextDemo,
   HelpTextSample,
