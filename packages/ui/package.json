@@ -80,6 +80,11 @@
       "import": "./dist/news-card.js",
       "default": "./dist/news-card.js"
     },
+    "./process": {
+      "types": "./dist/process.d.ts",
+      "import": "./dist/process.js",
+      "default": "./dist/process.js"
+    },
     "./result-state": {
       "types": "./dist/result-state.d.ts",
       "import": "./dist/result-state.js",

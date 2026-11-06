@@ -12,6 +12,7 @@ import HelpTextSample from '../docs/HelpTextSample';
 import NewsCardGrid from '../docs/NewsCardGrid';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
+import ProcessDemo from '../docs/ProcessDemo';
 import PropsTable from '../docs/PropsTable';
 import ResultStateDemo from '../docs/ResultStateDemo';
 import Section from '../docs/Section';
@@ -60,6 +61,7 @@ const baseComponents: MDXComponents = {
   td: Td,
   Preview,
   PropsTable,
+  ProcessDemo,
   Callout,
   CaptionDemo,
   EmptyStateDemo,
