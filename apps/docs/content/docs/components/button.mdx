@@ -31,6 +31,7 @@ export default function ButtonExample() {
 <Preview>
   <Button variant="primary">primary</Button>
   <Button variant="emphasis">emphasis</Button>
+  <Button variant="issue">issue</Button>
   <Button variant="neutral">neutral</Button>
   <Button variant="outline">outline</Button>
 </Preview>
@@ -43,6 +44,7 @@ export default function StyledButton() {
     <>
       <Button variant="primary">primary</Button>
       <Button variant="emphasis">emphasis</Button>
+      <Button variant="issue">issue</Button>
       <Button variant="neutral">neutral</Button>
       <Button variant="outline">outline</Button>
     </>
@@ -104,6 +106,7 @@ export default function IconButton() {
 <Preview>
   <Button variant="primary" disabled>primary</Button>
   <Button variant="emphasis" disabled>emphasis</Button>
+  <Button variant="issue" disabled>issue</Button>
   <Button variant="neutral" disabled>neutral</Button>
   <Button variant="outline" disabled>outline</Button>
 </Preview>
@@ -127,6 +130,12 @@ export default function DisabledButton() {
         emphasis
       </Button>
       <Button
+        variant="issue"
+        disabled
+      >
+        issue
+      </Button>
+      <Button
         variant="neutral"
         disabled
       >
@@ -148,7 +157,7 @@ export default function DisabledButton() {
 <PropsTable
   type={{
     variant: {
-      type: "primary | emphasis | neutral | outline",
+      type: "primary | emphasis | issue | neutral | outline",
       default: "primary",
       description: '색 계열',
     },
@@ -171,6 +180,7 @@ export default function DisabledButton() {
 ## 접근성
 
 - 네이티브 `<button>`이라 **키보드 포커스·Enter/Space 활성화·`disabled`** 가 기본 동작합니다.
+- 키보드로 포커스하면 `layout.highlight-line` 외곽선이 표시됩니다.
 - `type` 기본값은 `"button"` 입니다.
 
 ## 토큰 커스터마이징
@@ -183,14 +193,16 @@ Button은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) �
 | `layout.primary-dark` | <Swatch token="layout.primary-dark" /> | primary hover·active |
 | `layout.emphasis` | <Swatch token="layout.emphasis" /> | emphasis 배경 |
 | `layout.emphasis-dark` | <Swatch token="layout.emphasis-dark" /> | emphasis hover·active |
+| `layout.issue` | <Swatch token="layout.issue" /> | issue 배경 |
+| `layout.issue-dark` | <Swatch token="layout.issue-dark" /> | issue hover·active |
 | `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | neutral 배경 |
 | `text.accent-primary` | <Swatch token="text.accent-primary" /> | neutral 텍스트 |
-| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | neutral hover border |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | neutral hover border, 키보드 포커스 외곽선 |
 | `layout.bg-light` | <Swatch token="layout.bg-light" /> | outline 배경 |
 | `text.default` | <Swatch token="text.default" /> | outline 텍스트 |
 | `layout.default-line` | <Swatch token="layout.default-line" /> | outline border |
 | `layout.strong-line` | <Swatch token="layout.strong-line" /> | outline hover border |
-| `text.default-light` | <Swatch token="text.default-light" /> | primary·emphasis 텍스트 |
+| `text.default-light` | <Swatch token="text.default-light" /> | primary·emphasis·issue 텍스트 |
 | `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
 | `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
 
