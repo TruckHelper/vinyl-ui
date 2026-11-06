@@ -1,0 +1,150 @@
+---
+title: Breadcrumb
+description: 현재 페이지까지의 경로를 보여 주는 내비게이션 컴포넌트
+---
+
+import NextLink from 'next/link';
+
+import { Breadcrumb, BreadcrumbCurrent, BreadcrumbItem, BreadcrumbLink } from '@bigmobility/vinyl-ui/breadcrumb';
+
+`Breadcrumb` 안에 `BreadcrumbItem`을 경로 순서대로 넣습니다. 상위 페이지는 `BreadcrumbLink`, 현재 페이지는 `BreadcrumbCurrent`로 씁니다. 항목 사이의 구분 아이콘은 `BreadcrumbItem`이 넣습니다.
+
+## 기본 예시
+
+<Preview>
+  <Breadcrumb>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="#기본-예시">대분류</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbCurrent>중분류</BreadcrumbCurrent>
+    </BreadcrumbItem>
+  </Breadcrumb>
+</Preview>
+
+```tsx
+import { Breadcrumb, BreadcrumbCurrent, BreadcrumbItem, BreadcrumbLink } from '@bigmobility/vinyl-ui/breadcrumb';
+
+export default function BreadcrumbExample() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/category">대분류</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <BreadcrumbCurrent>중분류</BreadcrumbCurrent>
+      </BreadcrumbItem>
+    </Breadcrumb>
+  );
+}
+```
+
+## 3단계
+
+항목 수에는 제한이 없습니다. 필요한 만큼 `BreadcrumbItem`을 이어 넣습니다.
+
+<Preview>
+  <Breadcrumb>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="#3단계">대분류</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="#3단계">중분류</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbCurrent>소분류</BreadcrumbCurrent>
+    </BreadcrumbItem>
+  </Breadcrumb>
+</Preview>
+
+```tsx
+<Breadcrumb>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="/category">대분류</BreadcrumbLink>
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="/category/sub">중분류</BreadcrumbLink>
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbCurrent>소분류</BreadcrumbCurrent>
+  </BreadcrumbItem>
+</Breadcrumb>
+```
+
+## 라우터 연동
+
+`BreadcrumbLink`에 `asChild`를 지정하면 요소를 만들지 않고 자식 요소에 스타일과 속성을 넘깁니다. Next.js의 `Link` 같은 라우터 링크를 자식으로 넣습니다. 자식은 하나의 요소여야 합니다.
+
+<Preview>
+  <Breadcrumb>
+    <BreadcrumbItem>
+      <BreadcrumbLink asChild>
+        <NextLink href="#라우터-연동">대분류</NextLink>
+      </BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbCurrent>중분류</BreadcrumbCurrent>
+    </BreadcrumbItem>
+  </Breadcrumb>
+</Preview>
+
+```tsx
+import NextLink from 'next/link';
+
+import { Breadcrumb, BreadcrumbCurrent, BreadcrumbItem, BreadcrumbLink } from '@bigmobility/vinyl-ui/breadcrumb';
+
+<Breadcrumb>
+  <BreadcrumbItem>
+    <BreadcrumbLink asChild>
+      <NextLink href="/category">대분류</NextLink>
+    </BreadcrumbLink>
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbCurrent>중분류</BreadcrumbCurrent>
+  </BreadcrumbItem>
+</Breadcrumb>
+```
+
+## Props
+
+### Breadcrumb
+
+<PropsTable
+  type={{
+    'aria-label': {
+      type: 'string',
+      default: "'현재 위치'",
+      description: '내비게이션 이름',
+    },
+  }}
+/>
+
+### BreadcrumbLink
+
+<PropsTable
+  type={{
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: '자식 요소를 링크로 사용',
+    },
+  }}
+/>
+
+## 접근성
+
+- 루트는 `<nav>`이고 `aria-label`(기본 `현재 위치`)로 이름이 붙습니다. 한 페이지에 여러 개를 두면 서로 다른 `aria-label`을 지정합니다. 항목은 `<ol>` 목록으로 읽힙니다.
+- 현재 페이지(`BreadcrumbCurrent`)에는 `aria-current="page"`가 지정됩니다. 링크가 아니라 포커스를 받지 않습니다.
+- 구분 아이콘은 `aria-hidden`이라 스크린 리더가 읽지 않습니다.
+- `BreadcrumbLink`는 네이티브 `<a>`라 키보드 포커스·Enter 활성화가 기본 동작합니다.
+
+## 토큰 커스터마이징
+
+Breadcrumb는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.soft` | <Swatch token="text.soft" /> | 항목 텍스트·구분 아이콘 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 포커스 링 |
+
+이 밖에 타이포는 `body.medium-light`를 사용합니다.
