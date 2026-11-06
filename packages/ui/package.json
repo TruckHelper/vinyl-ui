@@ -35,6 +35,11 @@
       "import": "./dist/badge.js",
       "default": "./dist/badge.js"
     },
+    "./breadcrumb": {
+      "types": "./dist/breadcrumb.d.ts",
+      "import": "./dist/breadcrumb.js",
+      "default": "./dist/breadcrumb.js"
+    },
     "./button": {
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js",
