@@ -27,6 +27,7 @@ import SelectorButtonDemo from '../docs/SelectorButtonDemo';
 import Swatch from '../docs/Swatch';
 import SwitchDemo from '../docs/SwitchDemo';
 import SwitchSizeDemo from '../docs/SwitchSizeDemo';
+import TabsDemo from '../docs/TabsDemo';
 import TextFieldDemo from '../docs/TextFieldDemo';
 import ToastCustomDemo from '../docs/ToastCustomDemo';
 import ToastDemo from '../docs/ToastDemo';
@@ -91,6 +92,7 @@ const baseComponents: MDXComponents = {
   SelectorButtonDemo,
   SwitchDemo,
   SwitchSizeDemo,
+  TabsDemo,
   TextFieldDemo,
   ToastDemo,
   ToastCustomDemo,
