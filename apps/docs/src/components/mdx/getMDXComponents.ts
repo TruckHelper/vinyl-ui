@@ -9,6 +9,7 @@ import CodeBlock from '../docs/CodeBlock';
 import EmptyStateDemo from '../docs/EmptyStateDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
+import PaginationDemo from '../docs/PaginationDemo';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
@@ -71,6 +72,7 @@ const baseComponents: MDXComponents = {
   Section,
   Swatch,
   Palette,
+  PaginationDemo,
   SelectDemo,
   SelectorButtonDemo,
   SwitchDemo,

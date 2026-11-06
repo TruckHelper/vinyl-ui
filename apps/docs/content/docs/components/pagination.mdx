@@ -1,0 +1,149 @@
+---
+title: Pagination
+description: 목록을 여러 페이지로 나눠 이동하는 페이지네이션 컴포넌트
+---
+
+전체 데이터 수(`count`)와 한 페이지에 담을 데이터 수(`pageSize`)로 총 페이지 수를 계산하고, 첫 페이지·이전·번호·다음·마지막 페이지 버튼을 한 줄로 보여줍니다. 번호는 고정된 묶음 단위로 보여주며 현재 페이지가 속한 묶음만 표시됩니다. 묶음 크기는 화면 폭에 따라 10개 또는 5개로 바뀝니다.
+
+## 기본 예시
+
+`page`와 `onChangePage`로 현재 페이지를 관리합니다. `onChangePage`는 `{ page }`를 받습니다. 첫 페이지에서는 첫 페이지·이전 버튼이, 마지막 페이지에서는 다음·마지막 페이지 버튼이 비활성화됩니다.
+
+<Preview>
+  <PaginationDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Pagination } from '@bigmobility/vinyl-ui/pagination';
+
+export default function PaginationExample() {
+  const [page, setPage] = useState(1);
+
+  const handleChangePage = ({ page }: { page: number }) => {
+    setPage(page);
+  };
+
+  return (
+    <Pagination
+      count={250}
+      pageSize={10}
+      page={page}
+      onChangePage={handleChangePage}
+    />
+  );
+}
+```
+
+## 라우터 연동
+
+페이지를 주소의 쿼리로 관리할 때는 `onChangePage`에서 라우터로 이동하고, 주소에서 읽은 값을 `page`로 넘깁니다.
+
+```tsx
+'use client';
+
+import { useRouter, useSearchParams } from 'next/navigation';
+
+import { Pagination } from '@bigmobility/vinyl-ui/pagination';
+
+export default function ListPagination({ count }: { count: number }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get('page') ?? 1);
+
+  const handleChangePage = ({ page }: { page: number }) => {
+    router.push(`?page=${page}`);
+  };
+
+  return (
+    <Pagination
+      count={count}
+      pageSize={10}
+      page={page}
+      onChangePage={handleChangePage}
+    />
+  );
+}
+```
+
+## 화면 폭
+
+화면 폭에 따라 묶음 크기가 바뀝니다. 768px 이상에서는 번호 10개(`1~10`, `11~20`)와 간격 4px, 그보다 좁으면 번호 5개(`1~5`, `6~10`)와 간격 8px로 보입니다. 별도 prop 없이 CSS로 전환되어, 서버 렌더링 결과와 화면이 어긋나지 않습니다.
+
+## 비활성
+
+`disabled`를 주면 모든 버튼이 비활성화됩니다.
+
+<Preview>
+  <PaginationDemo
+    disabled
+    initialPage={3}
+  />
+</Preview>
+
+```tsx
+<Pagination
+  count={250}
+  pageSize={10}
+  page={page}
+  disabled
+  onChangePage={handleChangePage}
+/>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    count: {
+      type: 'number',
+      description: '전체 데이터 수 (필수)',
+    },
+    pageSize: {
+      type: 'number',
+      default: '10',
+      description: '한 페이지에 담을 데이터 수',
+    },
+    page: {
+      type: 'number',
+      description: '현재 페이지. 1부터 시작 (제어, 필수)',
+    },
+    onChangePage: {
+      type: `({ page }: {
+    page: number;
+  }) => void`,
+      description: '페이지를 바꾸려 할 때 호출 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '모든 버튼 비활성 여부',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `Pagination` 기반입니다. 루트는 `nav` 요소이고 이름은 "페이지네이션"입니다.
+- 모든 버튼은 네이티브 `button`이라 Tab으로 이동하고 Enter나 Space로 누릅니다. 비활성 버튼은 탭 순서에서 빠집니다.
+- 현재 페이지 번호는 `aria-current="page"`로 표시됩니다.
+- 버튼 이름은 "첫 페이지", "이전 페이지", "3 페이지", "다음 페이지", "마지막 페이지"이며, 마지막 페이지 번호는 "마지막 페이지, 25 페이지"로 읽힙니다.
+
+## 토큰 커스터마이징
+
+Pagination은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.soft` | <Swatch token="text.soft" /> | 기본 번호·아이콘 색 |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | hover 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 현재 페이지·누른 상태 배경 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 현재 페이지·누른 상태 글자색 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 글자색 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 포커스 링 |
+
+이 밖에 번호 타이포는 `button.small-normal`을 사용합니다.
