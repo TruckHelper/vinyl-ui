@@ -1,0 +1,245 @@
+---
+title: VerificationCodeField
+description: 인증번호 입력, 남은 시간, 재전송 버튼을 묶은 필드
+---
+
+## 개요
+
+`VerificationCodeField`는 문자·메일로 받은 인증번호를 입력하는 필드입니다. 입력창 오른쪽에 남은 시간을, 입력창 옆에 재전송·확인 같은 버튼을 둡니다. 숫자 코드용 필드라 입력창은 `inputMode="numeric"`입니다.
+
+남은 시간은 컴포넌트가 세지 않습니다. 소비자가 타이머를 돌리고 `"02:59"` 같은 문자열을 `remainingTime`으로 넘깁니다.
+
+## 기본 예시
+
+<Preview>
+  <VerificationCodeFieldDemo />
+</Preview>
+
+```tsx
+import { useEffect, useState } from 'react';
+
+import { VerificationCodeField } from '@bigmobility/vinyl-ui/field';
+
+const LIMIT_SECONDS = 180;
+
+function formatTime(seconds: number) {
+  const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const rest = String(seconds % 60).padStart(2, '0');
+
+  return `${minutes}:${rest}`;
+}
+
+export default function VerificationCodeFieldExample() {
+  const [code, setCode] = useState('');
+  const [seconds, setSeconds] = useState(LIMIT_SECONDS);
+
+  useEffect(() => {
+    if (seconds <= 0) {
+      return undefined;
+    }
+
+    const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
+
+    return () => clearTimeout(timer);
+  }, [seconds]);
+
+  return (
+    <VerificationCodeField
+      name="code"
+      label="인증번호"
+      value={code}
+      placeholder="인증번호 6자리"
+      maxLength={6}
+      buttonLabel="재전송"
+      remainingTime={formatTime(seconds)}
+      onChangeValue={({ value }) => setCode(value)}
+      onClickButton={() => setSeconds(LIMIT_SECONDS)}
+    />
+  );
+}
+```
+
+## 남은 시간 없이
+
+`remainingTime`을 넘기지 않으면 시간 표시를 그리지 않습니다.
+
+<Preview>
+  <VerificationCodeFieldDemo
+    buttonLabel="확인"
+    withTimer={false}
+  />
+</Preview>
+
+```tsx
+<VerificationCodeField
+  name="code"
+  label="인증번호"
+  value={code}
+  buttonLabel="확인"
+  onChangeValue={({ value }) => setCode(value)}
+  onClickButton={verify}
+/>
+```
+
+## 에러
+
+`errorMessage`를 주면 에러 상태가 되어 입력 스타일이 바뀌고 문구가 보입니다. 문구 없이 스타일만 바꾸려면 `hasError`를 줍니다.
+
+<Preview>
+  <VerificationCodeFieldDemo
+    required
+    errorMessage="인증번호가 일치하지 않습니다"
+  />
+</Preview>
+
+```tsx
+<VerificationCodeField
+  name="code"
+  label="인증번호"
+  value={code}
+  required
+  errorMessage="인증번호가 일치하지 않습니다"
+  buttonLabel="재전송"
+  remainingTime={remainingTime}
+  onChangeValue={({ value }) => setCode(value)}
+  onClickButton={resend}
+/>
+```
+
+## Disabled
+
+`disabled`는 입력창만 비활성으로 만듭니다. 버튼은 `buttonDisabled`로 따로 막습니다.
+
+<Preview>
+  <VerificationCodeFieldDemo disabled />
+  <VerificationCodeFieldDemo buttonDisabled />
+</Preview>
+
+```tsx
+<VerificationCodeField
+  name="code"
+  label="인증번호"
+  value={code}
+  disabled
+  buttonLabel="재전송"
+  remainingTime={remainingTime}
+  onChangeValue={({ value }) => setCode(value)}
+  onClickButton={resend}
+/>
+<VerificationCodeField
+  name="code"
+  label="인증번호"
+  value={code}
+  buttonDisabled
+  buttonLabel="재전송"
+  remainingTime={remainingTime}
+  onChangeValue={({ value }) => setCode(value)}
+  onClickButton={resend}
+/>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '필드 이름 (필수). id 생성(`input-{name}`)과 onChangeValue 키로 사용',
+    },
+    value: {
+      type: 'string',
+      description: '입력 값 (필수, 제어)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string;
+  }) => void`,
+      description: '값이 바뀔 때 호출 (필수)',
+    },
+    buttonLabel: {
+      type: 'string',
+      description: '버튼 문구 (필수). 예: 재전송, 확인',
+    },
+    onClickButton: {
+      type: '() => void',
+      description: '버튼을 누를 때 호출 (필수)',
+    },
+    buttonDisabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '버튼 비활성',
+    },
+    remainingTime: {
+      type: 'string',
+      description: '입력창 오른쪽에 보일 남은 시간 문자열. 없으면 그리지 않음',
+    },
+    label: {
+      type: 'string',
+      description: '라벨 텍스트 (없으면 라벨 미표시)',
+    },
+    placeholder: {
+      type: 'string',
+      description: '플레이스홀더',
+    },
+    maxLength: {
+      type: 'number',
+      description: '입력 최대 글자 수',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: '필수 입력 표시',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '에러 상태. `errorMessage`가 있으면 주지 않아도 에러 상태',
+    },
+    errorMessage: {
+      type: 'string',
+      description: '에러 메시지. 값이 있으면 에러 상태로 전환',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '입력창 비활성',
+    },
+    ref: {
+      type: 'Ref',
+      description: '내부 input(HTMLInputElement) 요소 ref',
+    },
+  }}
+/>
+
+## 접근성
+
+- 입력창은 `inputMode="numeric"`, `autoComplete="one-time-code"`라서 모바일에서 숫자 키패드와 문자 인증번호 자동 채우기가 뜹니다.
+- 남은 시간은 `role="timer"`로 표시하고 입력창의 `aria-describedby`에 연결합니다. 화면에 안 보이는 "남은 시간" 접두어가 붙어 "남은 시간 02:59"로 읽히고, 매초 읽어 주지는 않습니다.
+- 시간 만료는 컴포넌트가 알리지 않습니다. 소비자가 `errorMessage`(예: "입력 시간이 지났습니다")로 알립니다.
+- 에러 상태이면 입력창에 `aria-invalid`가 붙고 에러 메시지도 `aria-describedby`에 연결됩니다.
+- 버튼은 네이티브 `<button type="button">`이라 폼을 제출하지 않고, Tab·Enter·Space로 다룰 수 있습니다.
+
+## 토큰 커스터마이징
+
+VerificationCodeField는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 입력 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 입력 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | 입력 hover·focus 테두리 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 에러 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 에러 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.input` | <Swatch token="text.input" /> | 라벨·입력 텍스트 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | 플레이스홀더 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 남은 시간 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트·남은 시간 |
+| `text.issue` | <Swatch token="text.issue" /> | 에러 메시지 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 필수 표시 점 |
+| `layout.emphasis` | <Swatch token="layout.emphasis" /> | 버튼 배경 |
+| `text.default-light` | <Swatch token="text.default-light" /> | 버튼 텍스트 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 버튼 포커스 링 |
+
+이 밖에 높이는 `input-height`, 타이포는 `body.medium-light`(라벨)·`input.medium-light`(입력·남은 시간)·`button.medium-normal`(버튼)을 사용합니다.

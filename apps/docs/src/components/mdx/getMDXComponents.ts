@@ -24,6 +24,7 @@ import ToastCustomDemo from '../docs/ToastCustomDemo';
 import ToastDemo from '../docs/ToastDemo';
 import ToastDurationDemo from '../docs/ToastDurationDemo';
 import ToastPlacementDemo from '../docs/ToastPlacementDemo';
+import VerificationCodeFieldDemo from '../docs/VerificationCodeFieldDemo';
 
 import Code from './Code';
 
@@ -80,6 +81,7 @@ const baseComponents: MDXComponents = {
   ToastCustomDemo,
   ToastDurationDemo,
   ToastPlacementDemo,
+  VerificationCodeFieldDemo,
   TypeTable: PropsTable,
 };
 
