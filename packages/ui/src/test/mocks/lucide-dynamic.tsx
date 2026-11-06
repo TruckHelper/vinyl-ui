@@ -22,4 +22,5 @@ export const dynamicIconImports = {
   info: () => Promise.resolve({}),
   minus: () => Promise.resolve({}),
   user: () => Promise.resolve({}),
+  'user-round': () => Promise.resolve({}),
 };
