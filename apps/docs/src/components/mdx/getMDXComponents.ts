@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types';
 
+import AddressFieldDemo from '../docs/AddressFieldDemo';
 import Badge from '../docs/Badge';
 import BadgeDemo from '../docs/BadgeDemo';
 import BadgeSample from '../docs/BadgeSample';
@@ -60,6 +61,7 @@ const baseComponents: MDXComponents = {
   Preview,
   PropsTable,
   Callout,
+  AddressFieldDemo,
   CaptionDemo,
   EmptyStateDemo,
   ResultStateDemo,
