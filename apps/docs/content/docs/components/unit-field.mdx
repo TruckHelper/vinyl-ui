@@ -1,0 +1,215 @@
+---
+title: UnitField
+description: 입력 오른쪽에 단위를 붙인 텍스트 필드
+---
+
+## 개요
+
+`UnitField`는 입력 칸 안 오른쪽에 단위(`kg`, `원` 등)를 함께 보여 주는 필드입니다. 라벨·필수 표시·에러 메시지는 `TextField`와 같습니다.
+
+## 기본 예시
+
+<Preview>
+  <UnitFieldDemo
+    name="weight"
+    label="무게"
+    unit="kg"
+    placeholder="무게를 입력하세요"
+  />
+</Preview>
+
+```tsx
+import { useState } from 'react';
+
+import { UnitField } from '@bigmobility/vinyl-ui/field';
+
+export default function UnitFieldExample() {
+  const [weight, setWeight] = useState('');
+
+  return (
+    <UnitField
+      name="weight"
+      label="무게"
+      unit="kg"
+      value={weight}
+      inputMode="decimal"
+      placeholder="무게를 입력하세요"
+      onChangeValue={({ value }) => setWeight(value)}
+    />
+  );
+}
+```
+
+## 값 입력
+
+값이 비어 있으면 단위가 플레이스홀더 색으로, 값이 있으면 입력 텍스트 색으로 표시됩니다.
+
+<Preview>
+  <UnitFieldDemo
+    name="price"
+    label="금액"
+    unit="원"
+    initialValue="15000"
+    inputMode="numeric"
+  />
+</Preview>
+
+```tsx
+<UnitField
+  name="price"
+  label="금액"
+  unit="원"
+  value={price}
+  inputMode="numeric"
+  onChangeValue={({ value }) => setPrice(value)}
+/>
+```
+
+## 에러
+
+`errorMessage`를 전달하면 에러 상태가 되어 입력 스타일이 바뀌고 메시지가 노출됩니다.
+
+<Preview>
+  <UnitFieldDemo
+    name="maxLoad"
+    label="최대 적재량"
+    unit="t"
+    initialValue="0"
+    errorMessage="0보다 큰 값을 입력하세요"
+  />
+</Preview>
+
+```tsx
+<UnitField
+  name="maxLoad"
+  label="최대 적재량"
+  unit="t"
+  value={maxLoad}
+  errorMessage={error}
+  onChangeValue={({ value }) => setMaxLoad(value)}
+/>
+```
+
+## Required · Disabled
+
+<Preview>
+  <UnitFieldDemo
+    name="volume"
+    label="부피"
+    unit="L"
+    required
+  />
+  <UnitFieldDemo
+    name="fee"
+    label="수수료"
+    unit="원"
+    initialValue="15000"
+    disabled
+  />
+</Preview>
+
+```tsx
+<UnitField
+  name="volume"
+  label="부피"
+  unit="L"
+  value={volume}
+  required
+  onChangeValue={({ value }) => setVolume(value)}
+/>
+<UnitField
+  name="fee"
+  label="수수료"
+  unit="원"
+  value={fee}
+  disabled
+  onChangeValue={({ value }) => setFee(value)}
+/>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '필드 이름 (필수). id 생성(`input-{name}`)·onChangeValue 키로 사용',
+    },
+    value: {
+      type: 'string',
+      description: '입력 값 (필수, 제어)',
+    },
+    unit: {
+      type: 'string',
+      description: '입력 오른쪽에 표시할 단위 텍스트 (필수)',
+    },
+    label: {
+      type: 'string',
+      description: '라벨 텍스트 (없으면 라벨 미표시)',
+    },
+    inputMode: {
+      type: 'text | numeric | decimal',
+      default: 'text',
+      description: '모바일 가상 키보드 종류',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '메시지 없이 에러 상태로 전환',
+    },
+    errorMessage: {
+      type: 'string',
+      description: '에러 메시지. 값이 있으면 에러 상태로 전환',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: '필수 입력 표시',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성화',
+    },
+    placeholder: {
+      type: 'string',
+      description: '플레이스홀더',
+    },
+    ref: {
+      type: 'Ref',
+      description: '내부 input(HTMLInputElement) 요소 ref',
+    },
+    onChangeValue: {
+      type: '(payload: { name: string; value: string; }) => void',
+      description: '값 변경 콜백 (필수)',
+    }
+  }}
+/>
+
+## 접근성
+
+- 라벨은 `htmlFor`로 입력과 연결됩니다.
+- 단위 텍스트는 `aria-describedby`로 입력의 설명이 됩니다. 스크린 리더가 라벨 다음에 단위를 읽습니다.
+- 단위나 칸 여백을 눌러도 입력에 포커스가 갑니다.
+- `hasError`나 `errorMessage`가 있으면 입력에 `aria-invalid`가 지정되고, 에러 메시지도 설명에 더해집니다. 메시지는 `role="alert"`로 알립니다.
+- `required`이면 입력에 `required` 속성이 지정되고 라벨 옆에 필수 표시가 나타납니다.
+
+## 토큰 커스터마이징
+
+UnitField는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 기본 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 기본·비활성 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | hover·포커스 테두리 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 오류 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 오류 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 필수 표시 점 |
+| `text.input` | <Swatch token="text.input" /> | 라벨·입력 값·값이 있을 때 단위 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | 플레이스홀더·값이 없을 때 단위 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 입력 값·단위 |
+| `text.issue` | <Swatch token="text.issue" /> | 에러 메시지 |
+
+이 밖에 타이포는 입력과 단위에 `input.medium-light`, 라벨에 `body.medium-light`를 사용합니다.
