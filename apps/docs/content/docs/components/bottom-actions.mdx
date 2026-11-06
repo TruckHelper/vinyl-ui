@@ -1,0 +1,116 @@
+---
+title: BottomActions
+description: 스크롤 영역 하단에 붙는 버튼 바 컴포넌트
+---
+
+import { BottomActions } from '@bigmobility/vinyl-ui/bottom-actions';
+import { Button } from '@bigmobility/vinyl-ui/button';
+
+`BottomActions`는 버튼의 배치·간격·배경·하단 안전 영역만 담당합니다. 버튼은 `Button`을 직계 자식으로 넣고 `fit="block"`을 줍니다. 스크롤 영역의 하단에 붙어 있고(`position: sticky`), 위쪽은 배경색으로 흐려지는 그라데이션 배경을 가집니다. 투명한 위쪽 영역은 아래 콘텐츠의 클릭을 가로채지 않습니다.
+
+## 기본 예시
+
+`variant`는 기본 값이 `single`입니다. 버튼 하나가 전체 폭을 채웁니다.
+
+<Preview>
+  <BottomActions>
+    <Button fit="block">확인</Button>
+  </BottomActions>
+</Preview>
+
+```tsx
+import { BottomActions } from '@bigmobility/vinyl-ui/bottom-actions';
+import { Button } from '@bigmobility/vinyl-ui/button';
+
+export default function BottomActionsExample() {
+  return (
+    <BottomActions>
+      <Button fit="block">확인</Button>
+    </BottomActions>
+  );
+}
+```
+
+## Equal
+
+두 버튼을 같은 폭으로 나눕니다.
+
+<Preview>
+  <BottomActions variant="equal">
+    <Button
+      variant="neutral"
+      fit="block"
+    >취소</Button>
+    <Button fit="block">확인</Button>
+  </BottomActions>
+</Preview>
+
+```tsx
+<BottomActions variant="equal">
+  <Button
+    variant="neutral"
+    fit="block"
+  >
+    취소
+  </Button>
+  <Button fit="block">확인</Button>
+</BottomActions>
+```
+
+## Weighted
+
+첫 번째 버튼은 `12rem` 고정 폭, 두 번째 버튼이 남은 폭을 채웁니다. 보조 동작을 앞에, 주요 동작을 뒤에 둡니다.
+
+<Preview>
+  <BottomActions variant="weighted">
+    <Button
+      variant="neutral"
+      fit="block"
+    >이전</Button>
+    <Button fit="block">다음</Button>
+  </BottomActions>
+</Preview>
+
+```tsx
+<BottomActions variant="weighted">
+  <Button
+    variant="neutral"
+    fit="block"
+  >
+    이전
+  </Button>
+  <Button fit="block">다음</Button>
+</BottomActions>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    variant: {
+      type: "'single' | 'weighted' | 'equal'",
+      default: "'single'",
+      description: '버튼 배치. single은 한 개 전체 폭, equal은 같은 폭, weighted는 첫 버튼 고정 폭 + 나머지 채움',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '배치할 Button 목록. 직계 자식으로 넣고 `fit="block"`을 줌',
+    },
+  }}
+/>
+
+## 접근성
+
+- 레이아웃만 담당하는 `<div>`입니다. 포커스·키보드 동작은 안에 넣은 `Button`이 제공합니다.
+- 화면 하단에 붙어 콘텐츠를 가릴 수 있으므로, 페이지 마지막 콘텐츠가 바에 가려지지 않는지 확인합니다.
+- 노치·홈 인디케이터가 있는 기기에서는 `env(safe-area-inset-*)`만큼 여백이 더해집니다. 소비자 앱의 viewport 메타에 `viewport-fit=cover`가 있어야 적용됩니다.
+
+## 토큰 커스터마이징
+
+BottomActions는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 배경 그라데이션의 끝 색 |
+
+이 밖에 간격 `spacing.8`(버튼 사이)·`spacing.16`(위·좌우)·`spacing.24`(아래)와 z-index `sticky`를 사용합니다. 버튼 색은 [Button](/docs/components/button) 토큰을 따릅니다.
