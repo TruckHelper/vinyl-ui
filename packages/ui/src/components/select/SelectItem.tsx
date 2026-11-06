@@ -1,8 +1,12 @@
 'use client';
 
+import type { ComponentProps, FC } from 'react';
+
 import { Select as ArkSelect } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type SelectItemProps = Omit<ComponentProps<typeof ArkSelect.Item>, 'asChild'>;
 
 export const SelectItem = styled(ArkSelect.Item, {
   base: {
@@ -29,4 +33,4 @@ export const SelectItem = styled(ArkSelect.Item, {
       cursor: 'not-allowed',
     },
   },
-});
+}) as unknown as FC<SelectItemProps>;

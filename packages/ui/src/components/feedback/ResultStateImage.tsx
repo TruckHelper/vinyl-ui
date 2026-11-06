@@ -19,7 +19,7 @@ export function ResultStateImage(props: ResultStateImageProps) {
     <Svg
       viewBox="0 0 80 80"
       aria-hidden
-      {...props}
+      {...(props as ComponentProps<typeof Svg>)}
     >
       <circle
         cx="40"
@@ -31,4 +31,4 @@ export function ResultStateImage(props: ResultStateImageProps) {
   );
 }
 
-export type ResultStateImageProps = Omit<ComponentProps<typeof Svg>, 'children'>;
+export type ResultStateImageProps = Omit<ComponentProps<'svg'>, 'children'>;

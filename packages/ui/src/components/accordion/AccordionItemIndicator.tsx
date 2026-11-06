@@ -1,8 +1,12 @@
 'use client';
 
+import type { ComponentProps, FC } from 'react';
+
 import { Accordion as ArkAccordion } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type AccordionItemIndicatorProps = Omit<ComponentProps<typeof ArkAccordion.ItemIndicator>, 'asChild'>;
 
 export const AccordionItemIndicator = styled(ArkAccordion.ItemIndicator, {
   base: {
@@ -17,4 +21,4 @@ export const AccordionItemIndicator = styled(ArkAccordion.ItemIndicator, {
       transform: 'rotate(180deg)',
     },
   },
-});
+}) as unknown as FC<AccordionItemIndicatorProps>;

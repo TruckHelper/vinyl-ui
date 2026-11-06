@@ -34,7 +34,7 @@ const Container = styled(ArkAccordion.ItemTrigger, {
   },
 });
 
-type AccordionItemTriggerProps = ComponentProps<typeof Container> & {
+export type AccordionItemTriggerProps = Omit<ComponentProps<typeof ArkAccordion.ItemTrigger>, 'asChild'> & {
   hasIndicator?: boolean;
 };
 

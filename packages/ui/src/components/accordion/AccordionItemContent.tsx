@@ -1,8 +1,12 @@
 'use client';
 
+import type { ComponentProps, FC } from 'react';
+
 import { Accordion as ArkAccordion } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type AccordionItemContentProps = Omit<ComponentProps<typeof ArkAccordion.ItemContent>, 'asChild'>;
 
 export const AccordionItemContent = styled(ArkAccordion.ItemContent, {
   base: {
@@ -13,4 +17,4 @@ export const AccordionItemContent = styled(ArkAccordion.ItemContent, {
     width: '100%',
     color: 'text.default',
   },
-});
+}) as unknown as FC<AccordionItemContentProps>;

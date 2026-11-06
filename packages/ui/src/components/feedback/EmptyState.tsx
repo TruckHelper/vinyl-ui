@@ -1,6 +1,8 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type EmptyStateProps = ComponentProps<'div'>;
 
 export const EmptyState = styled('div', {
   base: {
@@ -10,6 +12,4 @@ export const EmptyState = styled('div', {
     gap: '8',
     textAlign: 'center',
   },
-});
-
-export type EmptyStateProps = ComponentProps<typeof EmptyState>;
+}) as unknown as FC<EmptyStateProps>;

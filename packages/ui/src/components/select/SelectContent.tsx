@@ -27,7 +27,7 @@ const Container = styled(ArkSelect.Content, {
   },
 });
 
-type SelectContentProps = ComponentProps<typeof Container>;
+export type SelectContentProps = Omit<ComponentProps<typeof ArkSelect.Content>, 'asChild'>;
 
 export function SelectContent({ children, ...props }: SelectContentProps) {
   return (

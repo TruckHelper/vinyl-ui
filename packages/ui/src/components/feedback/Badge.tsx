@@ -1,6 +1,8 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type BadgeProps = ComponentProps<'span'>;
 
 export const Badge = styled('span', {
   base: {
@@ -15,6 +17,4 @@ export const Badge = styled('span', {
     backgroundColor: 'layout.bg-light-blue',
     color: 'text.processing',
   },
-});
-
-export type BadgeProps = ComponentProps<typeof Badge>;
+}) as unknown as FC<BadgeProps>;

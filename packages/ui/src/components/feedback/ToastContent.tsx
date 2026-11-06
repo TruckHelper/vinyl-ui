@@ -1,10 +1,12 @@
 'use client';
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps, FC } from 'react';
 
 import { Toast as ArkToast } from '@ark-ui/react';
 
 import { styled } from 'styled-system/jsx/factory';
+
+export type ToastContentProps = Omit<ComponentProps<typeof ArkToast.Root>, 'asChild'>;
 
 export const ToastContent = styled(ArkToast.Root, {
   base: {
@@ -40,6 +42,4 @@ export const ToastContent = styled(ArkToast.Root, {
       marginInlineEnd: '0',
     },
   },
-});
-
-export type ToastContentProps = ComponentProps<typeof ToastContent>;
+}) as unknown as FC<ToastContentProps>;
