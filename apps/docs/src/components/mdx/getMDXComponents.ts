@@ -12,9 +12,11 @@ import HelpTextSample from '../docs/HelpTextSample';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
+import RadioDemo from '../docs/RadioDemo';
 import ResultStateDemo from '../docs/ResultStateDemo';
 import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
+import SelectionCardDemo from '../docs/SelectionCardDemo';
 import SelectorButtonDemo from '../docs/SelectorButtonDemo';
 import Swatch from '../docs/Swatch';
 import SwitchDemo from '../docs/SwitchDemo';
@@ -71,7 +73,9 @@ const baseComponents: MDXComponents = {
   Section,
   Swatch,
   Palette,
+  RadioDemo,
   SelectDemo,
+  SelectionCardDemo,
   SelectorButtonDemo,
   SwitchDemo,
   SwitchSizeDemo,

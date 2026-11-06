@@ -1,0 +1,387 @@
+---
+title: Radio
+description: 여러 선택지 중 하나만 고르는 컴포넌트
+---
+
+`RadioGroup` 안에 `Radio`를 나열하고, `Radio` 안에 원(`RadioControl`)과 라벨(`RadioLabel`)을 파트로 조합합니다. 카드 형태로 고를 때는 `Radio` 대신 `SelectionCard`를 넣습니다. 스크린 리더에는 라디오 그룹으로 읽힙니다.
+
+## 기본 예시
+
+`value`와 `onChangeValue`로 선택 상태를 관리합니다. `value`는 선택된 값이고 선택이 없으면 빈 문자열입니다. `onChangeValue`는 `{ name, value }`를 받습니다.
+
+<Preview>
+  <RadioDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Radio, RadioControl, RadioGroup, RadioLabel } from '@bigmobility/vinyl-ui/radio';
+
+export default function RadioExample() {
+  const [value, setValue] = useState('');
+
+  const handleChange = ({ value }: { name: string; value: string }) => {
+    setValue(value);
+  };
+
+  return (
+    <RadioGroup
+      name="payment"
+      value={value}
+      aria-label="결제 수단"
+      onChangeValue={handleChange}
+    >
+      <Radio value="card">
+        <RadioControl />
+        <RadioLabel>카드 결제</RadioLabel>
+      </Radio>
+      <Radio value="transfer">
+        <RadioControl />
+        <RadioLabel>계좌 이체</RadioLabel>
+      </Radio>
+      <Radio value="phone">
+        <RadioControl />
+        <RadioLabel>휴대폰 결제</RadioLabel>
+      </Radio>
+    </RadioGroup>
+  );
+}
+```
+
+## 라벨 없이 쓰기
+
+화면에 라벨을 보여 주지 않을 때는 `Radio`에 `aria-label`로 이름을 지정합니다.
+
+<Preview>
+  <RadioDemo hideLabel />
+</Preview>
+
+```tsx
+<RadioGroup
+  name="payment"
+  value={value}
+  aria-label="결제 수단"
+  onChangeValue={handleChange}
+>
+  <Radio
+    value="card"
+    aria-label="카드 결제"
+  >
+    <RadioControl />
+  </Radio>
+  <Radio
+    value="transfer"
+    aria-label="계좌 이체"
+  >
+    <RadioControl />
+  </Radio>
+  <Radio
+    value="phone"
+    aria-label="휴대폰 결제"
+  >
+    <RadioControl />
+  </Radio>
+</RadioGroup>
+```
+
+## 비활성
+
+`RadioGroup`에 `disabled`를 주면 모든 항목이 비활성화됩니다. 항목 하나만 비활성화할 때는 `Radio`에 `disabled`를 줍니다.
+
+<Preview>
+  <RadioDemo
+    disabled
+    initialValue="card"
+  />
+  <RadioDemo disabledItem />
+</Preview>
+
+```tsx
+<RadioGroup
+  name="payment"
+  value={value}
+  disabled
+  aria-label="결제 수단"
+  onChangeValue={handleChange}
+>
+  <Radio value="card">
+    <RadioControl />
+    <RadioLabel>카드 결제</RadioLabel>
+  </Radio>
+  <Radio value="transfer">
+    <RadioControl />
+    <RadioLabel>계좌 이체</RadioLabel>
+  </Radio>
+  <Radio value="phone">
+    <RadioControl />
+    <RadioLabel>휴대폰 결제</RadioLabel>
+  </Radio>
+</RadioGroup>
+
+<RadioGroup
+  name="payment"
+  value={value}
+  aria-label="결제 수단"
+  onChangeValue={handleChange}
+>
+  <Radio value="card">
+    <RadioControl />
+    <RadioLabel>카드 결제</RadioLabel>
+  </Radio>
+  <Radio value="transfer">
+    <RadioControl />
+    <RadioLabel>계좌 이체</RadioLabel>
+  </Radio>
+  <Radio
+    value="phone"
+    disabled
+  >
+    <RadioControl />
+    <RadioLabel>휴대폰 결제</RadioLabel>
+  </Radio>
+</RadioGroup>
+```
+
+## 오류
+
+`RadioGroup`에 `hasError`를 주면 선택되지 않은 원의 테두리가 `layout.issue-line`으로 표시됩니다. 선택된 원은 선택 색을 유지합니다.
+
+<Preview>
+  <RadioDemo hasError />
+</Preview>
+
+```tsx
+<RadioGroup
+  name="payment"
+  value={value}
+  hasError
+  aria-label="결제 수단"
+  onChangeValue={handleChange}
+>
+  <Radio value="card">
+    <RadioControl />
+    <RadioLabel>카드 결제</RadioLabel>
+  </Radio>
+  <Radio value="transfer">
+    <RadioControl />
+    <RadioLabel>계좌 이체</RadioLabel>
+  </Radio>
+  <Radio value="phone">
+    <RadioControl />
+    <RadioLabel>휴대폰 결제</RadioLabel>
+  </Radio>
+</RadioGroup>
+```
+
+## SelectionCard
+
+아이콘, 제목, 설명을 가진 카드로 하나를 고릅니다. `Radio`처럼 `RadioGroup` 안에 넣습니다. 아이콘은 lucide 아이콘 이름으로 바꿀 수 있고 기본값은 `user-round`입니다.
+
+<Preview>
+  <SelectionCardDemo initialValue="personal" />
+</Preview>
+
+```tsx
+<RadioGroup
+  name="member"
+  value={value}
+  aria-label="회원 유형"
+  onChangeValue={handleChange}
+>
+  <SelectionCard
+    value="personal"
+    title="개인 회원"
+    description="화물을 보내는 개인 사용자"
+  />
+  <SelectionCard
+    value="business"
+    title="사업자 회원"
+    description="사업자 등록증이 있는 사용자"
+    icon="building-2"
+  />
+</RadioGroup>
+```
+
+### 왼쪽 정렬
+
+`type="left"`를 주면 아이콘과 글이 가로로 놓입니다. 넓은 화면에서는 `center`, 모바일에서는 `left`를 씁니다.
+
+<Preview>
+  <SelectionCardDemo
+    type="left"
+    disabledItem
+  />
+</Preview>
+
+```tsx
+<RadioGroup
+  name="member"
+  value={value}
+  aria-label="회원 유형"
+  onChangeValue={handleChange}
+>
+  <SelectionCard
+    value="personal"
+    type="left"
+    title="개인 회원"
+    description="화물을 보내는 개인 사용자"
+  />
+  <SelectionCard
+    value="business"
+    type="left"
+    title="사업자 회원"
+    description="사업자 등록증이 있는 사용자"
+    icon="building-2"
+    disabled
+  />
+</RadioGroup>
+```
+
+## Props
+
+### RadioGroup
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '폼 필드 이름. 그룹 안의 모든 라디오에 지정됨 (필수)',
+    },
+    value: {
+      type: 'string',
+      description: '선택된 값. 선택이 없으면 빈 문자열 (제어, 필수)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string;
+  }) => void`,
+      description: '선택이 바뀔 때 호출 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '그룹 전체 비활성 여부',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 여부',
+    },
+    'aria-label': {
+      type: 'string',
+      description: '그룹 이름 (필수 권장)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'Radio 또는 SelectionCard 목록',
+    },
+  }}
+/>
+
+### Radio
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '항목의 값 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '항목 비활성 여부',
+    },
+    'aria-label': {
+      type: 'string',
+      description: '라벨이 없을 때의 이름',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'RadioControl과 RadioLabel',
+    },
+  }}
+/>
+
+### RadioControl
+
+선택 상태를 나타내는 원을 그립니다.
+
+### RadioLabel
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '라벨 문구',
+    },
+  }}
+/>
+
+### SelectionCard
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '카드의 값 (필수)',
+    },
+    title: {
+      type: 'string',
+      description: '제목. 라디오의 이름이 됨 (필수)',
+    },
+    description: {
+      type: 'string',
+      description: '설명. 라디오의 설명으로 연결됨',
+    },
+    type: {
+      type: "'center' | 'left'",
+      default: "'center'",
+      description: '배치 방향',
+    },
+    icon: {
+      type: 'IconName',
+      default: "'user-round'",
+      description: 'lucide 아이콘 이름',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '카드 비활성 여부',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `RadioGroup` 기반으로 각 항목은 네이티브 라디오 입력을 가지며, 그룹은 `radiogroup`으로 읽힙니다.
+- 그룹의 모든 라디오가 같은 `name`을 가지므로 Tab으로 그룹에 들어오면 선택된 항목(없으면 첫 항목)에 포커스가 가고, 화살표 키로 이전·다음 항목을 선택합니다.
+- 그룹 이름은 `aria-label`로 지정합니다.
+- `hasError`를 주면 그룹과 각 라디오에 `aria-invalid`가 지정됩니다.
+- `SelectionCard`의 제목은 라디오 이름으로, 설명은 `aria-describedby`로 연결됩니다. 아이콘은 스크린 리더에서 숨겨집니다.
+- 비활성 항목은 포커스·선택되지 않습니다.
+
+## 토큰 커스터마이징
+
+Radio와 SelectionCard는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 원 안쪽, 카드 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 기본 테두리 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 원 hover 테두리, 포커스 링 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 선택된 원 테두리 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 오류 원 테두리 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 원 안쪽, 비활성 라벨 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | 카드 hover·선택 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 카드 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 카드 아이콘 배경 |
+| `text.default` | <Swatch token="text.default" /> | 카드 아이콘 |
+| `text.input` | <Swatch token="text.input" /> | 라벨 |
+| `text.heading` | <Swatch token="text.heading" /> | 카드 제목 |
+| `text.soft` | <Swatch token="text.soft" /> | 카드 설명 |
+
+이 밖에 타이포는 라벨에 `input.medium-light`, 카드 제목에 `body.large-normal`, 카드 설명에 `body.medium-light`를 사용합니다.
