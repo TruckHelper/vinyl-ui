@@ -35,6 +35,11 @@
       "import": "./dist/badge.js",
       "default": "./dist/badge.js"
     },
+    "./bottom-actions": {
+      "types": "./dist/bottom-actions.d.ts",
+      "import": "./dist/bottom-actions.js",
+      "default": "./dist/bottom-actions.js"
+    },
     "./button": {
       "types": "./dist/button.d.ts",
       "import": "./dist/button.js",
