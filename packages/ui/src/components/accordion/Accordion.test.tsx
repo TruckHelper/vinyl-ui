@@ -66,6 +66,55 @@ describe('Accordion', () => {
     });
   });
 
+  context('without type', () => {
+    it('uses the border type', () => {
+      renderAccordion();
+
+      expect(screen.getByRole('button', { name: '배송 안내' }).closest('[data-part=root]'))
+        .toHaveAttribute('data-type', 'border');
+    });
+  });
+
+  context('with filled type', () => {
+    it('marks the root as filled and keeps toggling', async () => {
+      renderAccordion({ type: 'filled', collapsible: true });
+
+      const trigger = screen.getByRole('button', { name: '배송 안내' });
+
+      expect(trigger.closest('[data-part=root]')).toHaveAttribute('data-type', 'filled');
+
+      fireEvent.focus(trigger);
+      fireEvent.click(trigger);
+
+      await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'true'));
+    });
+  });
+
+  context('when arrow down key is pressed on a trigger', () => {
+    it('moves focus to the next trigger', async () => {
+      render((
+        <Accordion type="filled">
+          <AccordionItem value="delivery">
+            <AccordionItemTrigger>배송 안내</AccordionItemTrigger>
+            <AccordionItemContent>주문 후 2~3일 내 발송됩니다.</AccordionItemContent>
+          </AccordionItem>
+          <AccordionItem value="refund">
+            <AccordionItemTrigger>환불 정책</AccordionItemTrigger>
+            <AccordionItemContent>수령 후 7일 이내 교환·환불이 가능합니다.</AccordionItemContent>
+          </AccordionItem>
+        </Accordion>
+      ));
+
+      const first = screen.getByRole('button', { name: '배송 안내' });
+
+      first.focus();
+      fireEvent.focus(first);
+      fireEvent.keyDown(first, { key: 'ArrowDown' });
+
+      await waitFor(() => expect(screen.getByRole('button', { name: '환불 정책' })).toHaveFocus());
+    });
+  });
+
   context('when the item is disabled', () => {
     it('disables the trigger', () => {
       render((
