@@ -15,6 +15,10 @@ import Preview from '../docs/Preview';
 import ProcessDemo from '../docs/ProcessDemo';
 import PropsTable from '../docs/PropsTable';
 import ResultStateDemo from '../docs/ResultStateDemo';
+import ScrollToTopButtonBehaviorDemo from '../docs/ScrollToTopButtonBehaviorDemo';
+import ScrollToTopButtonDemo from '../docs/ScrollToTopButtonDemo';
+import ScrollToTopButtonDisabledDemo from '../docs/ScrollToTopButtonDisabledDemo';
+import ScrollToTopButtonThresholdDemo from '../docs/ScrollToTopButtonThresholdDemo';
 import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
 import SelectorButtonDemo from '../docs/SelectorButtonDemo';
@@ -72,6 +76,10 @@ const baseComponents: MDXComponents = {
   Badge,
   BadgeDemo,
   BadgeSample,
+  ScrollToTopButtonDemo,
+  ScrollToTopButtonThresholdDemo,
+  ScrollToTopButtonBehaviorDemo,
+  ScrollToTopButtonDisabledDemo,
   Section,
   Swatch,
   Palette,
