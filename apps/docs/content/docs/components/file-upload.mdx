@@ -1,0 +1,323 @@
+---
+title: FileUpload
+description: 파일을 골라 첨부하고 첨부한 파일 목록을 보여 주는 입력 컴포넌트
+---
+
+`FileUpload`는 라벨, 파일 선택 영역(또는 버튼), 첨부한 파일 목록, 오류 메시지를 묶은 컴포넌트입니다. 선택 영역은 드래그해서 놓기도 지원합니다.
+
+## 기본 예시
+
+`files`와 `onChangeFiles`로 첨부한 파일을 관리합니다. `files`는 `File` 배열이고, `onChangeFiles`는 `{ name, value }`를 받습니다. 파일을 고르거나 목록의 삭제 버튼을 누르면 바뀐 배열이 `value`로 전달됩니다.
+
+<Preview>
+  <FileUploadDemo
+    name="business-license"
+    subText="PDF 파일만 첨부할 수 있어요"
+    accept="application/pdf"
+  />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { FileUpload } from '@bigmobility/vinyl-ui/file-upload';
+
+export default function FileUploadExample() {
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleChangeFiles = ({ value }: { name: string; value: File[] }) => {
+    setFiles(value);
+  };
+
+  return (
+    <FileUpload
+      name="business-license"
+      files={files}
+      label="첨부 서류"
+      subText="PDF 파일만 첨부할 수 있어요"
+      accept="application/pdf"
+      onChangeFiles={handleChangeFiles}
+    />
+  );
+}
+```
+
+## 버튼형
+
+`type="button"`을 주면 선택 영역 대신 첨부 버튼을 보여 줍니다. 버튼형은 드래그해서 놓기를 받지 않습니다.
+
+<Preview>
+  <FileUploadDemo
+    name="bank-account"
+    type="button"
+  />
+</Preview>
+
+```tsx
+<FileUpload
+  name="bank-account"
+  files={files}
+  type="button"
+  label="첨부 서류"
+  onChangeFiles={handleChangeFiles}
+/>
+```
+
+## 여러 파일
+
+`maxFiles`로 첨부할 수 있는 파일 수를 정합니다. 기본값은 1이고, 1이면 새로 고른 파일이 기존 파일을 대신합니다. 2 이상이면 고른 파일이 목록 뒤에 추가됩니다.
+
+<Preview>
+  <FileUploadDemo
+    name="contract"
+    maxFiles={3}
+    sampleFileNames={['사업자등록증.pdf', '통장사본.pdf']}
+  />
+  <FileUploadDemo
+    name="receipt"
+    type="button"
+    maxFiles={3}
+    sampleFileNames={['사업자등록증.pdf']}
+  />
+</Preview>
+
+```tsx
+<FileUpload
+  name="contract"
+  files={files}
+  maxFiles={3}
+  label="첨부 서류"
+  onChangeFiles={handleChangeFiles}
+/>
+
+<FileUpload
+  name="receipt"
+  files={files}
+  type="button"
+  maxFiles={3}
+  label="첨부 서류"
+  onChangeFiles={handleChangeFiles}
+/>
+```
+
+## 필수 · 오류 · 비활성
+
+`required`는 라벨에 필수 점을 표시합니다. `errorMessage`나 `hasError`를 주면 오류 상태가 되고, `errorMessage`가 있으면 메시지를 보여 줍니다. `disabled`이면 파일을 고르거나 지울 수 없습니다.
+
+<Preview>
+  <FileUploadDemo
+    name="id-card"
+    required
+  />
+  <FileUploadDemo
+    name="insurance"
+    errorMessage="파일을 첨부해주세요"
+  />
+  <FileUploadDemo
+    name="vehicle"
+    disabled
+  />
+</Preview>
+
+```tsx
+<FileUpload
+  name="id-card"
+  files={files}
+  label="첨부 서류"
+  required
+  onChangeFiles={handleChangeFiles}
+/>
+
+<FileUpload
+  name="insurance"
+  files={files}
+  label="첨부 서류"
+  errorMessage="파일을 첨부해주세요"
+  onChangeFiles={handleChangeFiles}
+/>
+
+<FileUpload
+  name="vehicle"
+  files={files}
+  label="첨부 서류"
+  disabled
+  onChangeFiles={handleChangeFiles}
+/>
+```
+
+## 거부된 파일 알리기
+
+조건에 맞지 않는 파일은 `files`에 들어가지 않고 `onRejectFiles`로 전달됩니다. `value`는 `{ file, errors }` 배열이고, `errors`에는 `TOO_MANY_FILES`, `FILE_EXISTS`, `FILE_INVALID_TYPE` 같은 코드가 들어갑니다. 거부되는 경우는 다음과 같습니다.
+
+- 고른 파일 수와 이미 첨부한 파일 수의 합이 `maxFiles`를 넘으면 이번에 고른 파일이 전부 거부됩니다(`TOO_MANY_FILES`).
+- 이미 첨부한 파일(이름과 크기가 같은 파일)을 다시 고르면 그 파일이 거부됩니다(`FILE_EXISTS`).
+- `accept`에 맞지 않는 형식은 거부됩니다(`FILE_INVALID_TYPE`).
+
+FileUpload는 거부를 스스로 알리지 않습니다. 아래처럼 `errorMessage`로 알립니다. 예시는 PDF만, 2개까지 받습니다.
+
+<Preview>
+  <FileUploadDemo
+    name="tax-invoice"
+    subText="PDF 파일을 2개까지 첨부할 수 있어요"
+    accept="application/pdf"
+    maxFiles={2}
+    showRejection
+  />
+</Preview>
+
+```tsx
+const [files, setFiles] = useState<File[]>([]);
+const [errorMessage, setErrorMessage] = useState('');
+
+const handleChangeFiles = ({ value }: { name: string; value: File[] }) => {
+  setFiles(value);
+  setErrorMessage('');
+};
+
+const handleRejectFiles = ({ value }: {
+  name: string;
+  value: { file: File; errors: string[] }[];
+}) => {
+  const errors = value.flatMap((rejection) => rejection.errors);
+
+  if (errors.includes('TOO_MANY_FILES')) {
+    setErrorMessage('첨부할 수 있는 파일 수를 넘었어요');
+    return;
+  }
+
+  if (errors.includes('FILE_EXISTS')) {
+    setErrorMessage('이미 첨부한 파일이에요');
+    return;
+  }
+
+  setErrorMessage('첨부할 수 없는 파일 형식이에요');
+};
+
+<FileUpload
+  name="tax-invoice"
+  files={files}
+  label="첨부 서류"
+  subText="PDF 파일을 2개까지 첨부할 수 있어요"
+  accept="application/pdf"
+  maxFiles={2}
+  errorMessage={errorMessage}
+  onChangeFiles={handleChangeFiles}
+  onRejectFiles={handleRejectFiles}
+/>
+```
+
+## Props
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '파일 input 이름. 폼 제출과 `onChangeFiles` 키로 쓰고 id(`file-upload-{name}`)도 만듦. 한 페이지에서 같은 name을 두 번 쓰지 않는다 (필수)',
+    },
+    files: {
+      type: 'File[]',
+      description: '첨부한 파일 배열 (제어, 필수)',
+    },
+    onChangeFiles: {
+      type: `({ name, value }: {
+    name: string;
+    value: File[];
+  }) => void`,
+      description: '파일을 고르거나 지울 때 호출 (필수)',
+    },
+    onRejectFiles: {
+      type: `({ name, value }: {
+    name: string;
+    value: { file: File; errors: string[] }[];
+  }) => void`,
+      description: '조건에 맞지 않아 거부된 파일이 있을 때 호출',
+    },
+    type: {
+      type: "'dropzone' | 'button'",
+      default: "'dropzone'",
+      description: '선택 영역형 또는 버튼형',
+    },
+    label: {
+      type: 'string',
+      description: '라벨. 없으면 그리지 않음',
+    },
+    title: {
+      type: 'string',
+      default: "'파일을 업로드해주세요'",
+      description: '선택 영역 제목 (`dropzone`)',
+    },
+    subText: {
+      type: 'string',
+      description: '선택 영역 안내 문구 (`dropzone`)',
+    },
+    buttonText: {
+      type: 'string',
+      default: "'파일 첨부'",
+      description: '첨부 버튼 문구 (`button`)',
+    },
+    removeLabel: {
+      type: '(fileName: string) => string',
+      default: '`${fileName} 삭제`',
+      description: '목록 삭제 버튼의 접근성 이름',
+    },
+    accept: {
+      type: 'string | string[] | Record<string, string[]>',
+      description: '받을 파일 형식 (예: `application/pdf`, `image/*`)',
+    },
+    maxFiles: {
+      type: 'number',
+      default: '1',
+      description: '첨부할 수 있는 최대 파일 수',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: '필수 표시와 input `required`',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 여부. `errorMessage` 없이 오류 스타일만 줄 때 사용',
+    },
+    errorMessage: {
+      type: 'string',
+      description: '오류 메시지. 값이 있으면 오류 상태가 되고 메시지를 보여 줌',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `FileUpload` 기반입니다. 실제 파일 선택은 숨긴 `input type="file"`이 맡고, 라벨은 이 input에 연결됩니다.
+- 선택 영역은 `role="button"`이고 이름은 `label`(없으면 `title`)입니다. Tab으로 포커스하고 Enter나 Space로 파일 선택 창을 엽니다.
+- 버튼형은 일반 `button`이라 Enter·Space로 엽니다.
+- 목록의 삭제 버튼은 기본으로 `{파일 이름} 삭제`로 읽히고, `removeLabel`로 바꿀 수 있습니다.
+- `errorMessage`가 있으면 선택 영역·버튼의 `aria-describedby`가 오류 메시지를 가리킵니다.
+- 비활성이면 선택 영역은 `aria-disabled`가 되고 탭 순서에서 빠지며, 버튼과 삭제 버튼은 `disabled`가 됩니다.
+
+## 토큰 커스터마이징
+
+FileUpload는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 선택 영역·버튼·파일 항목 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 기본 테두리 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | hover·드래그 중 배경 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | hover·드래그 중·비활성 선택 영역 테두리, 포커스 링 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 오류 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 오류 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | 파일 아이콘 상자 배경 |
+| `text.default` | <Swatch token="text.default" /> | 제목, 버튼 문구, 파일 이름, 아이콘 |
+| `text.soft` | <Swatch token="text.soft" /> | 안내 문구, 파일 크기, 업로드 아이콘 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
+
+이 밖에 라벨과 오류 메시지는 [Field](/docs/components/field)의 토큰을 쓰고, 타이포는 `body.medium-normal`, `body.medium-light`, `body.small-light`, `button.medium-normal`을 사용합니다.
