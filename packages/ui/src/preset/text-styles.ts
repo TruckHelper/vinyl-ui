@@ -58,6 +58,24 @@ export const textStyles: TextStyles = {
         letterSpacing: '-0.03em',
       },
     },
+    'xlarge-normal': {
+      value: {
+        fontFamily: '{fonts.body}',
+        fontSize: '{fontSizes.body.xlarge}',
+        fontWeight: '{fontWeights.normal}',
+        lineHeight: '1.4',
+        letterSpacing: '-0.03em',
+      },
+    },
+    'xlarge-light': {
+      value: {
+        fontFamily: '{fonts.body}',
+        fontSize: '{fontSizes.body.xlarge}',
+        fontWeight: '{fontWeights.light}',
+        lineHeight: '1.4',
+        letterSpacing: '-0.03em',
+      },
+    },
     'large-bold': {
       value: {
         fontFamily: '{fonts.body}',
@@ -184,7 +202,7 @@ export const textStyles: TextStyles = {
         fontFamily: '{fonts.body}',
         fontSize: '{fontSizes.input.medium}',
         fontWeight: '{fontWeights.light}',
-        lineHeight: '1',
+        lineHeight: '1.4',
         letterSpacing: '-0.03em',
       },
     },
@@ -193,7 +211,7 @@ export const textStyles: TextStyles = {
         fontFamily: '{fonts.body}',
         fontSize: '{fontSizes.input.small}',
         fontWeight: '{fontWeights.light}',
-        lineHeight: '1',
+        lineHeight: '1.4',
         letterSpacing: '-0.03em',
       },
     },
@@ -202,7 +220,7 @@ export const textStyles: TextStyles = {
         fontFamily: '{fonts.body}',
         fontSize: '{fontSizes.input.xsmall}',
         fontWeight: '{fontWeights.light}',
-        lineHeight: '1',
+        lineHeight: '1.4',
         letterSpacing: '-0.03em',
       },
     },

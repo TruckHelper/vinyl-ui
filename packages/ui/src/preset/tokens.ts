@@ -64,7 +64,14 @@ export const tokens: Tokens = {
       800: { value: '#13172A' },
     },
     blue: {
-      500: { value: '#2C66D1' },
+      100: { value: '#EBF1FE' },
+      200: { value: '#CCDDFD' },
+      300: { value: '#A4C2FB' },
+      400: { value: '#71A0F9' },
+      500: { value: '#3478F6' },
+      600: { value: '#2C66D1' },
+      700: { value: '#2454AC' },
+      800: { value: '#1D4287' },
     },
     white: {
       default: { value: '#FFFFFF' },
