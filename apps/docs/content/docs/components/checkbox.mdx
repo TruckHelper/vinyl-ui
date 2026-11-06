@@ -1,0 +1,320 @@
+---
+title: Checkbox
+description: 항목을 선택하거나 해제하는 체크박스와 약관 동의 항목
+---
+
+체크 박스와 라벨을 파트로 조합합니다. 스크린 리더에는 체크박스로 읽힙니다. 약관 동의 목록에는 `AgreementItem`을 씁니다.
+
+## 기본 예시
+
+`checked`와 `onChangeChecked`로 상태를 관리합니다. `onChangeChecked`는 `{ name, value }`를 받습니다.
+
+<Preview>
+  <CheckboxDemo label="약관 동의" />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Checkbox, CheckboxControl, CheckboxLabel } from '@bigmobility/vinyl-ui/checkbox';
+
+export default function CheckboxExample() {
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = ({ value }: { name: string; value: boolean }) => {
+    setChecked(value);
+  };
+
+  return (
+    <Checkbox
+      name="terms"
+      checked={checked}
+      onChangeChecked={handleChange}
+    >
+      <CheckboxControl />
+      <CheckboxLabel>약관 동의</CheckboxLabel>
+    </Checkbox>
+  );
+}
+```
+
+## 라벨 없이 쓰기
+
+화면에 라벨을 보여 주지 않을 때는 `aria-label`로 이름을 지정합니다.
+
+<Preview>
+  <CheckboxDemo aria-label="약관 동의" />
+</Preview>
+
+```tsx
+<Checkbox
+  name="terms"
+  checked={checked}
+  aria-label="약관 동의"
+  onChangeChecked={handleChange}
+>
+  <CheckboxControl />
+</Checkbox>
+```
+
+## 오류
+
+`hasError`를 주면 체크 박스가 오류 스타일(배경 `layout.bg-issue`, 테두리 `layout.issue-line`)로 표시됩니다. 선택된 상태에서는 선택 배경을 유지하고 테두리만 오류 색으로 바뀝니다.
+
+<Preview>
+  <CheckboxDemo
+    label="약관 동의"
+    hasError
+  />
+  <CheckboxDemo
+    label="약관 동의"
+    hasError
+    initialChecked
+  />
+</Preview>
+
+```tsx
+<Checkbox
+  name="terms"
+  checked={checked}
+  hasError
+  onChangeChecked={handleChange}
+>
+  <CheckboxControl />
+  <CheckboxLabel>약관 동의</CheckboxLabel>
+</Checkbox>
+```
+
+## 비활성
+
+<Preview>
+  <CheckboxDemo
+    label="약관 동의"
+    disabled
+  />
+  <CheckboxDemo
+    label="약관 동의"
+    disabled
+    initialChecked
+  />
+</Preview>
+
+```tsx
+<Checkbox
+  name="terms"
+  checked={checked}
+  disabled
+  onChangeChecked={handleChange}
+>
+  <CheckboxControl />
+  <CheckboxLabel>약관 동의</CheckboxLabel>
+</Checkbox>
+```
+
+## 약관 동의
+
+`AgreementItem`은 체크박스와 문구를 한 줄로 보여 줍니다. `variant="all"`은 테두리가 있는 전체 동의 항목이고, 기본값 `variant="item"`은 개별 약관 항목입니다. 개별 항목에 `onDetailClick`을 주면 오른쪽에 상세 보기 버튼이 나타납니다.
+
+전체 동의는 하위 항목의 상태로 계산합니다. 전체 동의를 누르면 `onChangeChecked`에서 하위 항목을 모두 같은 값으로 바꾸고, 하위 항목이 모두 선택되면 전체 동의도 선택됩니다.
+
+<Preview>
+  <AgreementItemDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { AgreementItem } from '@bigmobility/vinyl-ui/checkbox';
+
+const TERMS = [
+  { name: 'service', label: '서비스 이용약관 동의' },
+  { name: 'privacy', label: '개인정보 수집 및 이용 동의' },
+  { name: 'marketing', label: '마케팅 정보 수신 동의' },
+];
+
+type AgreementExampleProps = {
+  onOpenTerms: (name: string) => void;
+};
+
+export default function AgreementExample({ onOpenTerms }: AgreementExampleProps) {
+  const [agreed, setAgreed] = useState<Record<string, boolean>>({
+    service: false,
+    privacy: false,
+    marketing: false,
+  });
+
+  const allChecked = TERMS.every((term) => agreed[term.name] ?? false);
+
+  const handleChangeAll = ({ value }: { name: string; value: boolean }) => {
+    setAgreed(Object.fromEntries(TERMS.map((term) => [term.name, value])));
+  };
+
+  const handleChange = ({ name, value }: { name: string; value: boolean }) => {
+    setAgreed((prev) => ({ ...prev, [name]: value }));
+  };
+
+  return (
+    <>
+      <AgreementItem
+        variant="all"
+        name="all"
+        checked={allChecked}
+        onChangeChecked={handleChangeAll}
+      >
+        전체 동의
+      </AgreementItem>
+      {TERMS.map((term) => (
+        <AgreementItem
+          key={term.name}
+          name={term.name}
+          checked={agreed[term.name] ?? false}
+          onChangeChecked={handleChange}
+          onDetailClick={() => onOpenTerms(term.name)}
+        >
+          {term.label}
+        </AgreementItem>
+      ))}
+    </>
+  );
+}
+```
+
+## Props
+
+### Checkbox
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '폼 필드 이름 (필수)',
+    },
+    checked: {
+      type: 'boolean',
+      description: '선택 여부 (제어, 필수)',
+    },
+    onChangeChecked: {
+      type: `({ name, value }: {
+    name: string;
+    value: boolean;
+  }) => void`,
+      description: '선택 여부가 바뀔 때 호출 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 여부',
+    },
+    'aria-label': {
+      type: 'string',
+      description: '라벨 없이 쓸 때의 이름',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '체크 박스와 라벨',
+    },
+  }}
+/>
+
+### CheckboxControl
+
+체크 박스를 그립니다. 체크 표시가 함께 들어 있습니다.
+
+### CheckboxLabel
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '라벨 문구',
+    },
+  }}
+/>
+
+### AgreementItem
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '폼 필드 이름 (필수)',
+    },
+    checked: {
+      type: 'boolean',
+      description: '선택 여부 (제어, 필수)',
+    },
+    onChangeChecked: {
+      type: `({ name, value }: {
+    name: string;
+    value: boolean;
+  }) => void`,
+      description: '선택 여부가 바뀔 때 호출 (필수)',
+    },
+    variant: {
+      type: "'all' | 'item'",
+      default: "'item'",
+      description: '전체 동의 또는 개별 항목',
+    },
+    onDetailClick: {
+      type: '() => void',
+      description: '상세 보기 버튼을 누를 때 호출. 있으면 `item`에 상세 보기 버튼이 나타남',
+    },
+    detailLabel: {
+      type: 'string',
+      default: "'상세 보기'",
+      description: '상세 보기 버튼의 이름',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부. 상세 보기 버튼도 비활성화',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 여부',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '약관 문구',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `Checkbox` 기반으로 숨은 `input[type=checkbox]`가 선택 상태를 노출하고, Space 키로 선택이 바뀝니다.
+- 라벨을 누르면 선택이 바뀝니다. 라벨이 없으면 `aria-label`로 이름을 지정합니다.
+- `hasError`를 주면 `aria-invalid`가 지정됩니다.
+- 상세 보기 버튼은 체크박스와 분리된 `button`이라 눌러도 선택이 바뀌지 않습니다. 이름은 `detailLabel`로 바꿀 수 있습니다.
+- 비활성 체크박스와 상세 보기 버튼은 포커스·선택되지 않습니다.
+
+## 토큰 커스터마이징
+
+Checkbox와 AgreementItem은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 기본·선택 테두리, 전체 동의 테두리 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | hover 테두리, 포커스 링 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 선택 배경 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 오류 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 오류 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | 선택 전 체크 표시 |
+| `text.default-light` | <Swatch token="text.default-light" /> | 선택 체크 표시 |
+| `text.issue` | <Swatch token="text.issue" /> | 오류 체크 표시 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 체크 표시·라벨, 비활성 상세 보기 버튼 |
+| `text.input` | <Swatch token="text.input" /> | 라벨 |
+| `text.soft` | <Swatch token="text.soft" /> | 상세 보기 버튼 |
+
+이 밖에 타이포는 라벨에 `input.medium-light`, 전체 동의에 `body.medium-bold`, 개별 항목에 `input.small-light`를 사용합니다.
