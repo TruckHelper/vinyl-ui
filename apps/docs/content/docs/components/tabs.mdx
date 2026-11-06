@@ -1,0 +1,201 @@
+---
+title: Tabs
+description: 같은 영역 안에서 여러 패널을 전환하는 탭 컴포넌트
+---
+
+`Tabs` 안에 `TabsList`와 `TabsTrigger`로 탭 목록을, `TabsContent`로 각 탭의 패널을 조합합니다. 선택된 탭의 패널만 표시됩니다.
+
+## 기본 예시
+
+`value`와 `onChangeValue`로 선택된 탭을 관리합니다. `value`는 선택된 탭의 값이고, `onChangeValue`는 `{ value }`를 받습니다. 탭은 폼 값이 아니므로 `name`을 받지 않습니다.
+
+<Preview>
+  <TabsDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@bigmobility/vinyl-ui/tabs';
+
+export default function TabsExample() {
+  const [value, setValue] = useState('order');
+
+  const handleChange = ({ value }: { value: string }) => {
+    setValue(value);
+  };
+
+  return (
+    <Tabs
+      value={value}
+      onChangeValue={handleChange}
+    >
+      <TabsList aria-label="주문 정보">
+        <TabsTrigger value="order">주문 내역</TabsTrigger>
+        <TabsTrigger value="delivery">배송 현황</TabsTrigger>
+        <TabsTrigger value="review">리뷰</TabsTrigger>
+      </TabsList>
+      <TabsContent value="order">주문 내역 내용</TabsContent>
+      <TabsContent value="delivery">배송 현황 내용</TabsContent>
+      <TabsContent value="review">리뷰 내용</TabsContent>
+    </Tabs>
+  );
+}
+```
+
+## 타입
+
+`TabsList`의 `type`으로 모양을 고릅니다. `border`(기본값)는 선택된 탭 아래에 선을 긋고, `fill`은 선택된 탭에 배경과 그림자를 줍니다.
+
+<Preview>
+  <TabsDemo type="fill" />
+</Preview>
+
+```tsx
+<Tabs
+  value={value}
+  onChangeValue={handleChange}
+>
+  <TabsList
+    type="fill"
+    aria-label="주문 정보"
+  >
+    <TabsTrigger value="order">주문 내역</TabsTrigger>
+    <TabsTrigger value="delivery">배송 현황</TabsTrigger>
+    <TabsTrigger value="review">리뷰</TabsTrigger>
+  </TabsList>
+  <TabsContent value="order">주문 내역 내용</TabsContent>
+  <TabsContent value="delivery">배송 현황 내용</TabsContent>
+  <TabsContent value="review">리뷰 내용</TabsContent>
+</Tabs>
+```
+
+## 비활성
+
+`TabsTrigger`에 `disabled`를 주면 그 탭은 선택되지 않고 키보드 이동에서도 건너뜁니다.
+
+<Preview>
+  <TabsDemo disabledItem />
+</Preview>
+
+```tsx
+<Tabs
+  value={value}
+  onChangeValue={handleChange}
+>
+  <TabsList aria-label="주문 정보">
+    <TabsTrigger value="order">주문 내역</TabsTrigger>
+    <TabsTrigger value="delivery">배송 현황</TabsTrigger>
+    <TabsTrigger
+      value="review"
+      disabled
+    >
+      리뷰
+    </TabsTrigger>
+  </TabsList>
+  <TabsContent value="order">주문 내역 내용</TabsContent>
+  <TabsContent value="delivery">배송 현황 내용</TabsContent>
+  <TabsContent value="review">리뷰 내용</TabsContent>
+</Tabs>
+```
+
+## Props
+
+### Tabs
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '선택된 탭의 값 (제어, 필수)',
+    },
+    onChangeValue: {
+      type: '({ value }: { value: string }) => void',
+      description: '선택된 탭이 바뀔 때 호출 (필수)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'TabsList와 TabsContent',
+    },
+  }}
+/>
+
+### TabsList
+
+<PropsTable
+  type={{
+    type: {
+      type: "'border' | 'fill'",
+      default: "'border'",
+      description: '탭 모양',
+    },
+    'aria-label': {
+      type: 'string',
+      description: '탭 목록 이름 (필수 권장)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'TabsTrigger 목록',
+    },
+  }}
+/>
+
+### TabsTrigger
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '탭의 값. 같은 값의 TabsContent와 연결됨 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '탭 비활성 여부',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '탭 문구',
+    },
+  }}
+/>
+
+### TabsContent
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '연결할 탭의 값 (필수)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '패널 내용',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `Tabs` 기반으로 `tablist`, `tab`, `tabpanel` 역할과 `aria-selected`, `aria-controls`가 지정됩니다.
+- 탭 목록 이름은 `TabsList`의 `aria-label`로 지정합니다.
+- 화살표 키로 이전·다음 탭으로 이동하면서 선택하고, Home·End로 처음·마지막 탭으로 이동합니다.
+- Tab 키는 선택된 탭에서 패널로 포커스를 옮깁니다.
+- 비활성 탭은 포커스·선택되지 않습니다.
+
+## 토큰 커스터마이징
+
+Tabs는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.default` | <Swatch token="text.default" /> | 기본 텍스트, `border` 선택 텍스트 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | `fill` 선택 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | `border` 선택 밑줄 |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | `fill` 선택 배경 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 포커스 링 |
+
+이 밖에 타이포는 `button.medium-normal`, `fill` 선택 그림자는 `floating`을 사용합니다.
