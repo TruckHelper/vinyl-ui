@@ -12,7 +12,7 @@ import { Icon } from '../icon/Icon';
 
 const Container = styled(ArkAccordion.ItemTrigger, {
   base: {
-    textStyle: 'body.large-normal',
+    textStyle: 'body.medium-normal',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -27,6 +27,14 @@ const Container = styled(ArkAccordion.ItemTrigger, {
     cursor: 'pointer',
     transitionProperty: 'color',
     transitionDuration: '0.2s',
+    '[data-type=filled] > [data-part=item] > &': {
+      borderBottomWidth: '0',
+    },
+    _focusVisible: {
+      outline: '2px solid',
+      outlineColor: 'layout.highlight-line',
+      outlineOffset: '2px',
+    },
     _disabled: {
       color: 'text.disable',
       cursor: 'not-allowed',
