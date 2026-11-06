@@ -85,6 +85,11 @@
       "import": "./dist/selector-button.js",
       "default": "./dist/selector-button.js"
     },
+    "./side-nav": {
+      "types": "./dist/side-nav.d.ts",
+      "import": "./dist/side-nav.js",
+      "default": "./dist/side-nav.js"
+    },
     "./switch": {
       "types": "./dist/switch.d.ts",
       "import": "./dist/switch.js",
