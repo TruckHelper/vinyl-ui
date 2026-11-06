@@ -1,0 +1,153 @@
+---
+title: List
+description: 제목과 값을 한 줄씩 나열하는 목록 컴포넌트
+---
+
+import { Button } from '@bigmobility/vinyl-ui/button';
+import { Link } from '@bigmobility/vinyl-ui/link';
+import {
+  List, ListAction, ListItem, ListTitle, ListValue,
+} from '@bigmobility/vinyl-ui/list';
+
+`List` 안에 `ListItem`을 넣고, 항목마다 `ListTitle`(제목)과 `ListValue`(값)를 조합합니다. 항목 사이에는 점선 구분선이 들어가고, 마지막 항목에는 구분선이 없습니다. 스크린 리더에는 목록으로 읽힙니다.
+
+## 기본 예시
+
+<Preview>
+  <List>
+    <ListItem>
+      <ListTitle>이름</ListTitle>
+      <ListValue>홍길동</ListValue>
+    </ListItem>
+    <ListItem>
+      <ListTitle>주소</ListTitle>
+      <ListValue>서울시 강남구 테헤란로 1</ListValue>
+    </ListItem>
+  </List>
+</Preview>
+
+```tsx
+import {
+  List, ListItem, ListTitle, ListValue,
+} from '@bigmobility/vinyl-ui/list';
+
+export default function ListExample() {
+  return (
+    <List>
+      <ListItem>
+        <ListTitle>이름</ListTitle>
+        <ListValue>홍길동</ListValue>
+      </ListItem>
+      <ListItem>
+        <ListTitle>주소</ListTitle>
+        <ListValue>서울시 강남구 테헤란로 1</ListValue>
+      </ListItem>
+    </List>
+  );
+}
+```
+
+## 링크
+
+값을 링크로 보여 줄 때는 `ListValue` 안에 `Link`를 넣습니다.
+
+<Preview>
+  <List>
+    <ListItem>
+      <ListTitle>약관</ListTitle>
+      <ListValue>
+        <Link href="#">이용약관 보기</Link>
+      </ListValue>
+    </ListItem>
+  </List>
+</Preview>
+
+```tsx
+import { Link } from '@bigmobility/vinyl-ui/link';
+import {
+  List, ListItem, ListTitle, ListValue,
+} from '@bigmobility/vinyl-ui/list';
+
+export default function ListLinkExample() {
+  return (
+    <List>
+      <ListItem>
+        <ListTitle>약관</ListTitle>
+        <ListValue>
+          <Link href="#">이용약관 보기</Link>
+        </ListValue>
+      </ListItem>
+    </List>
+  );
+}
+```
+
+## 텍스트와 버튼
+
+값 옆에 버튼을 둘 때는 `ListValue` 안에 `ListAction`을 넣고 텍스트와 `Button`을 차례로 넣습니다. 텍스트는 왼쪽, 버튼은 오른쪽 끝에 놓입니다.
+
+<Preview>
+  <List>
+    <ListItem>
+      <ListTitle>휴대폰</ListTitle>
+      <ListValue>
+        <ListAction>
+          <span>010-1234-5678</span>
+          <Button variant="neutral">변경</Button>
+        </ListAction>
+      </ListValue>
+    </ListItem>
+  </List>
+</Preview>
+
+```tsx
+import { Button } from '@bigmobility/vinyl-ui/button';
+import {
+  List, ListAction, ListItem, ListTitle, ListValue,
+} from '@bigmobility/vinyl-ui/list';
+
+export default function ListActionExample() {
+  return (
+    <List>
+      <ListItem>
+        <ListTitle>휴대폰</ListTitle>
+        <ListValue>
+          <ListAction>
+            <span>010-1234-5678</span>
+            <Button variant="neutral">변경</Button>
+          </ListAction>
+        </ListValue>
+      </ListItem>
+    </List>
+  );
+}
+```
+
+## Props
+
+List의 파트는 따로 만든 prop이 없습니다. 각 파트는 해당 HTML 요소의 속성과 `className`을 받습니다.
+
+| 파트 | 요소 | 용도 |
+| --- | --- | --- |
+| `List` | `ul` | 목록 전체 |
+| `ListItem` | `li` | 항목 한 줄 |
+| `ListTitle` | `div` | 항목 제목(폭 100px 고정) |
+| `ListValue` | `div` | 항목 값 |
+| `ListAction` | `div` | 값 안에서 텍스트와 버튼을 가로로 배치 |
+
+## 접근성
+
+- `ul`/`li`로 렌더링되어 스크린 리더가 목록과 항목 수를 읽습니다.
+- 목록의 용도를 알려야 하면 `List`에 `aria-label`을 지정합니다.
+- 링크와 버튼은 `Link`, `Button`을 그대로 쓰므로 키보드 포커스와 Enter 활성화가 기본 동작합니다.
+
+## 토큰 커스터마이징
+
+List는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.default` | <Swatch token="text.default" /> | 제목·값 텍스트 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 항목 사이 점선 |
+
+이 밖에 타이포는 제목 `body.medium-light`, 값 `body.medium-normal`을 사용합니다. 링크와 버튼 토큰은 [Link](/docs/components/link), [Button](/docs/components/button) 문서를 참고하세요.
