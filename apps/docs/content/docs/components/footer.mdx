@@ -1,0 +1,194 @@
+---
+title: Footer
+description: 페이지 하단에 회사 정보, 링크 목록, 저작권 문구를 보여 주는 레이아웃 컴포넌트
+---
+
+import {
+  Footer,
+  FooterCopyright,
+  FooterInfo,
+  FooterInfoItem,
+  FooterInfoList,
+  FooterLinkGroup,
+  FooterLinkGroupTitle,
+  FooterLinkList,
+  FooterNav,
+  FooterTitle,
+} from '@bigmobility/vinyl-ui/footer';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+회사 정보, 링크 목록, 저작권 문구를 파트로 조합합니다. 서비스명·회사 정보 같은 문구와 로고는 모두 children으로 넣고, 링크는 `Link`를 `FooterLinkList` 안에 넣습니다. 태블릿 너비(768px) 이상에서는 항목이 가로로 놓이고 구분선이 생기며, 그보다 좁으면 세로로 쌓입니다. 내용 폭은 최대 1280px이고 가운데에 놓입니다.
+
+## 기본 예시
+
+<Preview>
+  <Footer>
+    <FooterInfo>
+      <FooterTitle>서비스명</FooterTitle>
+      <FooterInfoList>
+        <FooterInfoItem>(주) 회사명</FooterInfoItem>
+        <FooterInfoItem>대표이사 : 홍길동</FooterInfoItem>
+        <FooterInfoItem>사업자 등록번호 : 000-00-00000</FooterInfoItem>
+        <FooterInfoItem>통신판매업신고번호 : 제 0000-0000-00000 호</FooterInfoItem>
+      </FooterInfoList>
+      <FooterInfoList>
+        <FooterInfoItem>대표번호 0000-0000</FooterInfoItem>
+        <FooterInfoItem>{'이메일 : help@example.com'}</FooterInfoItem>
+        <FooterInfoItem>주소 : 서울특별시 00구 00로 00</FooterInfoItem>
+      </FooterInfoList>
+    </FooterInfo>
+    <FooterNav aria-label="푸터 메뉴">
+      <FooterLinkGroup>
+        <FooterLinkGroupTitle>이용안내</FooterLinkGroupTitle>
+        <FooterLinkList>
+          <Link href="#기본-예시">신청 절차 가이드</Link>
+          <Link href="#기본-예시">발급 수수료 안내</Link>
+          <Link href="#기본-예시">자주 묻는 질문</Link>
+        </FooterLinkList>
+      </FooterLinkGroup>
+      <FooterLinkGroup>
+        <FooterLinkGroupTitle>이용 및 약관</FooterLinkGroupTitle>
+        <FooterLinkList>
+          <Link href="#기본-예시">개인정보처리방침</Link>
+          <Link href="#기본-예시">서비스 이용약관</Link>
+          <Link href="#기본-예시">책임 한계 고지</Link>
+        </FooterLinkList>
+      </FooterLinkGroup>
+    </FooterNav>
+    <FooterCopyright>
+      <p>이용안내 고지 문구가 들어가는 영역</p>
+      <p>© 2026 Company Co., Ltd. All rights reserved.</p>
+    </FooterCopyright>
+  </Footer>
+</Preview>
+
+```tsx
+import {
+  Footer,
+  FooterCopyright,
+  FooterInfo,
+  FooterInfoItem,
+  FooterInfoList,
+  FooterLinkGroup,
+  FooterLinkGroupTitle,
+  FooterLinkList,
+  FooterNav,
+  FooterTitle,
+} from '@bigmobility/vinyl-ui/footer';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+export default function FooterExample() {
+  return (
+    <Footer>
+      <FooterInfo>
+        <FooterTitle>서비스명</FooterTitle>
+        <FooterInfoList>
+          <FooterInfoItem>(주) 회사명</FooterInfoItem>
+          <FooterInfoItem>대표이사 : 홍길동</FooterInfoItem>
+          <FooterInfoItem>사업자 등록번호 : 000-00-00000</FooterInfoItem>
+          <FooterInfoItem>통신판매업신고번호 : 제 0000-0000-00000 호</FooterInfoItem>
+        </FooterInfoList>
+        <FooterInfoList>
+          <FooterInfoItem>대표번호 0000-0000</FooterInfoItem>
+          <FooterInfoItem>이메일 : help@example.com</FooterInfoItem>
+          <FooterInfoItem>주소 : 서울특별시 00구 00로 00</FooterInfoItem>
+        </FooterInfoList>
+      </FooterInfo>
+      <FooterNav aria-label="푸터 메뉴">
+        <FooterLinkGroup>
+          <FooterLinkGroupTitle>이용안내</FooterLinkGroupTitle>
+          <FooterLinkList>
+            <Link href="/guide">신청 절차 가이드</Link>
+            <Link href="/fee">발급 수수료 안내</Link>
+            <Link href="/faq">자주 묻는 질문</Link>
+          </FooterLinkList>
+        </FooterLinkGroup>
+        <FooterLinkGroup>
+          <FooterLinkGroupTitle>이용 및 약관</FooterLinkGroupTitle>
+          <FooterLinkList>
+            <Link href="/privacy">개인정보처리방침</Link>
+            <Link href="/terms">서비스 이용약관</Link>
+            <Link href="/disclaimer">책임 한계 고지</Link>
+          </FooterLinkList>
+        </FooterLinkGroup>
+      </FooterNav>
+      <FooterCopyright>
+        <p>이용안내 고지 문구가 들어가는 영역</p>
+        <p>© 2026 Company Co., Ltd. All rights reserved.</p>
+      </FooterCopyright>
+    </Footer>
+  );
+}
+```
+
+## 필요한 영역만 쓰기
+
+파트는 필요한 것만 넣습니다. 링크 목록이 없으면 `FooterNav`를 빼고, 로고 이미지는 `FooterInfo` 안에 children으로 넣습니다.
+
+<Preview>
+  <Footer>
+    <FooterInfo>
+      <FooterTitle>서비스명</FooterTitle>
+      <FooterInfoList>
+        <FooterInfoItem>(주) 회사명</FooterInfoItem>
+        <FooterInfoItem>대표번호 0000-0000</FooterInfoItem>
+      </FooterInfoList>
+    </FooterInfo>
+    <FooterCopyright>
+      <p>© 2026 Company Co., Ltd. All rights reserved.</p>
+    </FooterCopyright>
+  </Footer>
+</Preview>
+
+```tsx
+<Footer>
+  <FooterInfo>
+    <FooterTitle>서비스명</FooterTitle>
+    <FooterInfoList>
+      <FooterInfoItem>(주) 회사명</FooterInfoItem>
+      <FooterInfoItem>대표번호 0000-0000</FooterInfoItem>
+    </FooterInfoList>
+  </FooterInfo>
+  <FooterCopyright>
+    <p>© 2026 Company Co., Ltd. All rights reserved.</p>
+  </FooterCopyright>
+</Footer>
+```
+
+## Props
+
+Footer 파트는 따로 만든 prop이 없습니다. 각 파트는 아래 HTML 요소의 속성(`className`, `aria-label` 등)과 `children`을 받습니다.
+
+| 파트 | 요소 | 용도 |
+| --- | --- | --- |
+| `Footer` | `footer` | 루트. 배경과 최대 1280px 내용 폭 |
+| `FooterInfo` | `div` | 서비스명과 회사 정보 묶음 |
+| `FooterTitle` | `p` | 서비스명. `FooterInfo` 안에서 쓰는 파트로, 아래 정보 목록과의 간격(8px)을 포함 |
+| `FooterInfoList` | `ul` | 회사 정보 한 줄 |
+| `FooterInfoItem` | `li` | 회사 정보 항목. 태블릿 이상에서 항목 사이 구분선. 줄이 넘치면 새 줄 첫 항목은 구분선 없이 시작 |
+| `FooterNav` | `nav` | 링크 그룹 묶음 |
+| `FooterLinkGroup` | `div` | 제목과 링크 목록 한 그룹. 태블릿 이상에서 그룹 사이 구분선. 줄이 넘치면 새 줄 첫 그룹은 구분선 없이 시작 |
+| `FooterLinkGroupTitle` | `p` | 링크 그룹 제목 |
+| `FooterLinkList` | `div` | `Link` 목록. 안의 링크를 푸터 링크 모양으로 맞춤 |
+| `FooterCopyright` | `div` | 고지 문구와 저작권 문구 |
+
+## 접근성
+
+- `Footer`는 `<footer>`라 페이지 최상위에 두면 `contentinfo` 랜드마크로 읽힙니다.
+- `FooterNav`는 `<nav>`입니다. 페이지에 다른 내비게이션이 있으면 `aria-label`로 이름을 붙입니다.
+- 회사 정보는 `<ul>`·`<li>` 목록으로 읽히고, 구분선은 테두리라 스크린 리더에 읽히지 않습니다.
+- 링크의 키보드 포커스·포커스 표시는 `Link`가 맡습니다.
+
+## 토큰 커스터마이징
+
+Footer는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 구분선 |
+| `text.heading` | <Swatch token="text.heading" /> | 서비스명, 링크 그룹 제목 |
+| `text.default` | <Swatch token="text.default" /> | 회사 정보 |
+| `text.soft` | <Swatch token="text.soft" /> | 링크, 고지·저작권 문구 |
+
+이 밖에 타이포는 `heading.small-bold`(서비스명), `body.small-normal`(링크 그룹 제목), `body.small-light`(회사 정보, 링크, 고지·저작권 문구)를 사용합니다.
