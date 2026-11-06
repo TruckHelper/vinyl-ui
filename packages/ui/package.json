@@ -55,6 +55,11 @@
       "import": "./dist/field.js",
       "default": "./dist/field.js"
     },
+    "./floating-action-button": {
+      "types": "./dist/floating-action-button.d.ts",
+      "import": "./dist/floating-action-button.js",
+      "default": "./dist/floating-action-button.js"
+    },
     "./help-text": {
       "types": "./dist/help-text.d.ts",
       "import": "./dist/help-text.js",

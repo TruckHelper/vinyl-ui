@@ -13,6 +13,7 @@ import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
 import ResultStateDemo from '../docs/ResultStateDemo';
+import ScrollToTopButtonDemo from '../docs/ScrollToTopButtonDemo';
 import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
 import SelectorButtonDemo from '../docs/SelectorButtonDemo';
@@ -68,6 +69,7 @@ const baseComponents: MDXComponents = {
   Badge,
   BadgeDemo,
   BadgeSample,
+  ScrollToTopButtonDemo,
   Section,
   Swatch,
   Palette,
