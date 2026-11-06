@@ -16,6 +16,7 @@ import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import ProcessDemo from '../docs/ProcessDemo';
 import PropsTable from '../docs/PropsTable';
+import RadioDemo from '../docs/RadioDemo';
 import ResultStateDemo from '../docs/ResultStateDemo';
 import ScrollToTopButtonBehaviorDemo from '../docs/ScrollToTopButtonBehaviorDemo';
 import ScrollToTopButtonDemo from '../docs/ScrollToTopButtonDemo';
@@ -87,6 +88,7 @@ const baseComponents: MDXComponents = {
   Section,
   Swatch,
   Palette,
+  RadioDemo,
   SelectDemo,
   SelectorButtonDemo,
   SwitchDemo,
