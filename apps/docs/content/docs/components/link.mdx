@@ -1,0 +1,188 @@
+---
+title: Link
+description: 다른 페이지나 주소로 이동하는 링크 컴포넌트
+---
+
+import NextLink from 'next/link';
+
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+텍스트만 있을 때는 밑줄이 보입니다. 아이콘은 `Icon`을 children으로 넣으며, 넣으면 밑줄이 자동으로 없어지고 크기(16px)·색·간격은 `Link`가 맞춥니다. 스크린 리더에는 링크로 읽힙니다.
+
+## 기본 예시
+
+<Preview>
+  <Link href="#기본-예시">소개</Link>
+</Preview>
+
+```tsx
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+export default function LinkExample() {
+  return (
+    <Link href="/about">소개</Link>
+  );
+}
+```
+
+## 아이콘
+
+`Icon`을 children으로 텍스트 앞이나 뒤에 넣습니다.
+
+<Preview>
+  <Link href="#기본-예시"><Icon name="link" />링크</Link>
+  <Link href="#기본-예시">링크<Icon name="link" /></Link>
+</Preview>
+
+```tsx
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+export default function LinkIconExample() {
+  return (
+    <>
+      <Link href="/guide">
+        <Icon name="link" />
+        링크
+      </Link>
+      <Link href="/guide">
+        링크
+        <Icon name="link" />
+      </Link>
+    </>
+  );
+}
+```
+
+## 비활성
+
+`disabled`를 지정하면 클릭해도 이동하지 않고 `onClick`도 호출되지 않습니다. 키보드 포커스도 받지 않습니다.
+
+<Preview>
+  <Link
+    href="#기본-예시"
+    disabled
+  >소개</Link>
+</Preview>
+
+```tsx
+<Link
+  href="/about"
+  disabled
+>
+  소개
+</Link>
+```
+
+## 라우터 연동
+
+`asChild`를 지정하면 `Link`가 요소를 만들지 않고 자식 요소에 스타일과 속성을 넘깁니다. Next.js의 `Link` 같은 라우터 링크를 자식으로 넣습니다. 자식은 하나의 요소여야 합니다.
+
+<Preview>
+  <Link asChild>
+    <NextLink href="#기본-예시">소개</NextLink>
+  </Link>
+</Preview>
+
+```tsx
+import NextLink from 'next/link';
+
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+<Link asChild>
+  <NextLink href="/about">소개</NextLink>
+</Link>
+```
+
+<Preview>
+  <Link
+    asChild
+    disabled
+  >
+    <NextLink
+      href="#기본-예시"
+      prefetch={false}
+    >소개</NextLink>
+  </Link>
+</Preview>
+
+```tsx
+<Link
+  asChild
+  disabled
+>
+  <NextLink
+    href="/about"
+    prefetch={false}
+  >
+    소개
+  </NextLink>
+</Link>
+```
+
+<Preview>
+  <Link asChild>
+    <NextLink href="#기본-예시">링크<Icon name="link" /></NextLink>
+  </Link>
+</Preview>
+
+```tsx
+import NextLink from 'next/link';
+
+import { Icon } from '@bigmobility/vinyl-ui/icon';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+<Link asChild>
+  <NextLink href="/guide">
+    링크
+    <Icon name="link" />
+  </NextLink>
+</Link>
+```
+
+<Callout type="info">
+  `asChild`일 때 `tabIndex`, `aria-disabled`는 자식 요소에 직접 쓰지 않습니다. 자식에 쓴 값이 `Link`의 비활성 처리를 덮어씁니다.
+</Callout>
+
+<Callout type="info">
+  비활성이면 자식 `NextLink`에 `prefetch={false}`를 권장합니다. `href`가 남아 있어 해당 페이지를 미리 불러오기 때문입니다.
+</Callout>
+
+## Props
+
+### Link
+
+<PropsTable
+  type={{
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: '자식 요소를 링크로 사용',
+    },
+  }}
+/>
+
+## 접근성
+
+- 네이티브 `<a>`라 **키보드 포커스·Enter 활성화**가 기본 동작합니다.
+- 비활성이면 `aria-disabled="true"`와 `tabIndex={-1}`이 지정되어 탭 순서에서 빠집니다.
+- 읽기 커서 등으로 눌러도 이동과 `onClick`이 막힙니다.
+- `href` 없이 클릭 동작만 필요하면 `Button`을 사용하세요.
+
+## 토큰 커스터마이징
+
+Link는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.default` | <Swatch token="text.default" /> | 기본 텍스트·아이콘 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | hover·active |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 |
+
+이 밖에 타이포는 `button.medium-normal`을 사용합니다.
