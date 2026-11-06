@@ -80,6 +80,11 @@
       "import": "./dist/select.js",
       "default": "./dist/select.js"
     },
+    "./selector-button": {
+      "types": "./dist/selector-button.d.ts",
+      "import": "./dist/selector-button.js",
+      "default": "./dist/selector-button.js"
+    },
     "./switch": {
       "types": "./dist/switch.d.ts",
       "import": "./dist/switch.js",

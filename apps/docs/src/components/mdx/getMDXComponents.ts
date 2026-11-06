@@ -15,6 +15,7 @@ import PropsTable from '../docs/PropsTable';
 import ResultStateDemo from '../docs/ResultStateDemo';
 import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
+import SelectorButtonDemo from '../docs/SelectorButtonDemo';
 import Swatch from '../docs/Swatch';
 import SwitchDemo from '../docs/SwitchDemo';
 import SwitchSizeDemo from '../docs/SwitchSizeDemo';
@@ -71,6 +72,7 @@ const baseComponents: MDXComponents = {
   Swatch,
   Palette,
   SelectDemo,
+  SelectorButtonDemo,
   SwitchDemo,
   SwitchSizeDemo,
   TextFieldDemo,
