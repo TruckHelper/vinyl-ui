@@ -1,0 +1,223 @@
+---
+title: SelectorButton
+description: 버튼 형태로 하나 또는 여러 값을 고르는 선택 컴포넌트
+---
+
+`SelectorButtonGroup` 안에 `SelectorButton`을 나열해 조합합니다. 단일 선택과 다중 선택을 지원하며, 스크린 리더에는 단일 선택은 라디오처럼, 다중 선택은 토글 버튼으로 읽힙니다.
+
+## 기본 예시
+
+`value`와 `onChangeValue`로 선택 상태를 관리합니다. `value`는 선택된 값의 배열이고, `onChangeValue`는 `{ name, value }`를 받습니다. 단일 선택에서는 선택된 버튼을 다시 눌러도 선택이 해제되지 않습니다.
+
+<Preview>
+  <SelectorButtonDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { SelectorButton, SelectorButtonGroup } from '@bigmobility/vinyl-ui/selector-button';
+
+export default function SelectorButtonExample() {
+  const [value, setValue] = useState<string[]>([]);
+
+  const handleChange = ({ value }: { name: string; value: string[] }) => {
+    setValue(value);
+  };
+
+  return (
+    <SelectorButtonGroup
+      name="size"
+      value={value}
+      aria-label="옵션 선택"
+      onChangeValue={handleChange}
+    >
+      <SelectorButton value="small">Small</SelectorButton>
+      <SelectorButton value="medium">Medium</SelectorButton>
+      <SelectorButton value="large">Large</SelectorButton>
+    </SelectorButtonGroup>
+  );
+}
+```
+
+## 다중 선택
+
+`multiple`을 주면 여러 값을 동시에 선택할 수 있습니다. 선택된 버튼을 다시 누르면 선택이 해제됩니다.
+
+<Preview>
+  <SelectorButtonDemo multiple />
+</Preview>
+
+```tsx
+const [value, setValue] = useState<string[]>([]);
+
+<SelectorButtonGroup
+  name="size"
+  value={value}
+  multiple
+  aria-label="옵션 선택"
+  onChangeValue={handleChange}
+>
+  <SelectorButton value="small">Small</SelectorButton>
+  <SelectorButton value="medium">Medium</SelectorButton>
+  <SelectorButton value="large">Large</SelectorButton>
+</SelectorButtonGroup>
+```
+
+## 비활성
+
+`SelectorButtonGroup`에 `disabled`를 주면 모든 버튼이 비활성화됩니다. 버튼 하나만 비활성화할 때는 `SelectorButton`에 `disabled`를 줍니다.
+
+<Preview>
+  <SelectorButtonDemo disabled />
+  <SelectorButtonDemo disabledItem />
+</Preview>
+
+```tsx
+<SelectorButtonGroup
+  name="size"
+  value={value}
+  disabled
+  aria-label="옵션 선택"
+  onChangeValue={handleChange}
+>
+  <SelectorButton value="small">Small</SelectorButton>
+  <SelectorButton value="medium">Medium</SelectorButton>
+</SelectorButtonGroup>
+
+<SelectorButtonGroup
+  name="size"
+  value={value}
+  aria-label="옵션 선택"
+  onChangeValue={handleChange}
+>
+  <SelectorButton value="small">Small</SelectorButton>
+  <SelectorButton
+    value="medium"
+    disabled
+  >
+    Medium
+  </SelectorButton>
+</SelectorButtonGroup>
+```
+
+## 오류
+
+`SelectorButtonGroup`에 `hasError`를 주면 그룹 안의 모든 버튼이 오류 스타일(배경 `layout.bg-issue`, 테두리 `layout.issue-line`)로 표시됩니다. 선택된 버튼은 선택 배경과 글자색을 유지하고 테두리만 오류 색으로 바뀝니다.
+
+<Preview>
+  <SelectorButtonDemo
+    hasError
+    initialValue={['medium']}
+  />
+</Preview>
+
+```tsx
+<SelectorButtonGroup
+  name="size"
+  value={value}
+  hasError
+  aria-label="옵션 선택"
+  onChangeValue={handleChange}
+>
+  <SelectorButton value="small">Small</SelectorButton>
+  <SelectorButton value="medium">Medium</SelectorButton>
+</SelectorButtonGroup>
+```
+
+## Props
+
+### SelectorButtonGroup
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '`onChangeValue`로 돌려받는 이름. 네이티브 폼 제출에는 포함되지 않음 (필수)',
+    },
+    value: {
+      type: 'string[]',
+      description: '선택된 값의 배열 (제어, 필수)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string[];
+  }) => void`,
+      description: '선택이 바뀔 때 호출 (필수)',
+    },
+    multiple: {
+      type: 'boolean',
+      default: 'false',
+      description: '다중 선택 여부',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '그룹 전체 비활성 여부',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 여부. 모든 버튼이 오류 스타일로 표시',
+    },
+    'aria-label': {
+      type: 'string',
+      description: '그룹 이름 (필수 권장)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'SelectorButton 목록',
+    },
+  }}
+/>
+
+### SelectorButton
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '버튼의 값 (필수)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '버튼 비활성 여부',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '버튼 문구',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `ToggleGroup` 기반으로 키보드 탐색이 기본 동작합니다.
+- 단일 선택에서는 `aria-checked`, 다중 선택에서는 `aria-pressed`로 선택 상태를 노출하고, 선택된 버튼은 `data-state="on"`으로 표시됩니다.
+- 그룹 이름은 항상 `aria-label`로 지정합니다.
+- Tab으로 그룹에 들어오면 첫 번째 활성 버튼에 포커스가 갑니다. 화살표 키는 포커스만 옮기고, Space나 Enter로 선택합니다.
+- `hasError`를 주면 그룹에 `aria-invalid`가 지정됩니다.
+- 비활성 버튼은 포커스·선택되지 않습니다. 그룹이 `disabled`이면 그룹도 탭 순서에서 빠집니다.
+
+## 토큰 커스터마이징
+
+SelectorButton은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 기본 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 기본 테두리 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | hover·선택 테두리, 포커스 링 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 선택 배경 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 오류 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 오류 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경 |
+| `text.default` | <Swatch token="text.default" /> | 기본·오류 텍스트 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 선택 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트 |
+
+이 밖에 타이포는 `button.medium-normal`을 사용합니다.
