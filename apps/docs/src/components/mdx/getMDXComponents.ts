@@ -1,10 +1,12 @@
 import type { MDXComponents } from 'mdx/types';
 
+import AgreementItemDemo from '../docs/AgreementItemDemo';
 import Badge from '../docs/Badge';
 import BadgeDemo from '../docs/BadgeDemo';
 import BadgeSample from '../docs/BadgeSample';
 import Callout from '../docs/Callout';
 import CaptionDemo from '../docs/CaptionDemo';
+import CheckboxDemo from '../docs/CheckboxDemo';
 import CodeBlock from '../docs/CodeBlock';
 import EmptyStateDemo from '../docs/EmptyStateDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
@@ -61,6 +63,8 @@ const baseComponents: MDXComponents = {
   PropsTable,
   Callout,
   CaptionDemo,
+  CheckboxDemo,
+  AgreementItemDemo,
   EmptyStateDemo,
   ResultStateDemo,
   HelpTextDemo,
