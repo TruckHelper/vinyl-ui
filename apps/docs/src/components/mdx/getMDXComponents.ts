@@ -10,6 +10,7 @@ import EmptyStateDemo from '../docs/EmptyStateDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
 import Palette from '../docs/Palette';
+import PasswordFieldDemo from '../docs/PasswordFieldDemo';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
 import ResultStateDemo from '../docs/ResultStateDemo';
@@ -71,6 +72,7 @@ const baseComponents: MDXComponents = {
   Section,
   Swatch,
   Palette,
+  PasswordFieldDemo,
   SelectDemo,
   SelectorButtonDemo,
   SwitchDemo,
