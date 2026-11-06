@@ -90,6 +90,11 @@
       "import": "./dist/news-card.js",
       "default": "./dist/news-card.js"
     },
+    "./page-title": {
+      "types": "./dist/page-title.d.ts",
+      "import": "./dist/page-title.js",
+      "default": "./dist/page-title.js"
+    },
     "./process": {
       "types": "./dist/process.d.ts",
       "import": "./dist/process.js",
