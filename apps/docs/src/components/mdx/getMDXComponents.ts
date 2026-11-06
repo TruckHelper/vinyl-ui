@@ -9,6 +9,7 @@ import CodeBlock from '../docs/CodeBlock';
 import EmptyStateDemo from '../docs/EmptyStateDemo';
 import HelpTextDemo from '../docs/HelpTextDemo';
 import HelpTextSample from '../docs/HelpTextSample';
+import NewsCardGrid from '../docs/NewsCardGrid';
 import Palette from '../docs/Palette';
 import Preview from '../docs/Preview';
 import PropsTable from '../docs/PropsTable';
@@ -65,6 +66,7 @@ const baseComponents: MDXComponents = {
   ResultStateDemo,
   HelpTextDemo,
   HelpTextSample,
+  NewsCardGrid,
   Badge,
   BadgeDemo,
   BadgeSample,
