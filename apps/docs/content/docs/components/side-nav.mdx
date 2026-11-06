@@ -1,0 +1,317 @@
+---
+title: SideNav
+description: 대시보드 옆에 두는 세로 내비게이션 메뉴
+---
+
+import { SideNav, SideNavItem, SideNavList } from '@bigmobility/vinyl-ui/side-nav';
+
+`SideNav` 안에 `SideNavList`를 두고 `SideNavItem`(링크)과 `SideNavGroup`(펼치는 하위 메뉴)을 나열해 조합합니다. 스크린 리더에는 이름이 붙은 내비게이션 영역 안의 링크 목록으로 읽힙니다. 폭은 정하지 않으므로 감싸는 요소에서 지정합니다.
+
+## 기본 예시
+
+현재 페이지 항목에 `current`를 지정하면 `aria-current="page"`가 붙고 선택 스타일이 보입니다. 아이콘은 `icon`에 lucide 아이콘 이름을 넣습니다. 항목을 눌러 보세요.
+
+<Preview>
+  <SideNavDemo />
+</Preview>
+
+```tsx
+import {
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
+  SideNavList,
+  SideNavSubItem,
+} from '@bigmobility/vinyl-ui/side-nav';
+
+export default function SideNavExample() {
+  return (
+    <SideNav aria-label="대시보드 메뉴">
+      <SideNavList>
+        <SideNavItem
+          href="/"
+          icon="house"
+          current
+        >
+          홈
+        </SideNavItem>
+        <SideNavGroup
+          label="신청 관리"
+          icon="file"
+          defaultOpen
+        >
+          <SideNavSubItem href="/requests/personal">개인 회원</SideNavSubItem>
+          <SideNavSubItem href="/requests/company">법인 회원</SideNavSubItem>
+        </SideNavGroup>
+        <SideNavGroup
+          label="차고지 관리"
+          icon="truck"
+        >
+          <SideNavSubItem href="/depots">차고지 목록</SideNavSubItem>
+        </SideNavGroup>
+        <SideNavItem
+          href="/me"
+          icon="info"
+        >
+          내 정보
+        </SideNavItem>
+      </SideNavList>
+    </SideNav>
+  );
+}
+```
+
+## 하위 메뉴
+
+`SideNavGroup`은 누르면 하위 메뉴가 펼쳐지고 접힙니다. `label`은 버튼 텍스트, children은 `SideNavSubItem` 목록입니다. 처음부터 펼쳐 두려면 `defaultOpen`을 지정합니다. 현재 페이지가 하위 메뉴 안에 있으면 그 그룹에 `defaultOpen`을 주는 것을 권장합니다.
+
+```tsx
+<SideNavGroup
+  label="신청 관리"
+  icon="file"
+  defaultOpen
+>
+  <SideNavSubItem
+    href="/requests/personal"
+    current
+  >
+    개인 회원
+  </SideNavSubItem>
+  <SideNavSubItem href="/requests/company">법인 회원</SideNavSubItem>
+</SideNavGroup>
+```
+
+## 밝은 배경
+
+`variant="light"`는 밝은 화면 안에 두는 메뉴입니다. 배경이 없고 항목은 텍스트 위주로 표시됩니다. 기본값은 `dark`입니다.
+
+<Callout type="info">
+  `light`는 `SideNavItem`만 지원합니다. `SideNavGroup`·`SideNavSubItem`은 `dark`용입니다.
+</Callout>
+
+<Preview>
+  <SideNavDemo variant="light" />
+</Preview>
+
+```tsx
+<SideNav
+  aria-label="설정 메뉴"
+  variant="light"
+>
+  <SideNavList>
+    <SideNavItem
+      href="/settings"
+      current
+    >
+      기본 정보
+    </SideNavItem>
+    <SideNavItem href="/settings/account">계정</SideNavItem>
+    <SideNavItem href="/settings/alarm">알림</SideNavItem>
+    <SideNavItem
+      href="/settings/billing"
+      disabled
+    >
+      결제
+    </SideNavItem>
+  </SideNavList>
+</SideNav>
+```
+
+## 비활성
+
+`SideNavItem`과 `SideNavSubItem`에 `disabled`를 지정하면 클릭해도 이동하지 않고 키보드 포커스도 받지 않습니다.
+
+<Preview>
+  <SideNav
+    aria-label="비활성 예시"
+    variant="light"
+  >
+    <SideNavList>
+      <SideNavItem href="#비활성">기본 정보</SideNavItem>
+      <SideNavItem
+        href="#비활성"
+        disabled
+      >결제</SideNavItem>
+    </SideNavList>
+  </SideNav>
+</Preview>
+
+```tsx
+<SideNav
+  aria-label="설정 메뉴"
+  variant="light"
+>
+  <SideNavList>
+    <SideNavItem href="/settings">기본 정보</SideNavItem>
+    <SideNavItem
+      href="/settings/billing"
+      disabled
+    >
+      결제
+    </SideNavItem>
+  </SideNavList>
+</SideNav>
+```
+
+## 라우터 연동
+
+`asChild`를 지정하면 항목이 요소를 만들지 않고 자식 요소에 스타일과 속성을 넘깁니다. Next.js의 `Link` 같은 라우터 링크를 자식으로 넣습니다. 자식은 하나의 요소여야 하며, `icon`은 자식의 텍스트 앞에 들어갑니다.
+
+```tsx
+'use client';
+
+import NextLink from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import {
+  SideNav,
+  SideNavItem,
+  SideNavList,
+} from '@bigmobility/vinyl-ui/side-nav';
+
+export default function AppSideNav() {
+  const pathname = usePathname();
+
+  return (
+    <SideNav aria-label="대시보드 메뉴">
+      <SideNavList>
+        <SideNavItem
+          icon="house"
+          current={pathname === '/'}
+          asChild
+        >
+          <NextLink href="/">홈</NextLink>
+        </SideNavItem>
+      </SideNavList>
+    </SideNav>
+  );
+}
+```
+
+<Callout type="info">
+  `asChild`일 때 `aria-current`, `tabIndex`, `aria-disabled`는 자식 요소에 직접 쓰지 않습니다. 자식에 쓴 값이 항목의 처리를 덮어씁니다.
+</Callout>
+
+<Callout type="info">
+  `asChild`와 `disabled`를 함께 쓰면 자식의 `href`는 남고 클릭·포커스만 막힙니다. 자식 `NextLink`에는 `prefetch={false}`를 권장합니다.
+</Callout>
+
+## Props
+
+### SideNav
+
+<PropsTable
+  type={{
+    'aria-label': {
+      type: 'string',
+      description: '내비게이션 영역 이름(필수)',
+    },
+    variant: {
+      type: "'dark' | 'light'",
+      default: "'dark'",
+      description: '어두운 배경 메뉴 또는 밝은 화면용 메뉴',
+    },
+  }}
+/>
+
+### SideNavItem
+
+<PropsTable
+  type={{
+    href: {
+      type: 'string',
+      description: '이동할 주소',
+    },
+    icon: {
+      type: 'IconName',
+      description: '텍스트 앞 아이콘(lucide 이름)',
+    },
+    current: {
+      type: 'boolean',
+      default: 'false',
+      description: '현재 페이지 여부. aria-current="page"를 붙임',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: '자식 요소를 링크로 사용',
+    },
+  }}
+/>
+
+### SideNavGroup
+
+<PropsTable
+  type={{
+    label: {
+      type: 'string',
+      description: '펼침 버튼 텍스트(필수)',
+    },
+    icon: {
+      type: 'IconName',
+      description: '텍스트 앞 아이콘(lucide 이름)',
+    },
+    defaultOpen: {
+      type: 'boolean',
+      default: 'false',
+      description: '처음에 펼쳐 둘지 여부',
+    },
+  }}
+/>
+
+### SideNavSubItem
+
+<PropsTable
+  type={{
+    href: {
+      type: 'string',
+      description: '이동할 주소',
+    },
+    current: {
+      type: 'boolean',
+      default: 'false',
+      description: '현재 페이지 여부. aria-current="page"를 붙임',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    asChild: {
+      type: 'boolean',
+      default: 'false',
+      description: '자식 요소를 링크로 사용',
+    },
+  }}
+/>
+
+## 접근성
+
+- 루트는 `<nav>`이고 `aria-label`로 이름을 붙입니다. 한 화면에 내비게이션이 여럿이면 서로 다른 이름을 씁니다.
+- 항목은 `<ul>`·`<li>` 목록 안의 네이티브 `<a>`라 **키보드 포커스·Enter 이동**이 기본 동작합니다.
+- 현재 페이지는 `aria-current="page"`로 알리며, 선택 스타일도 이 속성을 기준으로 보입니다.
+- `SideNavGroup`의 펼침 버튼은 네이티브 `<button>`이며 `aria-expanded`·`aria-controls`로 펼침 상태를 알립니다. Enter·Space로 펼치고 접습니다.
+- 비활성 항목은 `aria-disabled="true"`와 `tabIndex={-1}`이 지정되어 탭 순서에서 빠집니다.
+
+## 토큰 커스터마이징
+
+SideNav는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-dark` | <Swatch token="layout.bg-dark" /> | `dark` 배경 |
+| `layout.primary` | <Swatch token="layout.primary" /> | `dark` hover·현재 항목 배경 |
+| `text.default-light` | <Swatch token="text.default-light" /> | `dark` 항목 텍스트·아이콘 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | `dark` 하위 메뉴 텍스트, 포커스 표시 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | `light` hover·현재 항목 배경 |
+| `text.soft` | <Swatch token="text.soft" /> | `light` 기본 텍스트 |
+| `text.default` | <Swatch token="text.default" /> | `light` hover 텍스트 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | `light` 현재 항목 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 |
+
+이 밖에 타이포는 `body.medium-normal`을 사용합니다.
