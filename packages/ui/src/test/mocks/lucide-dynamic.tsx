@@ -21,5 +21,7 @@ export const dynamicIconImports = {
   'file-x': () => Promise.resolve({}),
   info: () => Promise.resolve({}),
   minus: () => Promise.resolve({}),
+  'text-align-end': () => Promise.resolve({}),
   user: () => Promise.resolve({}),
+  x: () => Promise.resolve({}),
 };
