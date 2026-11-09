@@ -55,6 +55,11 @@
       "import": "./dist/field.js",
       "default": "./dist/field.js"
     },
+    "./header": {
+      "types": "./dist/header.d.ts",
+      "import": "./dist/header.js",
+      "default": "./dist/header.js"
+    },
     "./help-text": {
       "types": "./dist/help-text.d.ts",
       "import": "./dist/help-text.js",
