@@ -1,0 +1,263 @@
+---
+title: DatePicker
+description: 달력에서 날짜나 기간을 고르거나 직접 입력하는 컴포넌트
+---
+
+라벨, 날짜 입력칸, 달력 팝오버, 오류 메시지를 묶은 입력 컴포넌트입니다. 하루를 고르는 `DatePicker`와 시작일·종료일을 고르는
+`DateRangePicker`가 있습니다. 달력은 한국어(`ko-KR`)로 표시되고, 값은 `YYYY-MM-DD` 문자열로 주고받습니다.
+
+## 기본 예시
+
+`value`와 `onChangeValue`로 상태를 관리합니다. `onChangeValue`는 `{ name, value }`를 받습니다. 날짜가 없으면 `value`는 빈 문자열입니다.
+`value`는 `YYYY-MM-DD` 형식만 받고, 형식이 다르거나 없는 날짜(`2026-1-6`, `20261106`, `2026-13-40`)는 빈 값으로 표시합니다.
+
+<Preview>
+  <DatePickerDemo initialValue="2026-11-06" />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { DatePicker } from '@bigmobility/vinyl-ui/date-picker';
+
+export default function DatePickerExample() {
+  const [value, setValue] = useState('2026-11-06');
+
+  const handleChange = ({ value }: { name: string; value: string }) => {
+    setValue(value);
+  };
+
+  return (
+    <DatePicker
+      name="startDate"
+      label="시작일"
+      value={value}
+      onChangeValue={handleChange}
+    />
+  );
+}
+```
+
+입력칸 오른쪽 달력 아이콘을 누르면 달력이 열립니다. 달력 제목을 누르면 월 선택, 한 번 더 누르면 연도 선택(10년 단위)으로 바뀝니다.
+입력칸에 숫자 8자리(`20261106`)나 점으로 나눈 날짜(`2026.1.6`)를 입력하고 Enter를 누르거나 포커스를 옮기면 `2026-11-06`, `2026-01-06`처럼 바뀌어 선택됩니다.
+날짜로 읽을 수 없는 입력은 선택하지 않고, 포커스를 옮기면 이전 값으로 되돌립니다. 오늘 날짜는 한국 시간(`Asia/Seoul`) 기준입니다.
+
+## 기간 선택
+
+`DateRangePicker`는 `value`로 `[시작일, 종료일]`을 받습니다. 달력에서 시작일과 종료일을 차례로 누르면 기간이 정해지고,
+시작일만 고른 동안에는 `['2026-11-10', '']`처럼 종료일이 빈 문자열입니다. 시작일 없이 종료일만 주면(`['', '2026-11-14']`) 둘 다 빈 값으로 표시합니다.
+
+<Preview>
+  <DateRangePickerDemo initialValue={['2026-11-10', '2026-11-14']} />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import type { DateRangeValue } from '@bigmobility/vinyl-ui/date-picker';
+import { DateRangePicker } from '@bigmobility/vinyl-ui/date-picker';
+
+export default function DateRangePickerExample() {
+  const [value, setValue] = useState<DateRangeValue>(['2026-11-10', '2026-11-14']);
+
+  const handleChange = ({ value }: { name: string; value: DateRangeValue }) => {
+    setValue(value);
+  };
+
+  return (
+    <DateRangePicker
+      name="period"
+      label="기간"
+      value={value}
+      onChangeValue={handleChange}
+    />
+  );
+}
+```
+
+## 필수
+
+`required`를 주면 라벨 옆에 필수 표시가 붙고 입력칸에 `required`가 지정됩니다.
+
+<Preview>
+  <DatePickerDemo required />
+</Preview>
+
+```tsx
+<DatePicker
+  name="startDate"
+  label="시작일"
+  value={value}
+  required
+  onChangeValue={handleChange}
+/>
+```
+
+## 오류
+
+`errorMessage`를 주면 입력칸이 오류 스타일(배경 `layout.bg-issue`, 테두리 `layout.issue-line`)로 바뀌고 메시지가 아래에 표시됩니다.
+메시지 없이 오류 스타일만 쓸 때는 `hasError`를 줍니다.
+
+<Preview>
+  <DatePickerDemo errorMessage="날짜를 선택해 주세요" />
+  <DateRangePickerDemo errorMessage="종료일이 시작일보다 빠릅니다" />
+</Preview>
+
+```tsx
+<DatePicker
+  name="startDate"
+  label="시작일"
+  value={value}
+  errorMessage="날짜를 선택해 주세요"
+  onChangeValue={handleChange}
+/>
+
+<DateRangePicker
+  name="period"
+  label="기간"
+  value={period}
+  errorMessage="종료일이 시작일보다 빠릅니다"
+  onChangeValue={handlePeriodChange}
+/>
+```
+
+## 비활성
+
+`disabled`를 주면 입력과 달력 열기가 모두 막힙니다.
+
+<Preview>
+  <DatePickerDemo disabled />
+  <DateRangePickerDemo disabled />
+</Preview>
+
+```tsx
+<DatePicker
+  name="startDate"
+  label="시작일"
+  value={value}
+  disabled
+  onChangeValue={handleChange}
+/>
+
+<DateRangePicker
+  name="period"
+  label="기간"
+  value={period}
+  disabled
+  onChangeValue={handlePeriodChange}
+/>
+```
+
+## Props
+
+### DatePicker
+
+<PropsTable
+  type={{
+    name: {
+      type: 'string',
+      description: '입력의 name 속성이자 `onChangeValue`로 돌려받는 이름. id(`input-{name}`) 생성에도 사용 (필수)',
+    },
+    value: {
+      type: 'string',
+      description: '선택된 날짜 `YYYY-MM-DD`. 없으면 빈 문자열. 형식이 다르면 빈 값으로 취급 (제어, 필수)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: string;
+  }) => void`,
+      description: '날짜가 바뀔 때 호출 (필수)',
+    },
+    label: {
+      type: 'string',
+      description: '라벨 문구. 없으면 라벨을 그리지 않음',
+    },
+    placeholder: {
+      type: 'string',
+      default: "'YYYY-MM-DD'",
+      description: '값이 없을 때 입력칸에 표시할 문구',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: '필수 입력 여부',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성 여부',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 스타일 여부. `errorMessage`가 있으면 자동으로 오류 상태',
+    },
+    errorMessage: {
+      type: 'string',
+      description: '입력칸 아래에 표시할 오류 메시지',
+    },
+    className: {
+      type: 'string',
+      description: '바깥 요소(라벨·입력칸·오류 메시지를 감싼 요소)에 붙일 클래스',
+    },
+  }}
+/>
+
+### DateRangePicker
+
+`value`와 `onChangeValue`의 값 타입만 다르고 나머지 props는 `DatePicker`와 같습니다.
+
+<PropsTable
+  type={{
+    value: {
+      type: 'DateRangeValue = [string, string]',
+      description: '`[시작일, 종료일]`. 각각 `YYYY-MM-DD` 또는 빈 문자열 (제어, 필수)',
+    },
+    onChangeValue: {
+      type: `({ name, value }: {
+    name: string;
+    value: DateRangeValue;
+  }) => void`,
+      description: '시작일이나 종료일이 바뀔 때 호출 (필수)',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `DatePicker` 기반으로 달력은 `grid` 역할을 가지며 화살표 키로 날짜를 옮기고 Enter로 고릅니다. PageUp·PageDown은 이전·다음 달로, Home·End는 처음·끝 칸으로 옮기고, Esc는 달력을 닫고 달력 아이콘 버튼으로 포커스를 돌려줍니다.
+- 달력 아이콘 버튼, 이전·다음 버튼, 날짜 칸의 보조 기술용 이름은 한국어(`달력 열기`, `이전 달`, `선택됨. 2026년 11월 6일 금요일` 등)입니다.
+- 라벨은 첫 입력칸과 연결됩니다. `DateRangePicker`의 두 입력칸은 `{label} 시작일`, `{label} 종료일`로 읽힙니다.
+- 오류 상태에서는 입력칸에 `aria-invalid`가 지정되고, `errorMessage`가 있으면 `aria-describedby`로 메시지와 연결됩니다.
+
+## 토큰 커스터마이징
+
+DatePicker는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 입력칸·달력 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 입력칸·달력 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | 입력칸 hover·포커스·열림 테두리 |
+| `layout.bg-issue` | <Swatch token="layout.bg-issue" /> | 오류 배경 |
+| `layout.issue-line` | <Swatch token="layout.issue-line" /> | 오류 테두리 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 배경, 선택할 수 없는 월·연도 배경 |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | 달력 버튼·칸 hover 배경 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 선택한 날짜, 기간 시작·끝 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 기간 사이 날짜, 선택한 월·연도 배경 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 포커스 링 |
+| `text.input` | <Swatch token="text.input" /> | 입력 텍스트, hover·열림 아이콘 |
+| `text.input-soft` | <Swatch token="text.input-soft" /> | placeholder, 기본 아이콘 |
+| `text.default` | <Swatch token="text.default" /> | 달력 제목·날짜 텍스트 |
+| `text.soft` | <Swatch token="text.soft" /> | 요일 텍스트 |
+| `text.default-light` | <Swatch token="text.default-light" /> | 선택한 날짜 텍스트 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 기간 사이 날짜, 선택한 월·연도 텍스트 |
+| `text.disable` | <Swatch token="text.disable" /> | 비활성 텍스트, 이번 달 밖의 날짜 |
+
+이 밖에 타이포는 `input.medium-light`(입력), `button.medium-normal`(달력 제목), `button.small-normal`(날짜·월·연도), `body.small-normal`(요일)을 사용하고,
+달력 그림자는 `floating`을 사용합니다.
