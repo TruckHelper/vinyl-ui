@@ -16,6 +16,11 @@ const Container = styled('button', {
     cursor: 'pointer',
     transitionProperty: 'background-color, border-color',
     transitionDuration: '0.2s',
+    _focusVisible: {
+      outline: '2px solid',
+      outlineColor: 'layout.highlight-line',
+      outlineOffset: '2px',
+    },
     _disabled: {
       backgroundColor: 'layout.bg-disable',
       color: 'text.disable',
@@ -35,6 +40,12 @@ const Container = styled('button', {
         color: 'text.default-light',
         _hover: { backgroundColor: 'layout.emphasis-dark' },
         _active: { backgroundColor: 'layout.emphasis-dark' },
+      },
+      issue: {
+        backgroundColor: 'layout.issue',
+        color: 'text.default-light',
+        _hover: { backgroundColor: 'layout.issue-dark' },
+        _active: { backgroundColor: 'layout.issue-dark' },
       },
       neutral: {
         backgroundColor: 'layout.primary-subtle',
@@ -97,7 +108,7 @@ const IconWrapper = styled('span', {
 });
 
 export type ButtonProps = ComponentProps<'button'> & {
-  variant?: 'primary' | 'emphasis' | 'neutral' | 'outline';
+  variant?: 'primary' | 'emphasis' | 'issue' | 'neutral' | 'outline';
   fit?: 'block' | 'auto';
   leftIcon?: IconName;
   rightIcon?: IconName;
