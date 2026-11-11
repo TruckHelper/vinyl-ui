@@ -1,0 +1,220 @@
+---
+title: NewsCard
+description: 이미지, 라벨, 제목, 본문, 날짜로 소식을 보여 주는 카드 컴포넌트
+---
+
+import NextLink from 'next/link';
+
+import {
+  NewsCard, NewsCardContent, NewsCardDate, NewsCardImage, NewsCardInfo, NewsCardLabel, NewsCardText, NewsCardTitle,
+} from '@bigmobility/vinyl-ui/news-card';
+
+이미지, 라벨, 제목, 본문, 날짜를 파트로 조합합니다. 라벨과 본문은 필요할 때만 넣습니다. 폭은 부모 요소를 따르므로 목록은 그리드 같은 레이아웃 안에 놓습니다. 이미지는 320:213 비율로 채워지고 불러오기 전에는 회색 배경이 보입니다.
+
+## 기본 예시
+
+<Preview>
+  <NewsCardGrid>
+    <NewsCard>
+      <NewsCardImage alt="" />
+      <NewsCardInfo>
+        <NewsCardContent>
+          <NewsCardLabel>공지</NewsCardLabel>
+          <NewsCardTitle>서비스 점검 안내</NewsCardTitle>
+          <NewsCardText>11월 10일 새벽 2시부터 4시까지 서비스 점검이 진행됩니다.</NewsCardText>
+        </NewsCardContent>
+        <NewsCardDate dateTime="2026-11-06">2026.11.06</NewsCardDate>
+      </NewsCardInfo>
+    </NewsCard>
+  </NewsCardGrid>
+</Preview>
+
+```tsx
+import {
+  NewsCard, NewsCardContent, NewsCardDate, NewsCardImage, NewsCardInfo, NewsCardLabel, NewsCardText, NewsCardTitle,
+} from '@bigmobility/vinyl-ui/news-card';
+import { styled } from 'styled-system/jsx';
+
+const Grid = styled('div', {
+  base: {
+    display: 'grid',
+    gridTemplateColumns: { base: 'minmax(0, 1fr)', tablet: 'repeat(3, minmax(0, 1fr))' },
+    gap: '24',
+  },
+});
+
+export default function NewsCardExample() {
+  return (
+    <Grid>
+      <NewsCard>
+        <NewsCardImage
+          src="/images/notice.png"
+          alt=""
+        />
+        <NewsCardInfo>
+          <NewsCardContent>
+            <NewsCardLabel>공지</NewsCardLabel>
+            <NewsCardTitle>서비스 점검 안내</NewsCardTitle>
+            <NewsCardText>11월 10일 새벽 2시부터 4시까지 서비스 점검이 진행됩니다.</NewsCardText>
+          </NewsCardContent>
+          <NewsCardDate dateTime="2026-11-06">2026.11.06</NewsCardDate>
+        </NewsCardInfo>
+      </NewsCard>
+    </Grid>
+  );
+}
+```
+
+## 구성
+
+라벨이나 본문을 빼면 남은 파트끼리 간격이 맞춰집니다. 본문은 한 줄을 넘으면 말줄임표로 줄어듭니다.
+
+<Preview>
+  <NewsCardGrid>
+    <NewsCard>
+      <NewsCardImage alt="" />
+      <NewsCardInfo>
+        <NewsCardContent>
+          <NewsCardLabel>이벤트</NewsCardLabel>
+          <NewsCardTitle>신규 가입 혜택</NewsCardTitle>
+        </NewsCardContent>
+        <NewsCardDate dateTime="2026-11-01">2026.11.01</NewsCardDate>
+      </NewsCardInfo>
+    </NewsCard>
+    <NewsCard>
+      <NewsCardImage alt="" />
+      <NewsCardInfo>
+        <NewsCardContent>
+          <NewsCardTitle>앱 업데이트 소식</NewsCardTitle>
+          <NewsCardText>화물 조회 화면이 더 빨라지고 알림 설정이 추가되었습니다.</NewsCardText>
+        </NewsCardContent>
+        <NewsCardDate dateTime="2026-10-28">2026.10.28</NewsCardDate>
+      </NewsCardInfo>
+    </NewsCard>
+  </NewsCardGrid>
+</Preview>
+
+```tsx
+<NewsCard>
+  <NewsCardImage
+    src="/images/event.png"
+    alt=""
+  />
+  <NewsCardInfo>
+    <NewsCardContent>
+      <NewsCardLabel>이벤트</NewsCardLabel>
+      <NewsCardTitle>신규 가입 혜택</NewsCardTitle>
+    </NewsCardContent>
+    <NewsCardDate dateTime="2026-11-01">2026.11.01</NewsCardDate>
+  </NewsCardInfo>
+</NewsCard>
+<NewsCard>
+  <NewsCardImage
+    src="/images/update.png"
+    alt=""
+  />
+  <NewsCardInfo>
+    <NewsCardContent>
+      <NewsCardTitle>앱 업데이트 소식</NewsCardTitle>
+      <NewsCardText>화물 조회 화면이 더 빨라지고 알림 설정이 추가되었습니다.</NewsCardText>
+    </NewsCardContent>
+    <NewsCardDate dateTime="2026-10-28">2026.10.28</NewsCardDate>
+  </NewsCardInfo>
+</NewsCard>
+```
+
+## 링크 카드
+
+카드 전체를 링크로 만들려면 라우터 링크로 `NewsCard`를 감쌉니다. 링크 이름은 카드 안의 텍스트로 읽힙니다.
+
+<Preview>
+  <NewsCardGrid>
+    <NextLink href="#링크-카드">
+      <NewsCard>
+        <NewsCardImage alt="" />
+        <NewsCardInfo>
+          <NewsCardContent>
+            <NewsCardTitle>서비스 점검 안내</NewsCardTitle>
+          </NewsCardContent>
+          <NewsCardDate dateTime="2026-11-06">2026.11.06</NewsCardDate>
+        </NewsCardInfo>
+      </NewsCard>
+    </NextLink>
+  </NewsCardGrid>
+</Preview>
+
+```tsx
+import NextLink from 'next/link';
+
+import {
+  NewsCard, NewsCardContent, NewsCardDate, NewsCardImage, NewsCardInfo, NewsCardTitle,
+} from '@bigmobility/vinyl-ui/news-card';
+
+export default function NewsCardLinkExample() {
+  return (
+    <NextLink href="/news/1">
+      <NewsCard>
+        <NewsCardImage
+          src="/images/notice.png"
+          alt=""
+        />
+        <NewsCardInfo>
+          <NewsCardContent>
+            <NewsCardTitle>서비스 점검 안내</NewsCardTitle>
+          </NewsCardContent>
+          <NewsCardDate dateTime="2026-11-06">2026.11.06</NewsCardDate>
+        </NewsCardInfo>
+      </NewsCard>
+    </NextLink>
+  );
+}
+```
+
+## Props
+
+### NewsCardImage
+
+<PropsTable
+  type={{
+    alt: {
+      type: 'string',
+      description: '이미지 대체 텍스트(필수). 제목과 같은 내용이면 빈 문자열',
+    },
+  }}
+/>
+
+나머지 파트는 해당 HTML 요소의 속성을 그대로 받습니다.
+
+| 파트 | 요소 | 역할 |
+| --- | --- | --- |
+| `NewsCard` | `article` | 카드 루트 |
+| `NewsCardImage` | `img` | 이미지 |
+| `NewsCardInfo` | `div` | 내용과 날짜 묶음 |
+| `NewsCardContent` | `div` | 라벨, 제목, 본문 묶음 |
+| `NewsCardLabel` | `span` | 분류 라벨 |
+| `NewsCardTitle` | `h3` | 제목 |
+| `NewsCardText` | `p` | 한 줄 본문 |
+| `NewsCardDate` | `time` | 날짜. `dateTime`으로 기계가 읽는 날짜를 넣음 |
+
+## 접근성
+
+- 루트는 `article`이라 하나의 독립된 소식으로 읽힙니다.
+- 제목은 `h3`입니다. 페이지 제목 구조에 맞지 않으면 문서 구조를 조정하세요.
+- `NewsCardImage`는 `alt`가 필수입니다. 제목이 내용을 전달하면 `alt=""`로 두어 스크린 리더가 건너뛰게 합니다.
+- 본문의 말줄임은 화면에서만 적용되고, 스크린 리더는 전체 문장을 읽습니다.
+- 날짜는 `time` 요소라 `dateTime`에 `2026-11-06` 형식을 넣으면 기계가 날짜로 인식합니다.
+
+## 토큰 커스터마이징
+
+NewsCard는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-soft-gray` | <Swatch token="layout.bg-soft-gray" /> | 이미지 자리 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 라벨 배경 |
+| `text.accent-primary` | <Swatch token="text.accent-primary" /> | 라벨 글자 |
+| `text.heading` | <Swatch token="text.heading" /> | 제목 |
+| `text.default` | <Swatch token="text.default" /> | 본문 |
+| `text.soft` | <Swatch token="text.soft" /> | 날짜 |
+
+이 밖에 타이포는 제목 `heading.medium-bold`, 라벨 `body.small-normal`, 본문·날짜 `body.medium-light`를 사용합니다.

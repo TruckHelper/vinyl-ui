@@ -70,6 +70,11 @@
       "import": "./dist/link.js",
       "default": "./dist/link.js"
     },
+    "./news-card": {
+      "types": "./dist/news-card.d.ts",
+      "import": "./dist/news-card.js",
+      "default": "./dist/news-card.js"
+    },
     "./result-state": {
       "types": "./dist/result-state.d.ts",
       "import": "./dist/result-state.js",
