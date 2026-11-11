@@ -1,0 +1,302 @@
+---
+title: Table
+description: 행과 열로 데이터를 보여 주는 표 컴포넌트
+---
+
+`Table` 안에 `TableHeader`·`TableBody`, 그 안에 `TableRow`, 행 안에 `TableHeaderCell`·`TableCell`을 넣어 조합합니다. 각각 `table`·`thead`·`tbody`·`tr`·`th`·`td`로 렌더링되어 스크린 리더에 표로 읽힙니다. 표가 넓으면 가로로 스크롤됩니다.
+
+## 기본 예시
+
+<Preview>
+  <TableDemo />
+</Preview>
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableHeaderCell,
+  TableRow,
+} from '@bigmobility/vinyl-ui/table';
+
+export default function TableExample() {
+  return (
+    <Table aria-label="신청 목록">
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>이름</TableHeaderCell>
+          <TableHeaderCell>신청일</TableHeaderCell>
+          <TableHeaderCell>상태</TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>홍길동</TableCell>
+          <TableCell>2026-11-03</TableCell>
+          <TableCell>처리 중</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>김철수</TableCell>
+          <TableCell>2026-11-01</TableCell>
+          <TableCell>접수</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+## 정렬
+
+`TableHeaderCell`에 `sort`, `name`, `sortLabel`, `onChangeSort`를 주면 정렬 버튼이 붙습니다. 정렬 상태는 직접 관리합니다. 버튼을 누르면 `onChangeSort`가 `{ name, value }`를 받고, `value`는 `none → asc → desc → none` 순서의 다음 값입니다. 데이터 정렬도 직접 합니다(아래 `sortedRows`).
+
+<Preview>
+  <TableDemo variant="sort" />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import type { TableSort } from '@bigmobility/vinyl-ui/table';
+
+const [sort, setSort] = useState<{ name: string; value: TableSort }>({
+  name: 'date',
+  value: 'desc',
+});
+
+const sortOf = (name: string) => (sort.name === name ? sort.value : 'none');
+
+const sortedRows = sort.value === 'none'
+  ? rows
+  : [...rows].sort((a, b) => (
+    String(a[sort.name]).localeCompare(String(b[sort.name])) * (sort.value === 'asc' ? 1 : -1)
+  ));
+
+<Table aria-label="신청 목록">
+  <TableHeader>
+    <TableRow>
+      <TableHeaderCell
+        name="name"
+        sort={sortOf('name')}
+        sortLabel="이름 정렬"
+        onChangeSort={setSort}
+      >
+        이름
+      </TableHeaderCell>
+      <TableHeaderCell
+        name="date"
+        sort={sortOf('date')}
+        sortLabel="신청일 정렬"
+        onChangeSort={setSort}
+      >
+        신청일
+      </TableHeaderCell>
+      <TableHeaderCell>상태</TableHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {sortedRows.map((row) => (
+      <TableRow key={row.id}>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.date}</TableCell>
+        <TableCell>{row.status}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
+```
+
+## 셀 종류
+
+배지는 `Badge`를 `TableCell`의 children으로 넣습니다. 링크는 `variant="link"`를 주고 `Link`나 `a`를 children으로 넣으면 셀에 맞는 글자 크기(14px)로 표시됩니다.
+
+<Preview>
+  <TableDemo variant="cell-type" />
+</Preview>
+
+```tsx
+import { Badge } from '@bigmobility/vinyl-ui/badge';
+import { Link } from '@bigmobility/vinyl-ui/link';
+
+<Table aria-label="신청 목록">
+  <TableHeader>
+    <TableRow>
+      <TableHeaderCell>이름</TableHeaderCell>
+      <TableHeaderCell>상태</TableHeaderCell>
+      <TableHeaderCell>상세</TableHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>홍길동</TableCell>
+      <TableCell>
+        <Badge>처리 중</Badge>
+      </TableCell>
+      <TableCell variant="link">
+        <Link href="/requests/1">보기</Link>
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+## 열 너비
+
+열 너비는 기본적으로 표 너비에 맞춰 나뉩니다. 너비를 정하려면 `TableHeaderCell`을 감싸고 `sizes` 토큰 `table-col-xs`·`sm`·`md`·`lg`·`xl`(60·80·120·200·300px)을 지정합니다.
+
+<Preview>
+  <TableDemo variant="column-width" />
+</Preview>
+
+```tsx
+import { styled } from 'styled-system/jsx';
+
+const NoHeaderCell = styled(TableHeaderCell, {
+  base: { width: 'table-col-sm' },
+});
+
+const StatusHeaderCell = styled(TableHeaderCell, {
+  base: { width: 'table-col-md' },
+});
+
+<Table aria-label="신청 목록">
+  <TableHeader>
+    <TableRow>
+      <NoHeaderCell>번호</NoHeaderCell>
+      <TableHeaderCell>이름</TableHeaderCell>
+      <StatusHeaderCell>상태</StatusHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>1</TableCell>
+      <TableCell>홍길동</TableCell>
+      <TableCell>처리 중</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+## Props
+
+### Table
+
+<PropsTable
+  type={{
+    'aria-label': {
+      type: 'string',
+      description: '표 이름. `aria-label`이나 `aria-labelledby` 중 하나 권장',
+    },
+    'aria-labelledby': {
+      type: 'string',
+      description: '표 이름으로 쓸 요소(제목 등)의 id',
+    },
+    className: {
+      type: 'string',
+      description: '바깥 테두리 영역에 붙는 클래스',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'TableHeader, TableBody',
+    },
+  }}
+/>
+
+`TableHeader`, `TableBody`, `TableRow`는 각각 `thead`, `tbody`, `tr`의 속성을 그대로 받습니다.
+
+### TableHeaderCell
+
+<PropsTable
+  type={{
+    sort: {
+      type: "'none' | 'asc' | 'desc'",
+      description: '정렬 상태 (제어). 주면 정렬 버튼이 붙음',
+    },
+    name: {
+      type: 'string',
+      description: '`onChangeSort`로 돌려받는 열 이름 (`sort`를 줄 때 필수)',
+    },
+    onChangeSort: {
+      type: `({ name, value }: {
+    name: string;
+    value: TableSort;
+  }) => void`,
+      description: '정렬 버튼을 누를 때 다음 정렬 값으로 호출 (`sort`를 줄 때 필수)',
+    },
+    sortLabel: {
+      type: 'string',
+      description: '정렬 버튼의 접근성 이름. 열마다 다르게 지정 (`sort`를 줄 때 필수)',
+    },
+    colSpan: {
+      type: 'number',
+      description: '합칠 열 수',
+    },
+    rowSpan: {
+      type: 'number',
+      description: '합칠 행 수',
+    },
+    className: {
+      type: 'string',
+      description: '셀에 붙는 클래스',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '헤더 문구',
+    },
+  }}
+/>
+
+### TableCell
+
+<PropsTable
+  type={{
+    variant: {
+      type: "'text' | 'link'",
+      default: "'text'",
+      description: '셀 종류. `link`이면 children의 링크를 셀 스타일로 표시',
+    },
+    colSpan: {
+      type: 'number',
+      description: '합칠 열 수',
+    },
+    rowSpan: {
+      type: 'number',
+      description: '합칠 행 수',
+    },
+    className: {
+      type: 'string',
+      description: '셀에 붙는 클래스',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '셀 내용',
+    },
+  }}
+/>
+
+## 접근성
+
+- `table`·`thead`·`tbody`·`tr`·`th`·`td`로 렌더링되어 표 구조가 그대로 읽힙니다. 표 이름은 `aria-label`로 주거나, 화면에 제목이 있으면 `aria-labelledby`로 그 제목을 가리킵니다.
+- `TableHeaderCell`은 `scope="col"`을 가집니다.
+- 정렬 가능한 헤더는 `aria-sort`(`none`·`ascending`·`descending`)로 현재 정렬을 알립니다.
+- 정렬 버튼은 `button`이라 Tab으로 포커스하고 Enter나 Space로 누릅니다. 버튼 이름은 `sortLabel`로 열마다 다르게 줍니다(예: '이름 정렬').
+
+## 토큰 커스터마이징
+
+Table은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 바깥 테두리, 행 구분선 |
+| `layout.table-header` | <Swatch token="layout.table-header" /> | 헤더 배경 |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 본문 배경 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 정렬 버튼 포커스 링 |
+| `text.heading` | <Swatch token="text.heading" /> | 헤더 텍스트 |
+| `text.default` | <Swatch token="text.default" /> | 본문 텍스트, 링크, 현재 정렬 방향 아이콘 |
+| `text.disable` | <Swatch token="text.disable" /> | 정렬되지 않은 방향 아이콘 |
+
+이 밖에 타이포는 헤더 `body.small-normal`, 본문 `body.small-light`, 링크 `button.small-normal`을 사용하고, 열 너비 토큰은 `sizes.table-col-*`입니다.
