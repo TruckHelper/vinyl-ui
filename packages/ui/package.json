@@ -90,6 +90,11 @@
       "import": "./dist/switch.js",
       "default": "./dist/switch.js"
     },
+    "./tabs": {
+      "types": "./dist/tabs.d.ts",
+      "import": "./dist/tabs.js",
+      "default": "./dist/tabs.js"
+    },
     "./toast": {
       "types": "./dist/toast.d.ts",
       "import": "./dist/toast.js",
