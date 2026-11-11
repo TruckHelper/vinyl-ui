@@ -54,6 +54,56 @@ export default function AccordionExample() {
 }
 ```
 
+## Variant
+
+`variant` props로 모양을 고릅니다. 기본값 `border`는 제목 아래에 구분선을 그립니다.
+`filled`는 아이템마다 회색 배경과 둥근 모서리를 주고, 제목의 구분선을 없앱니다.
+
+<Preview>
+  <Accordion
+    variant="filled"
+    collapsible
+    defaultValue={["delivery"]}
+  >
+    <AccordionItem value="delivery">
+      <AccordionItemTrigger>배송 안내</AccordionItemTrigger>
+      <AccordionItemContent>주문 후 2~3일 내 발송됩니다.</AccordionItemContent>
+    </AccordionItem>
+    <AccordionItem value="refund">
+      <AccordionItemTrigger>환불 정책</AccordionItemTrigger>
+      <AccordionItemContent>수령 후 7일 이내 교환·환불이 가능합니다.</AccordionItemContent>
+    </AccordionItem>
+  </Accordion>
+</Preview>
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemTrigger,
+  AccordionItemContent,
+} from '@bigmobility/vinyl-ui/accordion';
+
+export default function FilledAccordion() {
+  return (
+    <Accordion
+      variant="filled"
+      collapsible
+      defaultValue={['delivery']}
+    >
+      <AccordionItem value="delivery">
+        <AccordionItemTrigger>배송 안내</AccordionItemTrigger>
+        <AccordionItemContent>주문 후 2~3일 내 발송됩니다.</AccordionItemContent>
+      </AccordionItem>
+      <AccordionItem value="refund">
+        <AccordionItemTrigger>환불 정책</AccordionItemTrigger>
+        <AccordionItemContent>수령 후 7일 이내 교환·환불이 가능합니다.</AccordionItemContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+```
+
 ## 다중 펼침
 
 `multiple` props를 사용하면 여러 아이템을 동시에 펼칠 수 있습니다. (기본은 한 번에 하나만 열립니다.)
@@ -189,6 +239,11 @@ export default function NoIndicatorAccordion() {
 
 <PropsTable
   type={{
+    variant: {
+      type: "'border' | 'filled'",
+      default: "'border'",
+      description: '모양. border는 제목 아래 구분선, filled는 아이템별 회색 배경',
+    },
     value: {
       type: 'string[]',
       description: '열린 아이템 값 (제어 컴포넌트)',
@@ -262,4 +317,6 @@ Accordion은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming
 | `text.strong` | <Swatch token="text.strong" /> | 제목 텍스트 |
 | `text.disable` | <Swatch token="text.disable" /> | 비활성 제목 텍스트 |
 | `text.default` | <Swatch token="text.default" /> | 내용 텍스트 |
-| `layout.default-line` | <Swatch token="layout.default-line" /> | 제목 하단 구분선 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 제목 하단 구분선 (`border`) |
+| `layout.bg-light-gray` | <Swatch token="layout.bg-light-gray" /> | 아이템 배경 (`filled`) |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 제목 키보드 포커스 표시 |
