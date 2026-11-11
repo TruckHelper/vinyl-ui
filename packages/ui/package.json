@@ -70,6 +70,11 @@
       "import": "./dist/link.js",
       "default": "./dist/link.js"
     },
+    "./radio": {
+      "types": "./dist/radio.d.ts",
+      "import": "./dist/radio.js",
+      "default": "./dist/radio.js"
+    },
     "./result-state": {
       "types": "./dist/result-state.d.ts",
       "import": "./dist/result-state.js",
