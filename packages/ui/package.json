@@ -35,6 +35,11 @@
       "import": "./dist/badge.js",
       "default": "./dist/badge.js"
     },
+    "./bottom-actions": {
+      "types": "./dist/bottom-actions.d.ts",
+      "import": "./dist/bottom-actions.js",
+      "default": "./dist/bottom-actions.js"
+    },
     "./breadcrumb": {
       "types": "./dist/breadcrumb.d.ts",
       "import": "./dist/breadcrumb.js",
