@@ -1,0 +1,67 @@
+---
+title: PageTitle
+description: 페이지 맨 위에 제목을 표시하는 컴포넌트
+---
+
+import { PageTitle, PageTitleHeading } from '@bigmobility/vinyl-ui/page-title';
+
+`PageTitle` 안에 `PageTitleHeading`으로 제목을 넣습니다. 제목은 `h1`로 렌더링되고 앞에 원형 표시가 붙습니다.
+
+## 기본 예시
+
+<Preview>
+  <PageTitle>
+    <PageTitleHeading>페이지 제목</PageTitleHeading>
+  </PageTitle>
+</Preview>
+
+```tsx
+import { PageTitle, PageTitleHeading } from '@bigmobility/vinyl-ui/page-title';
+
+export default function PageTitleExample() {
+  return (
+    <PageTitle>
+      <PageTitleHeading>페이지 제목</PageTitleHeading>
+    </PageTitle>
+  );
+}
+```
+
+## Props
+
+### PageTitle
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: 'PageTitleHeading',
+    },
+  }}
+/>
+
+### PageTitleHeading
+
+<PropsTable
+  type={{
+    children: {
+      type: 'ReactNode',
+      description: '페이지 제목',
+    },
+  }}
+/>
+
+## 접근성
+
+- 루트는 `header`, 제목은 `h1`로 렌더링됩니다. 페이지마다 하나만 사용합니다.
+- 사이트 헤더와 `banner` 랜드마크가 겹치지 않게 `main` 안에 둡니다.
+- 제목 앞 원형 표시는 가상 요소라 스크린 리더에 읽히지 않습니다.
+
+## 토큰 커스터마이징
+
+PageTitle은 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.heading` | <Swatch token="text.heading" /> | 제목 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 제목 앞 원형 표시 |
