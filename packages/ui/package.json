@@ -65,6 +65,11 @@
       "import": "./dist/floating-action-button.js",
       "default": "./dist/floating-action-button.js"
     },
+    "./footer": {
+      "types": "./dist/footer.d.ts",
+      "import": "./dist/footer.js",
+      "default": "./dist/footer.js"
+    },
     "./help-text": {
       "types": "./dist/help-text.d.ts",
       "import": "./dist/help-text.js",
