@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types';
 
+import AgreementItemDemo from '../docs/AgreementItemDemo';
 import Badge from '../docs/Badge';
 import BadgeDemo from '../docs/BadgeDemo';
 import BadgeSample from '../docs/BadgeSample';
@@ -70,6 +71,7 @@ const baseComponents: MDXComponents = {
   Callout,
   CaptionDemo,
   CheckboxDemo,
+  AgreementItemDemo,
   EmptyStateDemo,
   ResultStateDemo,
   HelpTextDemo,
