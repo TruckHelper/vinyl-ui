@@ -1,0 +1,132 @@
+---
+title: SelectionCard
+description: 아이콘·제목·설명이 있는 카드 형태의 라디오 선택지
+---
+
+[Radio](/docs/components/radio)처럼 `RadioGroup` 안에 넣어 쓰는 카드형 선택지입니다. 선택 상태는 `RadioGroup`의 `value`와 `onChangeValue`로 관리합니다.
+
+## 기본 예시
+
+아이콘, 제목, 설명을 가진 카드로 하나를 고릅니다. 아이콘은 lucide 아이콘 이름으로 바꿀 수 있고 기본값은 `user-round`입니다.
+
+<Preview>
+  <SelectionCardDemo initialValue="personal" />
+</Preview>
+
+```tsx
+import { RadioGroup } from '@bigmobility/vinyl-ui/radio';
+import { SelectionCard } from '@bigmobility/vinyl-ui/selection-card';
+
+<RadioGroup
+  name="member"
+  value={value}
+  aria-label="회원 유형"
+  onChangeValue={handleChange}
+>
+  <SelectionCard
+    value="personal"
+    title="개인 회원"
+    description="화물을 보내는 개인 사용자"
+  />
+  <SelectionCard
+    value="business"
+    title="사업자 회원"
+    description="사업자 등록증이 있는 사용자"
+    icon="building-2"
+  />
+</RadioGroup>
+```
+
+### 왼쪽 정렬
+
+`variant="left"`를 주면 아이콘과 글이 가로로 놓입니다. 넓은 화면에서는 `center`, 모바일에서는 `left`를 씁니다. 카드 하나만 비활성화할 때는 `disabled`를 줍니다.
+
+<Preview>
+  <SelectionCardDemo
+    variant="left"
+    disabledItem
+  />
+</Preview>
+
+```tsx
+<RadioGroup
+  name="member"
+  value={value}
+  aria-label="회원 유형"
+  onChangeValue={handleChange}
+>
+  <SelectionCard
+    value="personal"
+    variant="left"
+    title="개인 회원"
+    description="화물을 보내는 개인 사용자"
+  />
+  <SelectionCard
+    value="business"
+    variant="left"
+    title="사업자 회원"
+    description="사업자 등록증이 있는 사용자"
+    icon="building-2"
+    disabled
+  />
+</RadioGroup>
+```
+
+## Props
+
+### SelectionCard
+
+<PropsTable
+  type={{
+    value: {
+      type: 'string',
+      description: '카드의 값 (필수)',
+    },
+    title: {
+      type: 'string',
+      description: '제목. 라디오의 이름이 됨 (필수)',
+    },
+    description: {
+      type: 'string',
+      description: '설명. 라디오의 설명으로 연결됨',
+    },
+    variant: {
+      type: "'center' | 'left'",
+      default: "'center'",
+      description: '배치 방향',
+    },
+    icon: {
+      type: 'IconName',
+      default: "'user-round'",
+      description: 'lucide 아이콘 이름',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '카드 비활성 여부',
+    },
+  }}
+/>
+
+## 접근성
+
+- Ark UI `RadioGroup` 기반으로 각 카드는 네이티브 라디오 입력을 가지며, 그룹은 `radiogroup`으로 읽힙니다. 그룹 이름은 `RadioGroup`의 `aria-label`로 지정합니다.
+- 제목은 라디오 이름으로, 설명은 `aria-describedby`로 연결됩니다. 아이콘은 스크린 리더에서 숨겨집니다.
+- Tab으로 그룹에 들어오면 선택된 카드(없으면 첫 카드)에 포커스가 가고, 화살표 키로 이전·다음 카드를 선택합니다.
+- 비활성 카드는 포커스·선택되지 않습니다.
+
+## 토큰 커스터마이징
+
+SelectionCard는 아래 시맨틱 토큰을 참조합니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `layout.bg-light` | <Swatch token="layout.bg-light" /> | 카드 배경 |
+| `layout.default-line` | <Swatch token="layout.default-line" /> | 기본 테두리 |
+| `layout.strong-line` | <Swatch token="layout.strong-line" /> | hover·선택 테두리 |
+| `layout.highlight-line` | <Swatch token="layout.highlight-line" /> | 포커스 링 |
+| `layout.bg-disable` | <Swatch token="layout.bg-disable" /> | 비활성 카드 배경 |
+| `layout.primary-subtle` | <Swatch token="layout.primary-subtle" /> | 아이콘 배경 |
+| `text.default` | <Swatch token="text.default" /> | 아이콘 |
+| `text.heading` | <Swatch token="text.heading" /> | 제목 |
+| `text.soft` | <Swatch token="text.soft" /> | 설명 |

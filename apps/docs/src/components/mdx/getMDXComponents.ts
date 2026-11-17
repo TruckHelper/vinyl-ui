@@ -24,6 +24,7 @@ import ScrollToTopButtonDisabledDemo from '../docs/ScrollToTopButtonDisabledDemo
 import ScrollToTopButtonThresholdDemo from '../docs/ScrollToTopButtonThresholdDemo';
 import Section from '../docs/Section';
 import SelectDemo from '../docs/SelectDemo';
+import SelectionCardDemo from '../docs/SelectionCardDemo';
 import SelectorButtonDemo from '../docs/SelectorButtonDemo';
 import Swatch from '../docs/Swatch';
 import SwitchDemo from '../docs/SwitchDemo';
@@ -90,6 +91,7 @@ const baseComponents: MDXComponents = {
   Palette,
   RadioDemo,
   SelectDemo,
+  SelectionCardDemo,
   SelectorButtonDemo,
   SwitchDemo,
   SwitchSizeDemo,

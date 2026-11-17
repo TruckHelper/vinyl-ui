@@ -130,6 +130,11 @@
       "import": "./dist/select.js",
       "default": "./dist/select.js"
     },
+    "./selection-card": {
+      "types": "./dist/selection-card.d.ts",
+      "import": "./dist/selection-card.js",
+      "default": "./dist/selection-card.js"
+    },
     "./selector-button": {
       "types": "./dist/selector-button.d.ts",
       "import": "./dist/selector-button.js",
