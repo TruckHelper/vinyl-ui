@@ -115,6 +115,11 @@
       "import": "./dist/process.js",
       "default": "./dist/process.js"
     },
+    "./radio": {
+      "types": "./dist/radio.d.ts",
+      "import": "./dist/radio.js",
+      "default": "./dist/radio.js"
+    },
     "./result-state": {
       "types": "./dist/result-state.d.ts",
       "import": "./dist/result-state.js",
@@ -124,6 +129,11 @@
       "types": "./dist/select.d.ts",
       "import": "./dist/select.js",
       "default": "./dist/select.js"
+    },
+    "./selection-card": {
+      "types": "./dist/selection-card.d.ts",
+      "import": "./dist/selection-card.js",
+      "default": "./dist/selection-card.js"
     },
     "./selector-button": {
       "types": "./dist/selector-button.d.ts",
