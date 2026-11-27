@@ -1,0 +1,212 @@
+---
+title: FieldGroup
+description: 하나의 라벨과 오류 메시지 아래에 입력과 버튼을 가로로 묶는 필드 그룹
+---
+
+## 개요
+
+`FieldGroup`은 라벨 하나에 입력 여러 개, 또는 입력과 버튼을 함께 묶을 때 씁니다(예: 우편번호 + 검색 버튼).
+`FieldGroup` 안에 `FieldGroupLabel`·`FieldGroupWrap`·`ErrorMessage`를 배치하고, `FieldGroupWrap` 안에 `Input`과 `Button`을 가로로 나열합니다.
+`FieldGroup`은 `hasError`·`required`·`disabled`를 context로 그룹 안 `Input`과 `ErrorMessage`에 전달합니다.
+
+`FieldGroup`은 `Field` 없이 `Input` 여러 개(또는 입력과 버튼)를 하나의 라벨·오류로 묶을 때 씁니다. 주소 검색이나 인증번호 입력처럼 AddressField·VerificationCodeField 같은 완성된 입력 컴포넌트가 있으면 그 컴포넌트를 씁니다.
+
+## 기본 예시
+
+`FieldGroupWrap` 안의 `Input`은 남은 폭을 나눠 채우고, 버튼은 내용 폭을 유지합니다. 버튼 폭을 고정하려면 감싸서 지정합니다.
+
+<Preview>
+  <FieldGroupDemo />
+</Preview>
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+
+import { Button } from '@bigmobility/vinyl-ui/button';
+import {
+  ErrorMessage,
+  FieldGroup,
+  FieldGroupLabel,
+  FieldGroupWrap,
+  Input,
+} from '@bigmobility/vinyl-ui/field';
+
+import { styled } from 'styled-system/jsx';
+
+const ActionButton = styled(Button, {
+  base: {
+    width: '8.8rem',
+  },
+});
+
+export default function FieldGroupExample() {
+  const [postcode, setPostcode] = useState('');
+  const [error, setError] = useState('');
+
+  return (
+    <FieldGroup hasError={!!error}>
+      <FieldGroupLabel>주소</FieldGroupLabel>
+      <FieldGroupWrap>
+        <Input
+          name="postcode"
+          value={postcode}
+          placeholder="우편번호"
+          aria-label="우편번호"
+          onChange={(event) => setPostcode(event.target.value)}
+        />
+        <ActionButton variant="emphasis">검색</ActionButton>
+      </FieldGroupWrap>
+      <ErrorMessage>{error}</ErrorMessage>
+    </FieldGroup>
+  );
+}
+```
+
+## 필수
+
+`required`를 주면 라벨 오른쪽에 필수 표시 점이 붙고, 그룹 안 `Input`에 `required`가 전달됩니다.
+
+<Preview>
+  <FieldGroupDemo required />
+</Preview>
+
+```tsx
+<FieldGroup required>
+  <FieldGroupLabel>주소</FieldGroupLabel>
+  <FieldGroupWrap>
+    <Input
+      name="postcode"
+      value={postcode}
+      aria-label="우편번호"
+      onChange={handleChange}
+    />
+    <ActionButton variant="emphasis">검색</ActionButton>
+  </FieldGroupWrap>
+</FieldGroup>
+```
+
+## 오류
+
+`hasError`를 주면 그룹 안 `Input`이 오류 스타일로 바뀌고 `ErrorMessage`가 입력 줄 아래에 나타납니다. 그룹 안의 모든 `Input`이 같은 오류 메시지를 `aria-describedby`로 가리킵니다.
+
+<Preview>
+  <FieldGroupDemo
+    initialValue="12345"
+    errorMessage="우편번호를 확인해 주세요"
+  />
+</Preview>
+
+```tsx
+<FieldGroup hasError>
+  <FieldGroupLabel>주소</FieldGroupLabel>
+  <FieldGroupWrap>
+    <Input
+      name="postcode"
+      value={postcode}
+      aria-label="우편번호"
+      onChange={handleChange}
+    />
+    <ActionButton variant="emphasis">검색</ActionButton>
+  </FieldGroupWrap>
+  <ErrorMessage>우편번호를 확인해 주세요</ErrorMessage>
+</FieldGroup>
+```
+
+## 비활성
+
+`disabled`를 주면 그룹 안 `Input`이 비활성화됩니다. 버튼은 그대로 두며, 버튼도 막으려면 `Button`에 `disabled`를 직접 줍니다.
+
+<Preview>
+  <FieldGroupDemo
+    initialValue="12345"
+    disabled
+  />
+</Preview>
+
+```tsx
+<FieldGroup disabled>
+  <FieldGroupLabel>주소</FieldGroupLabel>
+  <FieldGroupWrap>
+    <Input
+      name="postcode"
+      value={postcode}
+      aria-label="우편번호"
+      onChange={handleChange}
+    />
+    <ActionButton variant="emphasis">검색</ActionButton>
+  </FieldGroupWrap>
+</FieldGroup>
+```
+
+## Props
+
+### FieldGroup
+
+<PropsTable
+  type={{
+    id: {
+      type: 'string',
+      description: '그룹 id. 오류 메시지 id의 기준. 미지정 시 자동 생성',
+    },
+    hasError: {
+      type: 'boolean',
+      default: 'false',
+      description: '오류 상태 — 그룹 안 Input 스타일·aria, ErrorMessage 노출 제어',
+    },
+    required: {
+      type: 'boolean',
+      default: 'false',
+      description: '필수 표시 (FieldGroupLabel·Input에 전파)',
+    },
+    disabled: {
+      type: 'boolean',
+      default: 'false',
+      description: '비활성화 (그룹 안 Input에 전파)',
+    },
+    children: {
+      type: 'ReactNode',
+      description: 'FieldGroupLabel, FieldGroupWrap, ErrorMessage',
+    },
+  }}
+/>
+
+### FieldGroupLabel
+
+<PropsTable
+  type={{
+    required: {
+      type: 'boolean',
+      description: '필수 표시. 지정하면 FieldGroup 값보다 우선',
+    },
+    children: {
+      type: 'ReactNode',
+      description: '그룹 이름',
+    },
+  }}
+/>
+
+### FieldGroupWrap
+
+`<div>`의 표준 속성을 그대로 사용합니다. 자식으로 `Input`과 `Button`을 가로로 나열합니다.
+
+## 접근성
+
+- `FieldGroup`은 `<fieldset>`, `FieldGroupLabel`은 `<legend>`로 렌더링되어 스크린 리더가 그룹 이름을 읽습니다.
+- 그룹 라벨은 각 입력의 라벨이 아니므로, 입력마다 `aria-label`이나 `Label`로 이름을 붙입니다.
+- 오류 상태의 `Input`은 `aria-invalid`와 `aria-describedby`(그룹 오류 메시지 id)를 갖습니다.
+- 그룹 안에 `Field`(`TextField` 포함)를 넣으면 그 안의 `Input`은 `Field` 값만 따릅니다. `FieldGroup`의 `hasError`·`required`·`disabled`는 닿지 않으므로 `Field`에 직접 줍니다.
+- 오류 상태는 `FieldGroup`의 `hasError`로 줍니다. `Input`에만 `hasError`를 주고 그룹 `hasError`가 `false`이면 `ErrorMessage`가 나타나지 않아 입력이 보이지 않는 메시지를 가리킵니다. 그룹 안 `ErrorMessage`에는 `id`를 주지 말고 필요하면 `FieldGroup`에 `id`를 줍니다(`ErrorMessage`에 `id`를 주면 입력이 가리키는 id와 달라집니다).
+
+## 토큰 커스터마이징
+
+FieldGroup은 아래 시맨틱 토큰을 참조합니다. 입력·버튼·오류 메시지 토큰은 [Field](/docs/components/field)와 [Button](/docs/components/button)을 따릅니다. ([테마](/docs/theming) 참고).
+
+| 토큰 | 미리보기 | 용도 |
+| --- | --- | --- |
+| `text.input` | <Swatch token="text.input" /> | 그룹 라벨 |
+| `layout.primary` | <Swatch token="layout.primary" /> | 필수 표시 점 |
+| `text.issue` | <Swatch token="text.issue" /> | 오류 메시지 |
+
+이 밖에 타이포는 라벨에 `body.medium-light`를 사용합니다.

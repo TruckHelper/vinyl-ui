@@ -7,6 +7,7 @@ import { styled } from 'styled-system/jsx/factory';
 import { createErrorId } from './utils';
 
 import { useFieldContext } from './FieldContext';
+import { useFieldGroupContext } from './FieldGroupContext';
 
 const StyledInput = styled('input', {
   base: {
@@ -59,12 +60,15 @@ export function Input({
   ...props
 }: InputProps) {
   const field = useFieldContext();
+  const groupContext = useFieldGroupContext();
+  const group = field ? null : groupContext;
 
   const resolvedId = id ?? field?.inputId;
-  const resolvedHasError = hasError ?? field?.hasError ?? false;
-  const resolvedDisabled = disabled ?? field?.disabled ?? false;
-  const resolvedRequired = required ?? field?.required ?? false;
-  const describedBy = resolvedHasError && resolvedId ? createErrorId(resolvedId) : undefined;
+  const resolvedHasError = hasError ?? field?.hasError ?? group?.hasError ?? false;
+  const resolvedDisabled = disabled ?? field?.disabled ?? group?.disabled ?? false;
+  const resolvedRequired = required ?? field?.required ?? group?.required ?? false;
+  const errorId = group ? group.errorId : resolvedId && createErrorId(resolvedId);
+  const describedBy = resolvedHasError && errorId ? errorId : undefined;
 
   return (
     <StyledInput
